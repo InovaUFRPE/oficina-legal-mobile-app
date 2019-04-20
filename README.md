@@ -4,3 +4,5 @@
 
 ### Step 1)
 
+Open your terminal
+
