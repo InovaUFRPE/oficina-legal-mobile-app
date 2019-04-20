@@ -2,30 +2,38 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-
 export default class Login extends Component {
+    state = {
+        password: '',
+        username: '',
+    };
     render() {
         return (
             <LinearGradient 
-                colors={['#111e29', '#333e48', '#586069']}
+                colors={['#111e29', '#284760', '#4a83b4']}
                 style = { styles.container }>
 
                 <View style={styles.infoContainer} >
                     <TextInput style={styles.IptEmail}
                         placeholder="Digite seu username ou email."
                         placeholderTextColor= 'white'
-                        keyboardType='email-address'>
+                        keyboardType='email-address'
+                        value={this.state.username}
+                        onChangeText={ (username) => this.setState({ username }) }>
                     </TextInput>
                     <TextInput style={styles.IptPassword}
-                        placeholder="Digite sua senha."
-                        placeholderTextColor= 'white'
-                        keyboardType='visible-password'>
-                    </TextInput>
+                    secureTextEntry={true} 
+                    placeholderTextColor= 'white'
+                    placeholder="Digite sua senha."
+                    value={this.state.password}
+                    onChangeText={ (password) => this.setState({ password }) }/>
+                    
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={styles.buttonLogin}>
                             <Text style={styles.login}>Entrar</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonRegister}>
+                        <TouchableOpacity style={styles.buttonRegister}
+                        onPress={() => this.props.navigation.navigate('RegisterUser')}>
                             <Text style={styles.register}>Registar</Text>
                         </TouchableOpacity>
                     </View>
@@ -70,11 +78,13 @@ const styles = StyleSheet.create({
     },
     IptEmail:{
         top: 5,
-        height: 60,
+        height: 70,
         width: 310,
         bottom: 10,
+        fontSize: 15,
         borderBottomColor: '#eee1d6',
         paddingLeft: 10,
+        paddingTop: 35,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
         color: 'white',
@@ -83,11 +93,13 @@ const styles = StyleSheet.create({
     },
     IptPassword: {
         top: 10,
-        height: 60,
+        height: 70,
         width: 310,
         left: 0,
+        fontSize: 15,
         bottom: 10,
         paddingLeft: 10,
+        paddingTop: 35,
         borderBottomColor: '#eee1d6',
         borderBottomWidth: 1,
         borderBottomRightRadius: 10,
@@ -122,11 +134,11 @@ const styles = StyleSheet.create({
         top: 8,
         fontSize: 20, 
         fontWeight: 'bold',
-        color: '#eee1d6', 
+        color: '#111e29', 
     }, 
     buttonRegister: {
         position: 'absolute',
-        backgroundColor: '#111e29',
+        backgroundColor: '#eee1d6',
         height: 40,
         width: 100,
         left: 20,
@@ -142,10 +154,12 @@ const styles = StyleSheet.create({
 
     buttonForgot: {
         top: 130, 
+        fontSize: 20
     },
 
     forgot:{
-        color: '#eee1d6'
+        color: '#eee1d6',
+        borderBottomColor: '#eee1d6',
     }
 
 })
