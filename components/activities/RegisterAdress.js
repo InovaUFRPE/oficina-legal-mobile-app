@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { ValidateCEP } from '../../busnisses/Validation'
+import { ValidateCEP, RemoveEmptySpaces } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 
@@ -15,12 +15,6 @@ export default class RegisterAdress extends Component {
         str: "\nCampo(s) em branco:\n",
     }
 
-    RemoveEmptySpaces(strTexto)
-        {
-            // Substitui os espaços vazios no inicio e no fim da string por vazio.
-            return strTexto.replace(/^s+|s+$/g, '');
-        }
-
 
     Verify(){
         if (!this.checkBlankCamps()){
@@ -32,10 +26,10 @@ export default class RegisterAdress extends Component {
             alert("Erro\n\nO Formato do CEP é inválido.")
             return
         }
-        this.state.street = this.RemoveEmptySpaces(this.state.street)
-        this.state.cep = this.RemoveEmptySpaces(this.state.cep)
-        this.state.complement = this.RemoveEmptySpaces(this.state.complement)
-        this.state.neighborhood = this.RemoveEmptySpaces(this.state.neighborhood)
+        this.state.street = RemoveEmptySpaces(this.state.street)
+        this.state.cep = RemoveEmptySpaces(this.state.cep)
+        this.state.complement = RemoveEmptySpaces(this.state.complement)
+        this.state.neighborhood = RemoveEmptySpaces(this.state.neighborhood)
         this.props.navigation.navigate('RegisterVehicle')
     }
 

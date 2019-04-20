@@ -1,12 +1,35 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import { RemoveEmptySpaces, validateEmail } from '../../busnisses/Validation'
 import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
+
 
 export default class ForgotPassword extends Component {
     state = {
         email: '',
     }
+    errors = {
+        str: "\nCampo em branco:\n",
+    }
 
+    Verify(){
+        if (!this.checkBlankCamps()){
+            alert(this.errors.str)
+            this.errors.str = "\nCampo em branco:\n"
+            return
+        }
+        this.state.email = RemoveEmptySpaces(this.state.email)
+        if(!validateEmail(this.state.email)) alert("Email inválido.")
+    }
+
+    checkBlankCamps(){
+        if(this.state.email == ""){
+            this.errors.str += "\n- Email"
+        }
+        if(this.errors.str == "\nCampo em branco:\n"){
+            return true
+        }
+    }
 
     render() {
         return(
@@ -37,7 +60,7 @@ export default class ForgotPassword extends Component {
 
                     <TouchableOpacity 
                         style={styles.buttom}
-                        onPress={() => {}} >
+                        onPress={() => {this.Verify()}} >
                         <Text style={styles.buttonText}>
                             Enviar
                         </Text>

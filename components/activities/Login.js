@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import {RemoveEmptySpaces, validateEmail} from '../../busnisses/Validation';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 export default class Login extends Component {
     state = {
@@ -11,22 +12,20 @@ export default class Login extends Component {
         str: "\nCampo(s) em branco:\n",
     }
 
-    RemoveEmptySpaces(strTexto)
-        {
-            // Substitui os espaços vazios no inicio e no fim da string por vazio.
-            return strTexto.replace(/^s+|s+$/g, '');
-        }
-
 
     Verify(){
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
             return
-        }else{
-            this.state.username = this.RemoveEmptySpaces(this.state.username)
-            this.state.password = this.RemoveEmptySpaces(this.state.password)
         }
+        if(!validateEmail(this.state.username)){
+            alert("Email inválido.")
+            return
+        }
+        this.state.username = RemoveEmptySpaces(this.state.username)
+        this.state.password = RemoveEmptySpaces(this.state.password)
+        
     }
 
     checkBlankCamps(){
@@ -49,7 +48,7 @@ export default class Login extends Component {
 
                 <View style={styles.infoContainer} >
                     <TextInput style={styles.IptEmail}
-                        placeholder="Digite seu username ou email."
+                        placeholder="Digite seu email."
                         placeholderTextColor= 'white'
                         keyboardType='email-address'
                         value={this.state.username}
@@ -65,7 +64,8 @@ export default class Login extends Component {
                     
                     <View style={styles.buttonContainer}
                         onPress={() => this.Verify()}>
-                        <TouchableOpacity style={styles.buttonLogin}>
+                        <TouchableOpacity style={styles.buttonLogin}
+                        onPress={() => this.Verify()}>
                             <Text style={styles.login}>Entrar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonRegister}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
 
 
 export default class RegisterUser extends Component {
@@ -10,18 +10,28 @@ export default class RegisterUser extends Component {
         cpf: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        checkBclient: false,
+        checkBmechanic: false
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
         str2: "\nErro(s)\n"
     }
 
-    RemoveEmptySpaces(strTexto)
-        {
-            // Substitui os espaços vazios no inicio e no fim da string por vazio.
-            return strTexto.replace(/^s+|s+$/g, '');
-        }
+    CheckBoxCPress(){
+        if(this.state.checkBmechanic) this.CheckBoxMPress()
+        this.setState({
+            checkBclient: !this.state.checkBclient
+        })
+    }
+
+    CheckBoxMPress(){
+        if(this.state.checkBclient) this.CheckBoxCPress()
+        this.setState({
+            checkBmechanic: !this.state.checkBmechanic
+        })
+    }
 
     Verify(){
         if (!this.checkBlankCamps()){
@@ -30,11 +40,12 @@ export default class RegisterUser extends Component {
             return
         }
         else if(this.VerifyErrors()){
-            this.state.name = this.RemoveEmptySpaces(this.state.name)
-            this.state.cpf = this.RemoveEmptySpaces(this.state.cpf)
-            this.state.email = this.RemoveEmptySpaces(this.state.email)
-            this.state.password = this.RemoveEmptySpaces(this.state.password)
-            this.props.navigation.navigate('RegisterAdress')
+            this.state.name = RemoveEmptySpaces(this.state.name)
+            this.state.cpf = RemoveEmptySpaces(this.state.cpf)
+            this.state.email = RemoveEmptySpaces(this.state.email)
+            this.state.password = RemoveEmptySpaces(this.state.password)
+            if(this.state.checkBclient) this.props.navigation.navigate('RegisterAdress')
+            else {this.props.navigation.navigate('LinkMechanicToWorkshop')}
         }else{
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
@@ -45,38 +56,20 @@ export default class RegisterUser extends Component {
     }
 
     VerifyErrors(){
-        if(!ConfirmPassword(this.state.password, this.state.confirmPassword)){
-            this.errors.str2 += "\n- As senhas não conferem."
-        }
-        if(!validateCPF(this.state.cpf)){
-            this.errors.str2 += "\n- Insira um CPF válido."
-        }
-        if(!validateEmail(this.state.email)){
-            this.errors.str2 += "\n- Insira um email válido."
-        }
-        if(this.errors.str2 == "\nErro(s)\n")
-            return true
+        if(!ConfirmPassword(this.state.password, this.state.confirmPassword)){ this.errors.str2 += "\n- As senhas não conferem." }
+        if(!validateCPF(this.state.cpf)){ this.errors.str2 += "\n- Insira um CPF válido." }
+        if(!validateEmail(this.state.email)){ this.errors.str2 += "\n- Insira um email válido." }
+        if(this.errors.str2 == "\nErro(s)\n") return true
     }
 
     checkBlankCamps(){
-        if(this.state.name == ""){
-            this.errors.str += "\n- Nome"
-        }
-        if(this.state.cpf == ""){
-            this.errors.str += "\n- CPF"
-        }
-        if(this.state.email == ""){
-            this.errors.str += "\n- Email"
-        }
-        if(this.state.password == ""){
-            this.errors.str += "\n- Senha"
-        }
-        if(this.state.confirmPassword == ""){
-            this.errors.str += "\n- Confirmar senha"
-        }
-        if(this.errors.str == "\nCampo(s) em branco:\n"){
-            return true
-        }
+        if(this.state.name == ""){ this.errors.str += "\n- Nome" }
+        if(this.state.cpf == ""){ this.errors.str += "\n- CPF" }
+        if(this.state.email == ""){ this.errors.str += "\n- Email" }
+        if(this.state.password == ""){ this.errors.str += "\n- Senha" }
+        if(this.state.confirmPassword == ""){ this.errors.str += "\n- Confirmar senha" }
+        if(this.state.checkBclient == false && this.state.checkBmechanic == false){ this.errors.str += "\n- Você é cliente ou mecânico?" }
+        if(this.errors.str == "\nCampo(s) em branco:\n") return true
     }
     
     render() {
@@ -133,8 +126,22 @@ export default class RegisterUser extends Component {
                         placeholderTextColor="#eee1d6" 
                         secureTextEntry={true}
                         onChangeText={confirmPassword => this.setState({ confirmPassword })}
-                        ref={(input) => this.confirmPasswordInput = input}/>   
-                                    
+                        ref={(input) => this.confirmPasswordInput = input}/> 
+                    
+                    <View style={{top:25}}>
+                        <CheckBox style={{position: 'absolute', left: 100}}
+                                  value = {this.state.checkBclient}
+                                  onChange={() => this.CheckBoxCPress()}></CheckBox>
+                        <CheckBox style={{right:100}}
+                                  value = {this.state.checkBmechanic}
+                                  onChange={() => this.CheckBoxMPress()}></CheckBox>
+                    </View>
+
+                    <View>
+                        <Text style={{position: 'absolute',color: '#eee1d6', right: 45}}>Mecânico</Text>
+                        <Text style={{color: '#eee1d6', left: 60}}>Cliente</Text>
+                    </View>
+
                     <TouchableOpacity onPress={() => this.Verify()} 
                         style={styles.buttonRegister}>
                         <Text style={styles.buttonRegisterText}>Seguir</Text>
@@ -164,6 +171,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         height: '100%',
         width: '100%',
+        top: 20,
         position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
@@ -186,7 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#eee1d6' ,
         height: 40,
         width: 250,
-        top: 50,
+        top: 30,
         alignItems: 'center',  
         shadowOffset: {
             width: 0,

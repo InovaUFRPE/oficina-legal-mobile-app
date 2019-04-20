@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import {RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 
@@ -13,12 +14,6 @@ export default class RegisterVehicle extends Component {
     errors = {
         str: "\nCampo(s) em branco:\n",
     }
-
-    RemoveEmptySpaces(strTexto)
-        {
-            // Substitui os espaços vazios no inicio e no fim da string por vazio.
-            return strTexto.replace(/^s+|s+$/g, '');
-        }
 
 
     Verify(){

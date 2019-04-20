@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
+import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView} from 'react-native';
 
 
@@ -11,18 +10,16 @@ export default class EditProfile extends Component {
         cep: '',
         street: '',
         complement: '',
-        neighborhood: ''
+        neighborhood: '',
+        model: '',
+        year: '',
+        renavam: '',
+        Vplate: '',
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
         str2: "\nErro(s)\n"
     }
-
-    RemoveEmptySpaces(strTexto)
-        {
-            // Substitui os espaços vazios no inicio e no fim da string por vazio.
-            return strTexto.replace(/^s+|s+$/g, '');
-        }
 
     Verify(){
         if (!this.checkBlankCamps()){
@@ -31,10 +28,17 @@ export default class EditProfile extends Component {
             return
         }
         else if(this.VerifyErrors()){
-            this.state.name = this.RemoveEmptySpaces(this.state.name)
-            this.state.cpf = this.RemoveEmptySpaces(this.state.cpf)
-            this.state.email = this.RemoveEmptySpaces(this.state.email)
-            this.state.password = this.RemoveEmptySpaces(this.state.password)
+            this.state.name = RemoveEmptySpaces(this.state.name)
+            this.state.cpf = RemoveEmptySpaces(this.state.cpf)
+            this.state.email = RemoveEmptySpaces(this.state.email)
+            this.state.cep = RemoveEmptySpaces(this.state.cep)
+            this.state.street = RemoveEmptySpaces(this.state.street)
+            this.state.complement = RemoveEmptySpaces(this.state.complement)
+            this.state.neighborhood = RemoveEmptySpaces(this.state.neighborhood)
+            this.state.model = RemoveEmptySpaces(this.state.model)
+            this.state.year = RemoveEmptySpaces(this.state.year)
+            this.state.renavam = RemoveEmptySpaces(this.state.renavam)
+            this.state.Vplate = RemoveEmptySpaces(this.state.Vplate)
             this.props.navigation.navigate('RegisterAdress')
         }else{
             alert(this.errors.str2)
@@ -87,15 +91,20 @@ export default class EditProfile extends Component {
                 style = { styles.container }>
                 
 
-                <LinearGradient colors={['#111e29', '#284760', '#4a83b4']} style={styles.inputContainer}> 
+                <View style = { styles.container } style={styles.inputContainer}> 
                     
                     <Text style={styles.header}>USER_NAME</Text>
                     <Image
                     source={require('../../images/profile.jpg')}
                     style={styles.image}/>
-        
-                    <View style={[styles.editContainer, {paddingTop: 10}]}>
-                        <Text style={styles.textCategoria}>Pessoais</Text>
+                    
+                    <TouchableOpacity style={styles.ButtonEdit}
+                            onPress = {() => {}}>
+                        <Text style={{fontSize: 18, color:'#eee1d6', top: 5}}>Alterar perfil</Text>    
+                    </TouchableOpacity>
+
+                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
+                        <Text style={styles.textCategoria}>____Pessoal____</Text>
                     </View> 
                     
                     <View style={styles.editContainer}>
@@ -103,7 +112,7 @@ export default class EditProfile extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder='user_name'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.name} 
                             onChangeText={name => this.setState({ name })}/>
                     </View> 
@@ -111,14 +120,14 @@ export default class EditProfile extends Component {
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>E-mail</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input]}
                             placeholder='user_email'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.email} 
                             onChangeText={email => this.setState({ email })}/>
                     </View>
                     
-                    <View style={[styles.editContainer, {paddingTop: 10}]}>
+                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
                         <Text style={styles.textCategoria}>Endereço</Text>
                     </View>  
 
@@ -127,7 +136,7 @@ export default class EditProfile extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder='user_cep'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.cep} 
                             onChangeText={cep => this.setState({ cep })}/>
                     </View>
@@ -137,7 +146,7 @@ export default class EditProfile extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder='user_street'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.street} 
                             onChangeText={street => this.setState({ street })}/>
                     </View>
@@ -147,7 +156,7 @@ export default class EditProfile extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder='user_neighborhood'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.neighborhood} 
                             onChangeText={neighborhood => this.setState({ neighborhood })}/>
                     </View>
@@ -157,27 +166,56 @@ export default class EditProfile extends Component {
                         <TextInput
                             style={styles.input}
                             placeholder='user_complement'
-                            placeholderTextColor='#eee1d6'
+                            placeholderTextColor='#586069'
                             value= {this.state.complement} 
                             onChangeText={complement => this.setState({ complement })}/>
                     </View>
 
-                    <View style={[styles.editContainer, {paddingTop: 10}]}>
-                        <Text style={styles.textCategoria}>Configurações</Text>
+                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
+                        <Text style={styles.textCategoria}>Veículo</Text>
                     </View>
 
                     <View style={styles.editContainer}>
-                        <TouchableOpacity style={styles.button}
-                            onPress = {() => {}}>
-                            <Text style={[styles.inputDescription, {fontSize: 15}]}>Mudar senha</Text>    
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity style={styles.button}
-                            onPress = {() => {}}>
-                            <Text style={[styles.inputDescription, {fontSize: 15}]}>Sair</Text>    
-                        </TouchableOpacity>      
+                        <Text style={styles.inputDescription}>Modelo</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_vehicle_model'
+                            placeholderTextColor='#586069'
+                            value= {this.state.model} 
+                            onChangeText={model => this.setState({ model })}/>
                     </View>
-                </LinearGradient>
+
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>Ano</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_vehicle_year'
+                            placeholderTextColor='#586069'
+                            value= {this.state.year} 
+                            onChangeText={year => this.setState({ year })}/>
+                    </View>
+
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>Renavam</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_vehicle_renavam'
+                            placeholderTextColor='#586069'
+                            value= {this.state.renavam} 
+                            onChangeText={renavam => this.setState({ renavam })}/>
+                    </View>
+
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>Placa</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_vehicle_plate'
+                            placeholderTextColor='#586069'
+                            value= {this.state.Vplate} 
+                            onChangeText={Vplate => this.setState({ Vplate })}/>
+                    </View>
+
+                </View>
             </ScrollView>
             
         )
@@ -187,12 +225,12 @@ export default class EditProfile extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'red'
+        backgroundColor: '#eee1d6' ,
     },
 
     header: {
         fontSize: 30,
-        color: 'white',
+        color: '#111e29',
         marginTop: 20
 
     },  
@@ -200,6 +238,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'flex-start',   
+        width: '85%',
+    },
+    editContainerCat: {
+        marginBottom: 10,
+        justifyContent: 'center',
+        alignItems: 'center',   
         width: '85%',
     },
 
@@ -212,33 +256,51 @@ const styles = StyleSheet.create({
     inputContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 15,
     },
 
     inputDescription: {
+        fontSize: 18,
         marginLeft: 10,
-        color: 'white'
+        color: '#111e29'
     },
 
     textCategoria: {   
-        fontSize: 20, 
-        color: 'white',
-        fontWeight: 'bold'
+        fontSize: 28, 
+        color: '#111e29',
+        fontWeight: 'bold',
+        alignContent: 'center'
     },
 
     input: {
+        fontSize: 18,
         width: '100%',
         marginLeft: 10,
         marginRight: 10,
         height: 40,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee1d6',
+        borderBottomColor: '#111e29',
         borderBottomWidth: 1,
-        color: 'white',
+        color: '#111e29',
     },
 
-    
+    ButtonEdit: {
+        top: 15,
+        width: 100,
+        height: 30,
+        marginBottom: 30,
+        backgroundColor: '#111e29',
+        alignItems: 'center',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
 
     button:{
-        marginBottom: 10
+        marginBottom: 1
     },
 })
