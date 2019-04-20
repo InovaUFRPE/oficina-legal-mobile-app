@@ -11,6 +11,7 @@ import RegisterVehicle from './components/activities/RegisterVehicle'
 import { StackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
 import ForgotPassword from './components/activities/ForgotPassword';
+import EditProfile from './components/activities/EditProfile'
 
 const Stack = StackNavigator({
     Login:{
@@ -48,6 +49,15 @@ const Stack = StackNavigator({
         navigationOptions:  {
             headerTintColor: '#eee1d6',
             headerTransparent: 'true'
+        }
+    },
+
+    EditProfile:{
+        screen: ForgotPassword,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true',
+            headerTitle: 'Editar perfil',
         }
     },
 
