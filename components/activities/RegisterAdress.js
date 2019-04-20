@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import { ValidateCEP } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 
@@ -27,28 +28,13 @@ export default class RegisterAdress extends Component {
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
-        if(!this.ValidateCEP(this.state.cep)){
+        if(!ValidateCEP(this.state.cep)){
             alert("Erro\n\nO Formato do CEP é inválido.")
             return
         }
         alert("Pode seguir")
     }
 
-    ValidateCEP(cep){
-        alert(cep);
-           if (cep.length == 0){
-            return null;            
-        };
-        if (cep.length == 8) {
-           return cep.charAt(0)+cep.charAt(1)+'.'+
-                  cep.charAt(2)+cep.charAt(3)+cep.charAt(4)+'-'+   
-                  cep.charAt(5)+cep.charAt(6)+cep.charAt(7);              
-        }
-        else {                          
-           return null;
-       };
-        
-};
 
     checkBlankCamps(){
         if(this.state.street == ""){

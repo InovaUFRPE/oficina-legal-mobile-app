@@ -7,6 +7,7 @@ import App from './App';
 import Login from './components/activities/Login'
 import RegisterUser from './components/activities/RegisterUser'
 import RegisterAdress from './components/activities/RegisterAdress'
+import RegisterVehicle from './components/activities/RegisterVehicle'
 import { StackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
 
@@ -31,7 +32,14 @@ const Stack = StackNavigator({
             headerTintColor: '#eee1d6',
             headerTransparent: 'true'
         }
-    }
+    },
+    RegisterVehicle:{
+        screen:RegisterVehicle,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
 })
 
-AppRegistry.registerComponent(appName, () => Stack);
+AppRegistry.registerComponent(appName, () => RegisterVehicle);
