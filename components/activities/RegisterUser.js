@@ -93,7 +93,8 @@ export default class RegisterUser extends Component {
                         style={styles.input}
                         value={this.state.name}
                         returnKeyType="next"
-                        onChangeText={name => this.setState({ name })}/>
+                        onChangeText={name => this.setState({ name })}
+                        onSubmitEditing={() => this.cpfInput.focus()}/>
 
                     <TextInput placeholder='CPF'  
                         placeholderTextColor="#eee1d6" 
@@ -101,7 +102,9 @@ export default class RegisterUser extends Component {
                         value= {this.state.cpf} 
                         returnKeyType="next"
                         keyboardType='numeric'
-                        onChangeText={cpf => this.setState({ cpf })}/>
+                        onChangeText={cpf => this.setState({ cpf })}
+                        ref={(input) => this.cpfInput = input}
+                        onSubmitEditing={() => this.emailInput.focus()}/>
 
                     <TextInput placeholder='E-mail' 
                         placeholderTextColor="#eee1d6" 
@@ -109,14 +112,18 @@ export default class RegisterUser extends Component {
                         value= {this.state.email} 
                         returnKeyType="next"
                         keyboardType='email-address'
-                        onChangeText={email => this.setState({ email })}/> 
+                        onChangeText={email => this.setState({ email })}
+                        onSubmitEditing={() => this.passwordInput.focus()}
+                        ref={(input) => this.emailInput = input}/> 
 
                     <TextInput placeholder='Senha' 
                         placeholderTextColor="#eee1d6" style={styles.input}
                         value= {this.state.password} 
                         returnKeyType="next"
                         secureTextEntry={true}
-                        onChangeText={password => this.setState({ password })}/> 
+                        onChangeText={password => this.setState({ password })}
+                        onSubmitEditing={() => this.confirmPasswordInput.focus()}
+                        ref={(input) => this.passwordInput = input}/> 
 
                     <TextInput placeholder='Confirmar Senha' 
                         placeholderTextColor="#eee1d6" 
@@ -125,7 +132,8 @@ export default class RegisterUser extends Component {
                         returnKeyType="go"
                         placeholderTextColor="#eee1d6" 
                         secureTextEntry={true}
-                        onChangeText={confirmPassword => this.setState({ confirmPassword })}/>   
+                        onChangeText={confirmPassword => this.setState({ confirmPassword })}
+                        ref={(input) => this.confirmPasswordInput = input}/>   
                                     
                     <TouchableOpacity onPress={() => this.Verify()} 
                         style={styles.buttonRegister}>

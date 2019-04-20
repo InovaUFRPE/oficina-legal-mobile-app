@@ -63,3 +63,18 @@ export function ConfirmPassword(password, confirmPassword){
         return null
     }
 }
+
+export function ValidateCEP(cep){
+       if (cep.length == 0){
+        return null;            
+    };
+    if (cep.length == 8) {
+       return cep.charAt(0)+cep.charAt(1)+'.'+
+              cep.charAt(2)+cep.charAt(3)+cep.charAt(4)+'-'+   
+              cep.charAt(5)+cep.charAt(6)+cep.charAt(7);              
+    }
+    else {                          
+       return null;
+   };
+    
+};

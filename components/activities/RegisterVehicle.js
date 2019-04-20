@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { ValidateCEP } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 
-export default class RegisterAdress extends Component {
+export default class RegisterVehicle extends Component {
     state =  {
-        street: '',
-        cep: '',
-        complement: '',
-        neighborhood: ''
+        model: '',
+        year: '',
+        renavam: '',
+        Vplate: ''
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
@@ -28,27 +27,21 @@ export default class RegisterAdress extends Component {
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
-        if(!ValidateCEP(this.state.cep)){
-            alert("Erro\n\nO Formato do CEP é inválido.")
-            return
-        }
-        this.state.street = this.RemoveEmptySpaces(this.state.street)
-        this.state.cep = this.RemoveEmptySpaces(this.state.cep)
-        this.state.complement = this.RemoveEmptySpaces(this.state.complement)
-        this.state.neighborhood = this.RemoveEmptySpaces(this.state.neighborhood)
-        this.props.navigation.navigate('RegisterVehicle')
+        alert("Pode seguir")
     }
 
-
     checkBlankCamps(){
-        if(this.state.street == ""){
-            this.errors.str += "\n- Rua"
+        if(this.state.model == ""){
+            this.errors.str += "\n- Modelo"
         }
-        if(this.state.cep == ""){
-            this.errors.str += "\n- CEP"
+        if(this.state.year == ""){
+            this.errors.str += "\n- Ano"
         }
-        if(this.state.neighborhood == ""){
-            this.errors.str += "\n- Bairro"
+        if(this.state.renavam == ""){
+            this.errors.str += "\n- Renavam"
+        }
+        if(this.state.Vplate == ""){
+            this.errors.str += "\n- Placa"
         }
         if(this.errors.str == "\nCampo(s) em branco:\n"){
             return true
@@ -62,47 +55,40 @@ export default class RegisterAdress extends Component {
                 style = { styles.container }>
                 <View style={styles.inputContainer}>  
                     <Text style={styles.header}>
-                        Insira seu endereço 
+                        Informações do seu veículo
                     </Text>          
-                    <TextInput placeholder='Rua' 
+                    <TextInput placeholder='Modelo' 
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value={this.state.street}
+                        value={this.state.model}
                         returnKeyType="next"
-                        onChangeText={street => this.setState({ street })}
-                        onSubmitEditing={() => this.cepInput.focus()}/>
+                        onChangeText={model => this.setState({ model })}/>
 
-                    <TextInput placeholder='CEP'  
+                    <TextInput placeholder='ano'  
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value= {this.state.cep} 
+                        value= {this.state.year} 
                         returnKeyType="next"
                         keyboardType='numeric'
-                        onChangeText={cep => this.setState({ cep })}
-                        ref={(input) => this.cepInput = input}
-                        onSubmitEditing={() => this.complementInput.focus()}/>
+                        onChangeText={year => this.setState({ year })}/>
 
-                    <TextInput placeholder='Complemento (Opcional)' 
+                    <TextInput placeholder='Renavam' 
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value= {this.state.complement} 
+                        value= {this.state.renavam} 
                         returnKeyType="next"
-                        onChangeText={complement => this.setState({ complement })}
-                        ref={(input) => this.complementInput = input}
-                        onSubmitEditing={() => this.neighborhoodInput.focus()}/> 
-                        
+                        onChangeText={renavam => this.setState({ renavam })}/> 
 
-                    <TextInput placeholder='Bairro' 
+                    <TextInput placeholder='Placa' 
                         placeholderTextColor="#eee1d6" style={styles.input}
-                        value= {this.state.neighborhood} 
-                        returnKeyType="go"
-                        onChangeText={neighborhood => this.setState({ neighborhood })}
-                        ref={(input) => this.neighborhoodInput = input}/> 
+                        value= {this.state.Vplate} 
+                        returnKeyType="next"
+                        onChangeText={Vplate => this.setState({ Vplate })}/> 
  
                                     
                     <TouchableOpacity onPress={() => this.Verify()} 
                         style={styles.buttonRegister}>
-                        <Text style={styles.buttonRegisterText}>Seguir</Text>
+                        <Text style={styles.buttonRegisterText}>Cadastrar</Text>
                     </TouchableOpacity>  
                 </View>
             </LinearGradient>

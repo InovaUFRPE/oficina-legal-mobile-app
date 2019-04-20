@@ -55,15 +55,16 @@ export default class Login extends Component {
                         value={this.state.username}
                         onChangeText={ (username) => this.setState({ username }) }>
                     </TextInput>
+
                     <TextInput style={styles.IptPassword}
-                    secureTextEntry={true} 
-                    placeholderTextColor= 'white'
-                    placeholder="Digite sua senha."
-                    value={this.state.password}
-                    onChangeText={ (password) => this.setState({ password }) }/>
+                        secureTextEntry={true} 
+                        placeholderTextColor= 'white'
+                        placeholder="Digite sua senha."
+                        value={this.state.password}
+                        onChangeText={ (password) => this.setState({ password }) }/>
                     
                     <View style={styles.buttonContainer}
-                    onPress={() => this.Verify()}>
+                        onPress={() => this.Verify()}>
                         <TouchableOpacity style={styles.buttonLogin}>
                             <Text style={styles.login}>Entrar</Text>
                         </TouchableOpacity>
@@ -72,7 +73,8 @@ export default class Login extends Component {
                             <Text style={styles.register}>Registar</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.buttonForgot}>
+                    <TouchableOpacity style={styles.buttonForgot}
+                    onPress={() => this.props.navigation.navigate('ForgotPassword')}>
                         <Text style={styles.forgot}>Esqueci minha senha!</Text> 
                     </TouchableOpacity>
                 </View>

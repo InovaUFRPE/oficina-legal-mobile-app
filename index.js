@@ -10,6 +10,7 @@ import RegisterAdress from './components/activities/RegisterAdress'
 import RegisterVehicle from './components/activities/RegisterVehicle'
 import { StackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
+import ForgotPassword from './components/activities/ForgotPassword';
 
 const Stack = StackNavigator({
     Login:{
@@ -40,6 +41,16 @@ const Stack = StackNavigator({
             headerTransparent: 'true'
         }
     },
+
+
+    ForgotPassword:{
+        screen: ForgotPassword,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
 })
 
-AppRegistry.registerComponent(appName, () => RegisterVehicle);
+AppRegistry.registerComponent(appName, () => Stack);
