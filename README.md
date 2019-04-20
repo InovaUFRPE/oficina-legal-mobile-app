@@ -8,8 +8,13 @@
 
 ### Step 2) Install the dependencies
 
-- Open your IDE and find the file, after that in the IDE's terminal type ```npm install``` or ```yarn``` and wait the dependencies to be downloaded.
+- Open your IDE and find the file, after that in the IDE's terminal type:
+                            ```npm install``` 
+                                    or 
+                              ```yarn```
+              and wait the dependencies to be downloaded.
 
 ### Step 2) Run
 
-- Type in the terminal ```react-native run-android```
+- Type in the terminal:
+                           ```react-native run-android```
