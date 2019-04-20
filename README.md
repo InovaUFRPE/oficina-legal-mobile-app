@@ -4,7 +4,7 @@
 
 ### Step 1) Install the oficina-legal-mobile-app
 
-- Open your terminal and type git clone -b branch-dev git@github.com:InovaUFRPE/oficina-legal-mobile-app.git
+- Open your terminal and type git clone -b branch-dev https://github.com/InovaUFRPE/oficina-legal-mobile-app.git
 
 ### Step 2) Install the dependencies
 
