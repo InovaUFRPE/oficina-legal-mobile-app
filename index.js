@@ -9,6 +9,7 @@ import RegisterUser from './components/activities/RegisterUser'
 import RegisterAdress from './components/activities/RegisterAdress'
 import { StackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
+import ForgotPassword from './components/activities/ForgotPassword';
 
 const Stack = StackNavigator({
     Login:{
@@ -27,6 +28,14 @@ const Stack = StackNavigator({
     },
     RegisterAdress:{
         screen:RegisterAdress,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
+    ForgotPassword:{
+        screen: ForgotPassword,
         navigationOptions:  {
             headerTintColor: '#eee1d6',
             headerTransparent: 'true'

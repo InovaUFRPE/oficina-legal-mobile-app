@@ -79,7 +79,8 @@ export default class RegisterAdress extends Component {
                         style={styles.input}
                         value={this.state.street}
                         returnKeyType="next"
-                        onChangeText={street => this.setState({ street })}/>
+                        onChangeText={street => this.setState({ street })}
+                        onSubmitEditing={() => this.cepInput.focus()}/>
 
                     <TextInput placeholder='CEP'  
                         placeholderTextColor="#eee1d6" 
@@ -87,20 +88,26 @@ export default class RegisterAdress extends Component {
                         value= {this.state.cep} 
                         returnKeyType="next"
                         keyboardType='numeric'
-                        onChangeText={cep => this.setState({ cep })}/>
+                        onChangeText={cep => this.setState({ cep })}
+                        ref={(input) => this.cepInput = input}
+                        onSubmitEditing={() => this.complementInput.focus()}/>
 
                     <TextInput placeholder='Complemento (Opcional)' 
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
                         value= {this.state.complement} 
                         returnKeyType="next"
-                        onChangeText={complement => this.setState({ complement })}/> 
+                        onChangeText={complement => this.setState({ complement })}
+                        ref={(input) => this.complementInput = input}
+                        onSubmitEditing={() => this.neighborhoodInput.focus()}/> 
+                        
 
                     <TextInput placeholder='Bairro' 
                         placeholderTextColor="#eee1d6" style={styles.input}
                         value= {this.state.neighborhood} 
-                        returnKeyType="next"
-                        onChangeText={neighborhood => this.setState({ neighborhood })}/> 
+                        returnKeyType="go"
+                        onChangeText={neighborhood => this.setState({ neighborhood })}
+                        ref={(input) => this.neighborhoodInput = input}/> 
  
                                     
                     <TouchableOpacity onPress={() => this.Verify()} 
