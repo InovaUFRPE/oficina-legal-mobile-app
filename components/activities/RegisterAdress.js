@@ -1,20 +1,17 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 
-export default class RegisterUser extends Component {
+export default class RegisterAdress extends Component {
     state =  {
-        name: '',
-        cpf: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
+        street: '',
+        cep: '',
+        complement: '',
+        neighborhood: ''
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
-        str2: "\nErro(s)\n"
     }
 
     RemoveEmptySpaces(strTexto)
@@ -23,56 +20,45 @@ export default class RegisterUser extends Component {
             return strTexto.replace(/^s+|s+$/g, '');
         }
 
+
     Verify(){
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
-        else if(this.VerifyErrors()){
-            this.state.name = this.RemoveEmptySpaces(this.state.name)
-            this.state.cpf = this.RemoveEmptySpaces(this.state.cpf)
-            this.state.email = this.RemoveEmptySpaces(this.state.email)
-            this.state.password = this.RemoveEmptySpaces(this.state.password)
-            this.props.navigation.navigate('RegisterAdress')
-        }else{
-            alert(this.errors.str2)
-            this.errors.str2 = "\nErro(s)\n"
+        if(!this.ValidateCEP(this.state.cep)){
+            alert("Erro\n\nO Formato do CEP é inválido.")
             return
         }
-        
-        
+        alert("Pode seguir")
     }
 
-    VerifyErrors(){
-        if(!ConfirmPassword(this.state.password, this.state.confirmPassword)){
-            this.errors.str2 += "\n- As senhas não conferem."
+    ValidateCEP(cep){
+        alert(cep);
+           if (cep.length == 0){
+            return null;            
+        };
+        if (cep.length == 8) {
+           return cep.charAt(0)+cep.charAt(1)+'.'+
+                  cep.charAt(2)+cep.charAt(3)+cep.charAt(4)+'-'+   
+                  cep.charAt(5)+cep.charAt(6)+cep.charAt(7);              
         }
-        if(!validateCPF(this.state.cpf)){
-            this.errors.str2 += "\n- Insira um CPF válido."
-        }
-        if(!validateEmail(this.state.email)){
-            this.errors.str2 += "\n- Insira um email válido."
-        }
-        if(this.errors.str2 == "\nErro(s)\n")
-            return true
-    }
+        else {                          
+           return null;
+       };
+        
+};
 
     checkBlankCamps(){
-        if(this.state.name == ""){
-            this.errors.str += "\n- Nome"
+        if(this.state.street == ""){
+            this.errors.str += "\n- Rua"
         }
-        if(this.state.cpf == ""){
-            this.errors.str += "\n- CPF"
+        if(this.state.cep == ""){
+            this.errors.str += "\n- CEP"
         }
-        if(this.state.email == ""){
-            this.errors.str += "\n- Email"
-        }
-        if(this.state.password == ""){
-            this.errors.str += "\n- Senha"
-        }
-        if(this.state.confirmPassword == ""){
-            this.errors.str += "\n- Confirmar senha"
+        if(this.state.neighborhood == ""){
+            this.errors.str += "\n- Bairro"
         }
         if(this.errors.str == "\nCampo(s) em branco:\n"){
             return true
@@ -86,46 +72,36 @@ export default class RegisterUser extends Component {
                 style = { styles.container }>
                 <View style={styles.inputContainer}>  
                     <Text style={styles.header}>
-                        Insira seus dados
+                        Insira seu endereço 
                     </Text>          
-                    <TextInput placeholder='Nome' 
+                    <TextInput placeholder='Rua' 
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value={this.state.name}
+                        value={this.state.street}
                         returnKeyType="next"
-                        onChangeText={name => this.setState({ name })}/>
+                        onChangeText={street => this.setState({ street })}/>
 
-                    <TextInput placeholder='CPF'  
+                    <TextInput placeholder='CEP'  
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value= {this.state.cpf} 
+                        value= {this.state.cep} 
                         returnKeyType="next"
                         keyboardType='numeric'
-                        onChangeText={cpf => this.setState({ cpf })}/>
+                        onChangeText={cep => this.setState({ cep })}/>
 
-                    <TextInput placeholder='E-mail' 
+                    <TextInput placeholder='Complemento (Opcional)' 
                         placeholderTextColor="#eee1d6" 
                         style={styles.input}
-                        value= {this.state.email} 
+                        value= {this.state.complement} 
                         returnKeyType="next"
-                        keyboardType='email-address'
-                        onChangeText={email => this.setState({ email })}/> 
+                        onChangeText={complement => this.setState({ complement })}/> 
 
-                    <TextInput placeholder='Senha' 
+                    <TextInput placeholder='Bairro' 
                         placeholderTextColor="#eee1d6" style={styles.input}
-                        value= {this.state.password} 
+                        value= {this.state.neighborhood} 
                         returnKeyType="next"
-                        secureTextEntry={true}
-                        onChangeText={password => this.setState({ password })}/> 
-
-                    <TextInput placeholder='Confirmar Senha' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.confirmPassword} 
-                        returnKeyType="go"
-                        placeholderTextColor="#eee1d6" 
-                        secureTextEntry={true}
-                        onChangeText={confirmPassword => this.setState({ confirmPassword })}/>   
+                        onChangeText={neighborhood => this.setState({ neighborhood })}/> 
+ 
                                     
                     <TouchableOpacity onPress={() => this.Verify()} 
                         style={styles.buttonRegister}>

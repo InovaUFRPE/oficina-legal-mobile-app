@@ -7,6 +7,40 @@ export default class Login extends Component {
         password: '',
         username: '',
     };
+    errors = {
+        str: "\nCampo(s) em branco:\n",
+    }
+
+    RemoveEmptySpaces(strTexto)
+        {
+            // Substitui os espaços vazios no inicio e no fim da string por vazio.
+            return strTexto.replace(/^s+|s+$/g, '');
+        }
+
+
+    Verify(){
+        if (!this.checkBlankCamps()){
+            alert(this.errors.str)
+            this.errors.str = "\nCampo(s) em branco:\n"
+            return
+        }else{
+            this.state.username = this.RemoveEmptySpaces(this.state.username)
+            this.state.password = this.RemoveEmptySpaces(this.state.password)
+        }
+    }
+
+    checkBlankCamps(){
+        if(this.state.username == ""){
+            this.errors.str += "\n- Usuário"
+        }
+        if(this.state.password == ""){
+            this.errors.str += "\n- Senha"
+        }
+        if(this.errors.str == "\nCampo(s) em branco:\n"){
+            return true
+        }
+    }
+
     render() {
         return (
             <LinearGradient 
@@ -28,7 +62,8 @@ export default class Login extends Component {
                     value={this.state.password}
                     onChangeText={ (password) => this.setState({ password }) }/>
                     
-                    <View style={styles.buttonContainer}>
+                    <View style={styles.buttonContainer}
+                    onPress={() => this.Verify()}>
                         <TouchableOpacity style={styles.buttonLogin}>
                             <Text style={styles.login}>Entrar</Text>
                         </TouchableOpacity>
