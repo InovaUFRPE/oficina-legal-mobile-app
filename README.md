@@ -14,7 +14,7 @@
                               ```yarn```
               and wait the dependencies to be downloaded.
 
-### Step 2) Run
+### Step 3) Run
 
 - Type in the terminal:
                            ```react-native run-android```
