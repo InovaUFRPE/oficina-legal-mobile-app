@@ -25,6 +25,7 @@ export default class Login extends Component {
         }
         this.state.username = RemoveEmptySpaces(this.state.username)
         this.state.password = RemoveEmptySpaces(this.state.password)
+        this.props.navigation.navigate('DrawerNavigator')
         
     }
 
@@ -65,7 +66,7 @@ export default class Login extends Component {
                     <View style={styles.buttonContainer}
                         onPress={() => this.Verify()}>
                         <TouchableOpacity style={styles.buttonLogin}
-                        onPress={() => this.Verify()}>
+                            onPress={() => this.Verify()}>
                             <Text style={styles.login}>Entrar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonRegister}

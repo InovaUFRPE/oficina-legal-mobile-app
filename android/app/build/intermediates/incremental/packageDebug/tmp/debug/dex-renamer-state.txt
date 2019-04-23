@@ -1,4 +1,4 @@
-#Sat Apr 20 11:13:09 BRT 2019
-base.0=/home/familia/projetos/projeto-oficina/oficina4/oficina-legal-mobile-app/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Sat Apr 20 18:42:15 BRT 2019
+base.0=C\:\\Users\\AMMM\\Desktop\\oficina-legal-mobile-app\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex

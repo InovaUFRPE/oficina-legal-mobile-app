@@ -14,6 +14,8 @@ import {name as appName} from './app.json';
 import ForgotPassword from './components/activities/ForgotPassword';
 import RegisterMechanic from './components/activities/RegisterMechanic';
 import EditProfile from './components/activities/EditProfile'
+import DrawerNavigator from './components/navigation/DrawerNavigator'
+
 
 const Stack = StackNavigator({
     Login:{
@@ -76,6 +78,13 @@ const Stack = StackNavigator({
             headerTransparent: 'true',
         }
     },
+
+    DrawerNavigator: {
+        screen: DrawerNavigator,
+        navigationOptions: {
+            header: null
+        }
+    }
 
 })
 

@@ -1,9 +1,20 @@
 import React, {Component} from 'react';
 import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import BackButton from '../../busnisses/BackButton'
 
 
 export default class EditProfile extends Component {
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', function() {
+            // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+            // Typically you would use the navigator here to go to the last state.
+            return true;
+            });
+    }
+    
+    
     state =  {
         name: '',
         email: '',
@@ -83,12 +94,21 @@ export default class EditProfile extends Component {
             return true
         }
     }
+
+    onBack = () => {
+        this.props.navigation.navigate('HomeClient')
+    }
     
     render() {
         return (
             
+            <BackButton onBack = {this.onBack}>
             <ScrollView 
                 style = { styles.container }>
+                    <FontAwesome name="bars" size={30} 
+                    color="white" 
+                    style={styles.menuIcon}
+                    onPress = {() => this.props.navigation.toggleDrawer()}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 
@@ -100,11 +120,11 @@ export default class EditProfile extends Component {
                     
                     <TouchableOpacity style={styles.ButtonEdit}
                             onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6', top: 5}}>Alterar perfil</Text>    
+                        <Text style={{fontSize: 18, color:'#eee1d6',}}>Alterar perfil</Text>    
                     </TouchableOpacity>
 
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
-                        <Text style={styles.textCategoria}>____Pessoal____</Text>
+                        <Text style={styles.textCategoria}>Pessoal</Text>
                     </View> 
                     
                     <View style={styles.editContainer}>
@@ -217,6 +237,7 @@ export default class EditProfile extends Component {
 
                 </View>
             </ScrollView>
+            </BackButton>
             
         )
     }
@@ -286,9 +307,8 @@ const styles = StyleSheet.create({
 
     ButtonEdit: {
         top: 15,
-        width: 100,
-        height: 30,
         marginBottom: 30,
+        padding: 5,
         backgroundColor: '#111e29',
         alignItems: 'center',
         borderTopLeftRadius: 10,
@@ -303,4 +323,11 @@ const styles = StyleSheet.create({
     button:{
         marginBottom: 1
     },
+
+    menuIcon: {
+        position: 'absolute',
+        color: 'black',
+        padding: 19
+
+    }
 })
