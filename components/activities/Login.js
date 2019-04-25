@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {RemoveEmptySpaces, validateEmail} from '../../busnisses/Validation';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default class Login extends Component {
     state = {
@@ -25,7 +26,7 @@ export default class Login extends Component {
         }
         this.state.username = RemoveEmptySpaces(this.state.username)
         this.state.password = RemoveEmptySpaces(this.state.password)
-        this.props.navigation.navigate('DrawerNavigator')
+        this.props.navigation.navigate('ChoseProfile')
         
     }
 
@@ -48,6 +49,12 @@ export default class Login extends Component {
                 style = { styles.container }>
 
                 <View style={styles.infoContainer} >
+                    <FontAwesome 
+                            name="user-circle"
+                            size={30}
+                            position="absolute"
+                            color="white"
+                            style={{right: 175, top: 90}}/>
                     <TextInput style={styles.IptEmail}
                         placeholder="Digite seu email."
                         placeholderTextColor= 'white'
@@ -56,6 +63,12 @@ export default class Login extends Component {
                         onChangeText={ (username) => this.setState({ username }) }>
                     </TextInput>
 
+                    <FontAwesome
+                        name="unlock-alt"
+                        size={30}
+                        position="absolute"
+                        color="white"
+                        style={{right: 175, top: 60}}/>
                     <TextInput style={styles.IptPassword}
                         secureTextEntry={true} 
                         placeholderTextColor= 'white'
@@ -79,6 +92,7 @@ export default class Login extends Component {
                         <Text style={styles.forgot}>Esqueci minha senha!</Text> 
                     </TouchableOpacity>
                 </View>
+
                 
             </LinearGradient>
             /* <View> 
@@ -115,10 +129,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     IptEmail:{
-        top: 5,
+        top: 20,
         height: 70,
         width: 310,
-        bottom: 10,
         fontSize: 15,
         borderBottomColor: '#eee1d6',
         paddingLeft: 10,
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
         
     },
     IptPassword: {
-        top: 10,
+
         height: 70,
         width: 310,
         left: 0,

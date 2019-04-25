@@ -3,7 +3,7 @@ import {Platform, Dimensions} from 'react-native'
 import {createDrawerNavigator} from 'react-navigation'
 
 import HomeClient from '../activities/HomeClient'
-import EditProfile from '../activities/EditProfile'
+import EditProfileClient from '../activities/EditProfileClient'
 
 
 
@@ -15,11 +15,10 @@ export default createDrawerNavigator({
         }
     },
 
-    EditProfile: {
-        screen: EditProfile,
+    EditProfileClient: {
+        screen: EditProfileClient,
         navigationOptions: {
             title: 'Perfil'
         }
-    },
-    
+    }, 
 })

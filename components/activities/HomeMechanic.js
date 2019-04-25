@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, Alert, BackHandler } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import BackButton from '../../busnisses/BackButton'
 
-export default class HomeClient extends Component {
+export default class HomeMechanic extends Component {
 
     componentWillMount(){
         BackHandler.addEventListener('hardwareBackPress', function() {
@@ -44,7 +44,7 @@ export default class HomeClient extends Component {
                     style={styles.menuIcon}
                     onPress = {() => this.props.navigation.toggleDrawer()}/>                  
                 </View>
-                <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', padding: 15}}>HOME CLIENTE</Text>
+                <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', padding: 15}}>HOME MECHANIC</Text>
             </LinearGradient>
             </BackButton>
         )

@@ -5,7 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import BackButton from '../../busnisses/BackButton'
 
 
-export default class EditProfile extends Component {
+export default class EditProfileClient extends Component {
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', function() {
             // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
@@ -50,7 +50,6 @@ export default class EditProfile extends Component {
             this.state.year = RemoveEmptySpaces(this.state.year)
             this.state.renavam = RemoveEmptySpaces(this.state.renavam)
             this.state.Vplate = RemoveEmptySpaces(this.state.Vplate)
-            this.props.navigation.navigate('RegisterAdress')
         }else{
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"

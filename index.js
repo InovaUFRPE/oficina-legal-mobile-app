@@ -13,8 +13,11 @@ import { StackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
 import ForgotPassword from './components/activities/ForgotPassword';
 import RegisterMechanic from './components/activities/RegisterMechanic';
-import EditProfile from './components/activities/EditProfile'
-import DrawerNavigator from './components/navigation/DrawerNavigator'
+import EditProfileClient from './components/activities/EditProfileClient'
+import DrawerNavigatorClient from './components/navigation/DrawerNavigatorClient'
+import DrawerNavigatorMechanic from './components/navigation/DrawerNavigatorMechanic'
+import ChoseProfile from './components/activities/ChoseProfile'
+
 
 
 const Stack = StackNavigator({
@@ -56,14 +59,15 @@ const Stack = StackNavigator({
         }
     },
 
-    EditProfile:{
-        screen: EditProfile,
+    EditProfileClient:{
+        screen: EditProfileClient,
         navigationOptions:  {
             headerTintColor: '#eee1d6',
             headerTransparent: 'true',
             headerTitle: 'Editar perfil',
         }
     },
+
     LinkMechanicToWorkshop:{
         screen: LinkMechanicToWorkshop,
         navigationOptions:  {
@@ -79,11 +83,28 @@ const Stack = StackNavigator({
         }
     },
 
-    DrawerNavigator: {
-        screen: DrawerNavigator,
+    DrawerNavigatorClient: {
+        screen: DrawerNavigatorClient,
         navigationOptions: {
             header: null
         }
+    },
+
+    DrawerNavigatorMechanic: {
+        screen: DrawerNavigatorMechanic,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    
+
+    ChoseProfile: {
+        screen: ChoseProfile,  
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true',
+        }      
     }
 
 })
