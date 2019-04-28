@@ -33,7 +33,7 @@ export default class ForgotPassword extends Component {
 
     render() {
         return(
-            <LinearGradient colors={['#111e29', '#284760', '#4a83b4']} 
+            <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style={styles.container}>
 
                 <Text style={styles.header}>

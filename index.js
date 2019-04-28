@@ -17,6 +17,9 @@ import EditProfileClient from './components/activities/EditProfileClient'
 import DrawerNavigatorClient from './components/navigation/DrawerNavigatorClient'
 import DrawerNavigatorMechanic from './components/navigation/DrawerNavigatorMechanic'
 import ChoseProfile from './components/activities/ChoseProfile'
+import AuthLoading from './components/activities/AuthLoading'
+import Home from './components/activities/HomeClient';
+
 
 
 
@@ -30,6 +33,13 @@ const Stack = StackNavigator({
     },
     RegisterUser:{
         screen: RegisterUser,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+    Home:{
+        screen: Home,
         navigationOptions:  {
             headerTintColor: '#eee1d6',
             headerTransparent: 'true'
@@ -67,6 +77,12 @@ const Stack = StackNavigator({
             headerTitle: 'Editar perfil',
         }
     },
+    AuthLoading:{
+        screen: AuthLoading,
+        navigationOptions: {
+            header: null
+        }
+    },
 
     LinkMechanicToWorkshop:{
         screen: LinkMechanicToWorkshop,
@@ -96,15 +112,11 @@ const Stack = StackNavigator({
             header: null
         }
     },
-
-    
-
     ChoseProfile: {
         screen: ChoseProfile,  
-        navigationOptions:  {
-            headerTintColor: '#eee1d6',
-            headerTransparent: 'true',
-        }      
+        navigationOptions: {
+            header: null
+        }    
     }
 
 })

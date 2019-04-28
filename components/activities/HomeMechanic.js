@@ -36,7 +36,7 @@ export default class HomeMechanic extends Component {
 
         return(
             <BackButton onBack={this.onBack}>
-            <LinearGradient colors={['#111e29', '#284760', '#4a83b4']} 
+            <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']} 
                 style={styles.container}>
                 <View style={styles.headerContainer}>
                     <FontAwesome name="bars" size={30} 

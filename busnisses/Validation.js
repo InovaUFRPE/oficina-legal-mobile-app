@@ -92,4 +92,28 @@ export function validURL(str) {
       '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
       '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
     return !!pattern.test(str);
-  }
+}
+
+export function getToken(length){
+    let chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
+    let random = '';
+    for (let i = 0; i < length; i++) {
+        let rnum = Math.floor(Math.random() * chars.length);
+        random += chars.substring(rnum, rnum + 1);
+    }
+    return random;
+}
+
+export function checkBlankCamps(strTyped, camp){
+    if(strTyped == ""){
+        return ("\n- " + camp)
+    }
+    return ''  
+}
+
+export function validBlankCamps(blank) {
+    if(blank == "\nCampo(s) em branco:\n"){
+        return ''
+    }
+    return blank
+}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {StyleSheet, View, Text, Alert, BackHandler } from 'react-native'
+import {StyleSheet, View, Text, Alert, BackHandler, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import BackButton from '../../busnisses/BackButton'
 
@@ -36,7 +36,7 @@ export default class HomeClient extends Component {
 
         return(
             <BackButton onBack={this.onBack}>
-            <LinearGradient colors={['#111e29', '#284760', '#4a83b4']} 
+            <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style={styles.container}>
                 <View style={styles.headerContainer}>
                     <FontAwesome name="bars" size={30} 
@@ -44,7 +44,11 @@ export default class HomeClient extends Component {
                     style={styles.menuIcon}
                     onPress = {() => this.props.navigation.toggleDrawer()}/>                  
                 </View>
-                <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', padding: 15}}>HOME CLIENTE</Text>
+                <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', paddingTop: 18, paddingRight: 80}}>HOME CLIENTE</Text>
+                <TouchableOpacity style={styles.buttonAtendiment}>
+                    
+                        <Text style={styles.atendiment}></Text>  
+                    </TouchableOpacity>
             </LinearGradient>
             </BackButton>
         )
@@ -68,5 +72,20 @@ const styles = StyleSheet.create({
     menuIcon: {
         position: 'absolute',
         padding: 19,
+    },
+
+    buttonAtendiment: {
+        width: 300,
+        height: 380, 
+        top: 40,
+        backgroundColor: '#eee1d6',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     }
+
 })

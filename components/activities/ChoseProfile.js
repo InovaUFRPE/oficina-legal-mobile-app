@@ -3,6 +3,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {RemoveEmptySpaces, validateEmail} from '../../busnisses/Validation';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import BackButton from '../../busnisses/BackButton'
 
 export default class Login extends Component {
     state = {
@@ -13,6 +14,9 @@ export default class Login extends Component {
         str: "\nCampo(s) em branco:\n",
     }
 
+    onBack = () => {
+        this.props.navigation.navigate('Login')  
+    }
 
     Verify(){
         if (!this.checkBlankCamps()){
@@ -44,46 +48,45 @@ export default class Login extends Component {
 
     render() {
         return (
-            <LinearGradient 
-                colors={['#111e29', '#284760', '#4a83b4']}
-                style = { styles.container }>
+            <BackButton onBack={this.onBack}>
+                <LinearGradient 
+                    colors={['#2250d9', '#204ac8', '#1d43b7']}
+                    style = { styles.container }>
 
-                <View style={{marginTop: 100}}>
-                    <Text style={styles.header}>Escolha com qual perfil deseja logar</Text>
-                </View>
 
-                <View style={styles.infoContainer} >
+                    <View style={[styles.infoContainer, {justifyContent: 'center'}]} >
+                        <View style={{marginTop: -150}}>
+                            <Text style={styles.header}>Escolha com qual perfil deseja logar</Text>
+                        </View>
+                        
+                        <TouchableOpacity 
+                            style={[styles.buttonC, {backgroundColor: '#111e29'}]}
+                            onPress={() => this.props.navigation.navigate('DrawerNavigatorClient')}>
+                            <Text style={[styles.buttonText, {color: '#eee1d6'}]}>Cliente</Text>
+                            <FontAwesome
+                                name="user"
+                                color="#eee1d6"
+                                size={20}
+                                />
+                        </TouchableOpacity>
+                        
+                        <TouchableOpacity 
+                            style={styles.buttonM}
+                            onPress={() => this.props.navigation.navigate('DrawerNavigatorMechanic')}>
+                            <Text style={[styles.buttonText, {color:'#111e29'}]}>Mecanico</Text>
+                            <FontAwesome
+                                name="wrench"
+                                color="#111e29"
+                                size={20}
+                                />
+                        </TouchableOpacity>
                     
-                    <TouchableOpacity 
-                        style={[styles.button, {backgroundColor: 'gray'}]}
-                        onPress={() => this.props.navigation.navigate('DrawerNavigatorClient')}>
-                        <Text style={[styles.buttonText, {color: 'white'}]}>Cliente</Text>
-                        <FontAwesome
-                            name="user"
-                            color="white"
-                            size={20}
-                            />
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => this.props.navigation.navigate('DrawerNavigatorMechanic')}>
-                        <Text style={styles.buttonText}>Mecanico</Text>
-                        <FontAwesome
-                            name="wrench"
-                            color="black"
-                            size={20}
-                            />
-                    </TouchableOpacity>
-                
-                </View>
+                    </View>
 
-                
-            </LinearGradient>
-            /* <View> 
-                
-                
-            </View> */
+                    
+                </LinearGradient>
+    
+            </BackButton>
             
         )
     }
@@ -92,8 +95,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
+        flexDirection: 'column',
 
     },
 
@@ -105,17 +107,40 @@ const styles = StyleSheet.create({
 
     infoContainer: {
         marginTop: 200,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        alignItems: 'center'
     },
 
-    button: {
-        padding: 20,
-        backgroundColor: 'white',
-        width: '50%',
-        justifyContent: 'center',
+    buttonC: {
+        position: 'absolute',
+        backgroundColor: '#eee1d6',
+        height: 50,
+        width: 300,
+        bottom: 20,
+        top: 50,
         alignItems: 'center',
-        marginVertical: 5
+        borderTopLeftRadius: 50,
+        borderBottomLeftRadius: 50,
+        borderTopRightRadius: 50,
+        borderBottomRightRadius: 50,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        
+    },
+    buttonM: {
+        position: 'absolute',
+        backgroundColor: '#eee1d6',
+        height: 50,
+        width: 300,
+        top: 130,
+        alignItems: 'center',
+        borderTopLeftRadius:50,
+        borderBottomLeftRadius: 50,
+        borderTopRightRadius: 50,
+        borderBottomRightRadius: 50,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
         
     },
 

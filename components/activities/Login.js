@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {RemoveEmptySpaces, validateEmail} from '../../busnisses/Validation';
+import {RemoveEmptySpaces, validateEmail, checkBlankCamps, validBlankCamps, getToken} from '../../busnisses/Validation';
+import {saveUserToken} from '../../auth'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -9,43 +10,38 @@ export default class Login extends Component {
         password: '',
         username: '',
     };
-    errors = {
-        str: "\nCampo(s) em branco:\n",
+
+    blankCamps() {
+        let blank = "\nCampo(s) em branco:\n"
+        blank += checkBlankCamps(this.state.username, "LOGIN")
+        blank += checkBlankCamps(this.state.password, "SENHA")
+        if(validBlankCamps(blank)) return validBlankCamps(blank)
+        return false
+    }
+    
+    isEmail(){
+        if(!validateEmail(this.state.username)){ return false }
+        return true
     }
 
+    _signInAsync = async () => {
+        saveUserToken();
+        this.props.navigation.navigate('AuthLoading');
 
+      };
+    
     Verify(){
-        if (!this.checkBlankCamps()){
-            alert(this.errors.str)
-            this.errors.str = "\nCampo(s) em branco:\n"
-            return
-        }
-        if(!validateEmail(this.state.username)){
-            alert("Email inválido.")
-            return
-        }
         this.state.username = RemoveEmptySpaces(this.state.username)
         this.state.password = RemoveEmptySpaces(this.state.password)
-        this.props.navigation.navigate('ChoseProfile')
-        
-    }
-
-    checkBlankCamps(){
-        if(this.state.username == ""){
-            this.errors.str += "\n- Usuário"
-        }
-        if(this.state.password == ""){
-            this.errors.str += "\n- Senha"
-        }
-        if(this.errors.str == "\nCampo(s) em branco:\n"){
-            return true
-        }
+        if(this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
+        if(!this.isEmail(this.state.username)){ alert("Email inválido."); return }
+        this._signInAsync()
     }
 
     render() {
         return (
             <LinearGradient 
-                colors={['#111e29', '#284760', '#4a83b4']}
+                colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
 
                 <View style={styles.infoContainer} >
@@ -53,11 +49,11 @@ export default class Login extends Component {
                             name="user-circle"
                             size={30}
                             position="absolute"
-                            color="white"
-                            style={{right: 175, top: 90}}/>
+                            color="#eee1d6"
+                            style={{left: 125, top: 84}}/>
                     <TextInput style={styles.IptEmail}
                         placeholder="Digite seu email."
-                        placeholderTextColor= 'white'
+                        placeholderTextColor= '#eee1d6'
                         keyboardType='email-address'
                         value={this.state.username}
                         onChangeText={ (username) => this.setState({ username }) }>
@@ -67,11 +63,11 @@ export default class Login extends Component {
                         name="unlock-alt"
                         size={30}
                         position="absolute"
-                        color="white"
-                        style={{right: 175, top: 60}}/>
+                        color="#eee1d6"
+                        style={{left: 125, top: 55}}/>
                     <TextInput style={styles.IptPassword}
                         secureTextEntry={true} 
-                        placeholderTextColor= 'white'
+                        placeholderTextColor= '#eee1d6'
                         placeholder="Digite sua senha."
                         value={this.state.password}
                         onChangeText={ (password) => this.setState({ password }) }/>
@@ -95,10 +91,6 @@ export default class Login extends Component {
 
                 
             </LinearGradient>
-            /* <View> 
-                
-                
-            </View> */
             
         )
     }
@@ -135,10 +127,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         borderBottomColor: '#eee1d6',
         paddingLeft: 10,
-        paddingTop: 35,
+        paddingTop: 40,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        color: 'white',
+        color: '#eee1d6',
         borderBottomWidth: 1,
         
     },
@@ -150,12 +142,12 @@ const styles = StyleSheet.create({
         fontSize: 15,
         bottom: 10,
         paddingLeft: 10,
-        paddingTop: 35,
+        paddingTop: 40,
         borderBottomColor: '#eee1d6',
         borderBottomWidth: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        color: 'white',
+        color: '#eee1d6',
     },
     buttonLogin: {
         backgroundColor: '#111e29' ,
@@ -204,7 +196,7 @@ const styles = StyleSheet.create({
     },
 
     buttonForgot: {
-        top: 130, 
+        top: 100, 
         fontSize: 20
     },
 

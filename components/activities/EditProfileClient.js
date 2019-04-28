@@ -119,7 +119,7 @@ export default class EditProfileClient extends Component {
                     
                     <TouchableOpacity style={styles.ButtonEdit}
                             onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6',}}>Alterar perfil</Text>    
+                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center'}}>Alterar perfil</Text>    
                     </TouchableOpacity>
 
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
