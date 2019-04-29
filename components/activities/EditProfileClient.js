@@ -104,10 +104,10 @@ export default class EditProfileClient extends Component {
             <BackButton onBack = {this.onBack}>
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="bars" size={30} 
+                    <FontAwesome name="chevron-left" size={30} 
                     color="white" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.toggleDrawer()}/>
+                    onPress = {() => this.props.navigation.navigate('HomeClient')}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 

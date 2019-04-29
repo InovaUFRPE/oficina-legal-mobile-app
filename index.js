@@ -91,6 +91,7 @@ const Stack = StackNavigator({
             headerTransparent: 'true',
         }
     },
+    
     RegisterMechanic:{
         screen: RegisterMechanic,
         navigationOptions:  {
