@@ -45,9 +45,16 @@ export default class HomeClient extends Component {
                     onPress = {() => this.props.navigation.toggleDrawer()}/>                  
                 </View>
                 <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', paddingTop: 18, paddingRight: 80}}>HOME CLIENTE</Text>
-                <TouchableOpacity style={styles.buttonAtendiment}>
-                    
-                        <Text style={styles.atendiment}></Text>  
+                <TouchableOpacity style={styles.buttonWorkshop}>
+                        <Text style={styles.workshop}>Deseja encontrar uma oficina?</Text>
+                        <FontAwesome
+                                name="search"
+                                size={90}
+                                position="absolute"
+                                color="#111e29"
+                                style={{alignItems: 'center', top: 90}}/>
+                        <Text style={styles.workshop2}>Clique no card para ter acesso</Text>
+                        <Text style={styles.workshop3}>a várias oficinas!</Text>
                     </TouchableOpacity>
             </LinearGradient>
             </BackButton>
@@ -74,7 +81,7 @@ const styles = StyleSheet.create({
         padding: 19,
     },
 
-    buttonAtendiment: {
+    buttonWorkshop: {
         width: 300,
         height: 380, 
         top: 40,
@@ -86,6 +93,24 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+        alignItems: 'center',
+    },
+
+    workshop:{
+        top: 20,
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    workshop2: {
+        top: 150,
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    workshop3:{
+        top: 155,
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 
 })

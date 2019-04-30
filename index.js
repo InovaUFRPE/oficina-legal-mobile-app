@@ -19,6 +19,7 @@ import DrawerNavigatorMechanic from './components/navigation/DrawerNavigatorMech
 import ChoseProfile from './components/activities/ChoseProfile'
 import AuthLoading from './components/activities/AuthLoading'
 import Home from './components/activities/HomeClient';
+import SearchWorkshop from './components/activities/SearchWorkshop'
 
 
 
@@ -44,6 +45,10 @@ const Stack = StackNavigator({
             headerTintColor: '#eee1d6',
             headerTransparent: 'true'
         }
+    },
+    SearchWorkshop:{
+        screen: SearchWorkshop,
+        
     },
     RegisterAdress:{
         screen:RegisterAdress,
@@ -122,4 +127,4 @@ const Stack = StackNavigator({
 
 })
 
-AppRegistry.registerComponent(appName, () => Stack);
+AppRegistry.registerComponent(appName, () => SearchWorkshop);
