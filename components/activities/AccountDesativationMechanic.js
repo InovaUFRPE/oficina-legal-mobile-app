@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { RemoveEmptySpaces, validateEmail } from '../../busnisses/Validation'
 import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
 import BackButtom from '../../busnisses/BackButton'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
 
 
 export default class AccountDesativationMechanic extends Component {
@@ -20,10 +19,7 @@ export default class AccountDesativationMechanic extends Component {
             <BackButtom onBack = {this.onBack}>
             <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style={styles.container}>
-                <FontAwesome name="chevron-left" size={30} 
-                color="white"
-                style={styles.backIcon} 
-                onPress = {() =>  this.props.navigation.navigate('AccountConfigMechanic')}/>
+
 
                 <Text style={styles.header}>
                     Desativar conta
@@ -118,9 +114,5 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
 
-    backIcon: {
-        position: 'absolute',
-        padding: 14,
-        left: 0.1
-    }
+
 })

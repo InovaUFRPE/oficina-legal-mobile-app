@@ -1,54 +1,30 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {RemoveEmptySpaces, validateEmail} from '../../busnisses/Validation';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator ,StatusBar, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import BackButton from '../../busnisses/BackButton'
+import {createSwitchNavigator} from 'react-navigation'
 
-export default class Login extends Component {
-    state = {
-        password: '',
-        username: '',
-    };
-    errors = {
-        str: "\nCampo(s) em branco:\n",
-    }
 
-    onBack = () => {
-        this.props.navigation.navigate('Login')  
-    }
+export default class ChoseProfile extends Component {
+    constructor(props) {
+        super(props);
+        this._bootstrapAsync();
+      }
+    
+    
+      // Fetch the token from storage then navigate to our appropriate place
+      _bootstrapAsync = async () => {
+        const userToken = await AsyncStorage.getItem('userToken');
+    
+        // This will switch to the App screen or Auth screen and this loading
+        // screen will be unmounted and thrown away.
+        this.props.navigation.navigate(userToken ? 'ChoseProfile' : 'Login');
+      };
 
-    Verify(){
-        if (!this.checkBlankCamps()){
-            alert(this.errors.str)
-            this.errors.str = "\nCampo(s) em branco:\n"
-            return
-        }
-        if(!validateEmail(this.state.username)){
-            alert("Email inválido.")
-            return
-        }
-        this.state.username = RemoveEmptySpaces(this.state.username)
-        this.state.password = RemoveEmptySpaces(this.state.password)
-        this.props.navigation.navigate('DrawerNavigator')
-        
-    }
 
-    checkBlankCamps(){
-        if(this.state.username == ""){
-            this.errors.str += "\n- Usuário"
-        }
-        if(this.state.password == ""){
-            this.errors.str += "\n- Senha"
-        }
-        if(this.errors.str == "\nCampo(s) em branco:\n"){
-            return true
-        }
-    }
 
     render() {
         return (
-            <BackButton onBack={this.onBack}>
                 <LinearGradient 
                     colors={['#2250d9', '#204ac8', '#1d43b7']}
                     style = { styles.container }>
@@ -84,10 +60,7 @@ export default class Login extends Component {
                     </View>
 
                     
-                </LinearGradient>
-    
-            </BackButton>
-            
+                </LinearGradient>         
         )
     }
 }
@@ -151,3 +124,6 @@ const styles = StyleSheet.create({
 
 
 })
+
+
+

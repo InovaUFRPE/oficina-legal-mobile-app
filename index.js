@@ -9,22 +9,20 @@ import RegisterUser from './components/activities/RegisterUser'
 import RegisterAdress from './components/activities/RegisterAdress'
 import RegisterVehicle from './components/activities/RegisterVehicle'
 import LinkMechanicToWorkshop from './components/activities/LinkMechanicToWorkshop'
-import { StackNavigator } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation'
 import {name as appName} from './app.json';
 import ForgotPassword from './components/activities/ForgotPassword';
 import RegisterMechanic from './components/activities/RegisterMechanic';
 import EditProfileClient from './components/activities/EditProfileClient'
-import DrawerNavigatorClient from './components/navigation/DrawerNavigatorClient'
-import DrawerNavigatorMechanic from './components/navigation/DrawerNavigatorMechanic'
-import ChoseProfile from './components/activities/ChoseProfile'
 import AuthLoading from './components/activities/AuthLoading'
 import Home from './components/activities/HomeClient';
 import SearchWorkshop from './components/activities/SearchWorkshop'
+import Routes from './components/navigation/Routes';
 
 
 
 
-const Stack = StackNavigator({
+const Stack = createStackNavigator({
     Login:{
         screen: Login,
         navigationOptions:  {
@@ -105,26 +103,12 @@ const Stack = StackNavigator({
         }
     },
 
-    DrawerNavigatorClient: {
-        screen: DrawerNavigatorClient,
+    Routes: {
+        screen: Routes,
         navigationOptions: {
             header: null
         }
-    },
-
-    DrawerNavigatorMechanic: {
-        screen: DrawerNavigatorMechanic,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ChoseProfile: {
-        screen: ChoseProfile,  
-        navigationOptions: {
-            header: null
-        }    
     }
-
 })
 
-AppRegistry.registerComponent(appName, () => SearchWorkshop);
+AppRegistry.registerComponent(appName, () => Stack);

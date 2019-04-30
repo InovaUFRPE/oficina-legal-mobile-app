@@ -6,14 +6,6 @@ import BackButton from '../../busnisses/BackButton'
 
 
 export default class EditProfileClient extends Component {
-    componentWillMount() {
-        BackHandler.addEventListener('hardwareBackPress', function() {
-            // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
-            // Typically you would use the navigator here to go to the last state.
-            return true;
-            });
-    }
-    
     
     state =  {
         name: '',

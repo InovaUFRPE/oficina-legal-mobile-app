@@ -4,25 +4,19 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-nativ
 import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-export default class SearchWorkshop extends Component {
+export default class VeicleHistory extends Component {
     state = {
-        empresas: [
-            {nome: 'Oficina 4 rodas', id: 1, endereco: 'Rua das amebas, 78'}, 
-            {nome: 'Oficina rodaqui', id: 2, endereco: "Rua dos navegantes 598"},
-            {nome: 'Oficina bateu', id: 3, endereco: "Avenida saibora, 13"},
-            {nome: 'Oficina nitro', id: 4, endereco: 'Praça Rui Leopoldo S/N'},
-            {nome: 'Oficina tres irmãos', id: 6, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina do Manoel', id: 7, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Pao', id: 8, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Disel', id: 9, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Carburador', id: 10, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Do Joao', id: 11, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Calos', id: 12, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Martelinho de ouro', id: 13, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Jundiair', id: 14, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina dois Rios', id: 15, endereco: 'Rua piracora, 59'},
-            {nome: 'Oficina Vintage', id: 16, endereco: 'Rua piracora, 59'},
-
+        laudos: [
+            {oficina: '4 rodas', id: 1, data: '02/02/18', servico: "-Funilaria \n-Mecanica \n-Eletrico"}, 
+            {oficina: 'Rodaqui', id: 2, data: '02/02/18', servico: "\n-Mecanica \n-Eletrico"}, 
+            {oficina: 'do Monoel', id: 3, data: '02/02/18', servico: "-Funilaria \n-Mecanica"}, 
+            {oficina: 'Dois Rios', id: 4, data: '02/02/18', servico: "-Mecanica"}, 
+            {oficina: 'Martelinho de Ouro', id: 5, data: '02/02/18', servico: "-Funilaria \n-Mecanica \n-Eletrico"}, 
+            {oficina: 'Joaozinho', id: 6, data: '02/02/18', servico: "\n-Mecanica \n-Eletrico"}, 
+            {oficina: 'Carburador', id: 7, data: '02/02/18', servico: "Eletrico"}, 
+            {oficina: 'Vintage', id: 8, data: '02/02/18', servico: "-Funilaria \n-Mecanica \n-Eletrico"}, 
+            {oficina: 'Três irmãos', id: 9, data: '02/02/18', servico: "-Funilaria \n-Mecanica"}, 
+            {oficina: 'Gasolina', id: 10, data: '02/02/18', servico: "\n-Mecanica \n-Eletrico"}, 
         ],
         cor: '#eee1d6'
     }
@@ -30,14 +24,10 @@ export default class SearchWorkshop extends Component {
     RenderItem(obj){
         return(
             <TouchableOpacity style={[styles.cell, {backgroundColor: '#eee1d6'}]}
-            onPress={() => alert(obj.item.endereco)}>
+            onPress={() => alert(obj.item.servico)}>
                 <View style={styles.workContainer}>
-                    <Text style={styles.workText}>{obj.item.nome}</Text>
-                    <FontAwesome
-                    name="star-half" size={20}
-                    color="black"
-                    style={styles.rattingIcon}
-                    />
+                    <Text style={styles.workText}>Oficina {obj.item.oficina}</Text>
+                    <Text style={styles.workText}>Data: {obj.item.data}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -65,7 +55,7 @@ export default class SearchWorkshop extends Component {
                 style = { styles.container }>
                 <View style={styles.headerContainer}>
                     <Text style={styles.header}>
-                    Oficinas proximo a você
+                        Histórico do seu veiculo
                     </Text>
                 </View>
                 
@@ -74,7 +64,7 @@ export default class SearchWorkshop extends Component {
                 style={styles.menuIcon}
                 onPress = {() => this.props.navigation.navigate('HomeClient')}/>
                 <ScrollView style={{flex: 1, width: '100%'}}>
-                <FlatList style={styles.flatContainer} data={this.state.empresas} renderItem={this.RenderItem} ></FlatList>
+                <FlatList style={styles.flatContainer} data={this.state.laudos} renderItem={this.RenderItem} ></FlatList>
                 </ScrollView>
             </LinearGradient>
         )

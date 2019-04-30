@@ -3,27 +3,24 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import BackButtom from '../../busnisses/BackButton'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
-
+import {createStackNavigator} from 'react-navigation'
+import AccountDesativationClient from './AccountDesativationClient'
 
 
 export default class AccountConfigClient extends Component {
 
 
-    onBack = () => {
-        this.props.navigation.navigate('HomeClient')
-    }
-
     render() {
         return (
-            <BackButtom onBack = {this.onBack}>
+
             <LinearGradient 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
-                <FontAwesome name="chevron-left" size={30} 
+                <FontAwesome name="arrow-left" size={30} 
                 color="white"
                 style={styles.backIcon} 
                 onPress = {() =>  this.props.navigation.navigate('HomeClient')}/>
+
 
                 <View style={styles.headerContainer} >
                     <Text style={styles.header}>CONFIGURAÇÕES CLIENTE</Text>
@@ -38,7 +35,7 @@ export default class AccountConfigClient extends Component {
                 </View> 
 
             </LinearGradient>
-            </BackButtom>
+
         
         )
     }
@@ -83,4 +80,24 @@ const styles = StyleSheet.create({
         position: 'absolute',
         padding: 14
     }
+})
+
+
+export const StackClient = createStackNavigator({
+    
+    AccountConfigClient:{
+        screen: AccountConfigClient,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
+    AccountDesativationClient:{
+        screen: AccountDesativationClient,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
 })

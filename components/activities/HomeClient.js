@@ -6,16 +6,6 @@ import BackButton from '../../busnisses/BackButton'
 
 export default class HomeClient extends Component {
 
-    componentWillMount(){
-        BackHandler.addEventListener('hardwareBackPress', function() {
-            // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
-            // Typically you would use the navigator here to go to the last state.
-              
-            return true;
-          });
-    }
-
-    
     onBack = () => {
         Alert.alert(
             'Mensagem',
@@ -35,7 +25,7 @@ export default class HomeClient extends Component {
     render() {
 
         return(
-            <BackButton onBack={this.onBack}>
+
             <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -45,7 +35,9 @@ export default class HomeClient extends Component {
                     onPress = {() => this.props.navigation.toggleDrawer()}/>                  
                 </View>
                 <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', paddingTop: 18, paddingRight: 80}}>HOME CLIENTE</Text>
-                <TouchableOpacity style={styles.buttonWorkshop}>
+                <TouchableOpacity 
+                style={styles.buttonWorkshop}
+                onPress={() => this.props.navigation.navigate('SeachWorkshop')}>
                         <Text style={styles.workshop}>Deseja encontrar uma oficina?</Text>
                         <FontAwesome
                                 name="search"
@@ -57,7 +49,7 @@ export default class HomeClient extends Component {
                         <Text style={styles.workshop3}>a várias oficinas!</Text>
                     </TouchableOpacity>
             </LinearGradient>
-            </BackButton>
+
         )
     }
 }

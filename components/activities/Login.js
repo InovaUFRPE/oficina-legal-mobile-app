@@ -27,7 +27,6 @@ export default class Login extends Component {
     _signInAsync = async () => {
         saveUserToken();
         this.props.navigation.navigate('AuthLoading');
-
       };
     
     Verify(){

@@ -54,7 +54,7 @@ export default class CustomDrawerMenu extends React.Component {
                 </View>
 
                 <View style={styles.configButtomContainer}>
-                    {this.navLink('AccountConfigMechanic', 'Configurações')}
+                    {this.navLink('StackMechanic', 'Configurações')}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.logOut()}>
                         <Text style={styles.link}>Sair</Text>
                     </TouchableOpacity>

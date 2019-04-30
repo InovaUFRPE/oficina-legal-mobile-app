@@ -4,9 +4,12 @@ import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'reac
 
 import HomeClient from '../activities/HomeClient'
 import EditProfileClient from '../activities/EditProfileClient'
-import AccountConfigClient from '../activities/AccountConfigClient'
+
 import CustomDrawer from './CustomDrawerMenuClient'
-import AccountDesativationClient from '../activities/AccountDesativationClient'
+import {StackClient} from '../activities/AccountConfigClient'
+import SeachWorkshop from '../activities/SearchWorkshop'
+import VeicleHistory from '../activities/VeicleHistory'
+
 
 
 export default createDrawerNavigator({
@@ -23,20 +26,18 @@ export default createDrawerNavigator({
             title: 'Perfil'
         }
     },
-    
-    AccountConfigClient: {
-        screen: AccountConfigClient,
-        navigationOptions: {
-            title: 'Configurações'
-        }
+
+    StackClient: {
+        screen: StackClient
     },
 
-    AccountDesativationClient: {
-        screen: AccountDesativationClient,
-        navigationOptions: {
-            title: 'Desativar Conta'
-        }
-    }
+    SeachWorkshop: {
+        screen: SeachWorkshop
+    },
+
+    VeicleHistory: {
+        screen: VeicleHistory
+    },
 
 }, {contentComponent: ({ navigation }) => {
     return(<CustomDrawer navigation={navigation}/>)

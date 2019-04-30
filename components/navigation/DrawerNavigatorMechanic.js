@@ -4,8 +4,7 @@ import {createDrawerNavigator} from 'react-navigation'
 
 import HomeMechanic from '../activities/HomeMechanic'
 import EditProfileMechanic from '../activities/EditProfileMechanic'
-import AccountConfigMechanic from '../activities/AccountConfigMechanic'
-import AccountDesativationMechanic from '../activities/AccountDesativationMechanic'
+import {StackMechanic} from '../activities/AccountConfigMechanic'
 import CustomDrawer from './CustomDrawerMenuMechanic'
 
 
@@ -26,21 +25,10 @@ export default createDrawerNavigator({
             title: 'Perfil'
         }
     },
-    AccountConfigMechanic: {
-        screen: AccountConfigMechanic,
-        navigationOptions:{
-            title: 'Configurações'
-        }
-    },
-    
-    AccountDesativationMechanic: {
-        screen: AccountDesativationMechanic,
-        navigationOptions: {
-            title: 'Desativar Conta'
-        }
+
+    StackMechanic: {
+        screen: StackMechanic
     }
-
-
 },
 
 {contentComponent: ({ navigation }) => {

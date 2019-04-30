@@ -3,22 +3,21 @@ import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, BackHandler} from 'react-native';
 import BackButtom from '../../busnisses/BackButton'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import {createStackNavigator} from 'react-navigation'
+import AccountDesativationMechanic from './AccountDesativationMechanic'
 
 
 
 export default class AccountConfigMechanic extends Component {
 
-    onBack = () => {
-        this.props.navigation.navigate('HomeMechanic')
-    }
 
     render() {
         return (
-            <BackButtom onBack = {this.onBack}>
+
             <LinearGradient 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
-                <FontAwesome name="chevron-left" size={30} 
+                <FontAwesome name="arrow-left" size={20} 
                 color="white"
                 style={styles.backIcon} 
                 onPress = {() =>  this.props.navigation.navigate('HomeMechanic')}/>
@@ -36,7 +35,7 @@ export default class AccountConfigMechanic extends Component {
                 </View> 
 
             </LinearGradient>
-            </BackButtom>
+
         
         )
     }
@@ -81,4 +80,23 @@ const styles = StyleSheet.create({
         position: 'absolute',
         padding: 14
     }
+})
+
+export const StackMechanic = createStackNavigator({
+    
+    AccountConfigMechanic:{
+        screen: AccountConfigMechanic,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
+    AccountDesativationMechanic:{
+        screen: AccountDesativationMechanic,
+        navigationOptions:  {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
 })
