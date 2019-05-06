@@ -7,8 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default class Login extends Component {
     state = {
-        password: '',
-        username: '',
+        password: '12345',
+        username: 'mateus@hotmail.com',
     };
 
     blankCamps() {

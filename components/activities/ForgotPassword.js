@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { RemoveEmptySpaces, validateEmail } from '../../busnisses/Validation'
 import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
-
+import Icon from 'react-native-vector-icons/FontAwesome'
+import {Input} from 'react-native-elements'
 
 export default class ForgotPassword extends Component {
     state = {
@@ -41,14 +42,13 @@ export default class ForgotPassword extends Component {
                 </Text>
 
                 <View style={styles.infoContainer}>
-                    <TextInput
-                        placeholder="Insira seu E-mail"
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        autoCapitalize="none"
-                        value= {this.state.email} 
-                        returnKeyType="go"
+
+                    <Input
+                        leftIcon={{type: 'font-awesome', name: 'at', color: 'white', marginRight: 10 }}
+                        inputStyle={{color: 'white'}}
                         keyboardType='email-address'
+                        shake={true}
+                        style={styles.input}
                         onChangeText={email => this.setState({ email })}
                         ref={(input) => this.emailInput = input}
                     />

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import BackButton from '../../busnisses/BackButton'
+
 
 
 export default class EditProfileClient extends Component {
@@ -93,7 +93,6 @@ export default class EditProfileClient extends Component {
     render() {
         return (
             
-            <BackButton onBack = {this.onBack}>
             <ScrollView 
                 style = { styles.container }>
                     <FontAwesome name="chevron-left" size={30} 
@@ -228,7 +227,6 @@ export default class EditProfileClient extends Component {
 
                 </View>
             </ScrollView>
-            </BackButton>
             
         )
     }
