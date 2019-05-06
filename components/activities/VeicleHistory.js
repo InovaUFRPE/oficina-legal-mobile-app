@@ -55,12 +55,12 @@ export default class VeicleHistory extends Component {
                 style = { styles.container }>
                 <View style={styles.headerContainer}>
                     <FontAwesome
-                        name="arrow-left"
-                        size={20}
+                        name="bars"
+                        size={30}
                         style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
-                        onPress = {() => this.props.navigation.navigate('HomeClient')}
+                        onPress = {() => this.props.navigation.toggleDrawer()}
                     />
-                    <Text style={styles.headerTitle}>Buscar Oficina</Text>
+                    <Text style={styles.headerTitle}>Histórico do Veículo</Text>
                 </View>
                 
                 <ScrollView style={{flex: 1, width: '100%'}}>

@@ -110,10 +110,10 @@ export default class SearchWorkshop extends Component {
                     colors={['#2250d9', '#204ac8', '#1d43b7']} style={{flex: 1}}>
                 <View style={styles.headerContainer}>
                     <FontAwesome
-                        name="arrow-left"
-                        size={20}
+                        name="bars"
+                        size={30}
                         style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
-                        onPress = {() => this.props.navigation.navigate('HomeClient')}
+                        onPress = {() => this.props.navigation.toggleDrawer()}
                     />
                     <Text style={styles.headerTitle}>Buscar Oficina</Text>
                 </View>

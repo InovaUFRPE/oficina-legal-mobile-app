@@ -50,6 +50,7 @@ export default class CustomDrawerMenu extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
+                    {this.navLink('HomeMechanic', 'Home')}
                     {this.navLink('EditProfileMechanic', 'Perfil')}
                 </View>
 

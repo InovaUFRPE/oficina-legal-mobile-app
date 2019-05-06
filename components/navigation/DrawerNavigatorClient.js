@@ -41,6 +41,8 @@ export default createDrawerNavigator({
 
 }, {contentComponent: ({ navigation }) => {
     return(<CustomDrawer navigation={navigation}/>)
-}})
+}, drawerOpenRoute: 'DrawerOpen', 
+    drawerCloseRoute: 'DrawerClose', 
+    drawerToggleRoute: 'DrawerToggle'})
 
 

@@ -95,10 +95,10 @@ export default class EditProfileClient extends Component {
             
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="chevron-left" size={30} 
+                    <FontAwesome name="bars" size={30} 
                     color="white" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.navigate('HomeClient')}/>
+                    onPress = {() => this.props.navigation.toggleDrawer()}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 

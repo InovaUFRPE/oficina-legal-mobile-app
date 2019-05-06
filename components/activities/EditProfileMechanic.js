@@ -100,10 +100,10 @@ export default class EditProfileMechanic extends Component {
             <BackButton onBack = {this.onBack}>
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="chevron-left" size={30} 
+                    <FontAwesome name="bars" size={30} 
                     color="white" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.navigate('HomeMechanic')}/>
+                    onPress = {() => this.props.navigation.toggleDrawer()}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 
