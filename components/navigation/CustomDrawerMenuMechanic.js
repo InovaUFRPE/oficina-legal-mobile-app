@@ -7,6 +7,7 @@ import {
     Image,
     Alert
 } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 export default class CustomDrawerMenu extends React.Component {
@@ -26,9 +27,16 @@ export default class CustomDrawerMenu extends React.Component {
           );
     }
 
-    navLink(nav, text){
+    navLink(nav, text, iconName){
         return(
-            <TouchableOpacity style={{height: 50}} onPress={() => this.props.navigation.navigate(nav)}>
+            <TouchableOpacity style={{height: 50, flexDirection: 'row', justifyContent: 'center'}} onPress={() => this.props.navigation.navigate(nav)}>
+                <View style={{alignItems: 'center', width: 50}}>
+                    <Icon
+                        name={iconName}
+                        size={30}
+                        style={{marginTop: 11, marginLeft: 10, color: 'black'}}
+                    />
+                </View>
                 <Text style={styles.link}>{text}</Text>
             </TouchableOpacity>
         )
@@ -50,14 +58,19 @@ export default class CustomDrawerMenu extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    {this.navLink('HomeMechanic', 'Home')}
-                    {this.navLink('EditProfileMechanic', 'Perfil')}
+                    {this.navLink('HomeMechanic', 'Home', 'home')}
+                    {this.navLink('EditProfileMechanic', 'Perfil', 'user')}
                 </View>
 
                 <View style={styles.configButtomContainer}>
-                    {this.navLink('StackMechanic', 'Configurações')}
+                    {this.navLink('StackMechanic', 'Configurações', 'cog')}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.logOut()}>
-                        <Text style={styles.link}>Sair</Text>
+                        <Icon                       
+                                name="angle-left"
+                                size={30}
+                                style={{position: 'absolute',marginTop: 11, marginLeft: 20, color: 'black'}}
+                            />
+                        <Text style={[styles.link, {marginLeft: 60}]}>Sair</Text>
                     </TouchableOpacity>
                 </View>
             </View>          
@@ -106,9 +119,8 @@ const styles = StyleSheet.create({
     link: {
         flex: 1,
         fontSize: 20,
-        paddingLeft: 14,
         marginTop: 15,
-        marginLeft: 20,
+        marginLeft: 10,
         textAlign: 'left'
     },
 

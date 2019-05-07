@@ -16,14 +16,14 @@ export default class AccountConfigClient extends Component {
             <LinearGradient 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
-                <FontAwesome name="arrow-left" size={30} 
-                color="white"
-                style={styles.backIcon} 
-                onPress = {() =>  this.props.navigation.navigate('HomeClient')}/>
-
-
-                <View style={styles.headerContainer} >
-                    <Text style={styles.header}>CONFIGURAÇÕES CLIENTE</Text>
+                <View style={styles.headerContainer}>
+                    <FontAwesome
+                        name="bars"
+                        size={30}
+                        style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
+                        onPress = {() => this.props.navigation.toggleDrawer()}
+                    />
+                    <Text style={styles.headerTitle}>Buscar Oficina</Text>
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -47,10 +47,17 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     headerContainer: {
-        marginTop: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
+        width: '100%', 
+        height: 60, 
+        alignItems: 'center', 
+        justifyContent: 'center'},
+
+    headerTitle: {
+        fontSize: 20, 
+        fontWeight: 'bold', 
+        color: 'white'
     },
+
 
     infoContainer: {
         marginTop: 60,

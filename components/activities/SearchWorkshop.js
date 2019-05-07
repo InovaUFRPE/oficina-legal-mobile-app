@@ -4,7 +4,7 @@ import { ActivityIndicator ,StyleSheet, Text, View, ScrollView, TouchableOpacity
 import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {SearchBar, List, ListItem, Icon, Button} from 'react-native-elements'
-import {getUsers, contains} from '../api'
+import {getUsers, contains} from '../SearchConfig'
 import Data from '../users'
 import _ from 'lodash'
 
@@ -141,9 +141,7 @@ const styles = StyleSheet.create({
         width: '100%', 
         height: 60, 
         alignItems: 'center', 
-        justifyContent: 'center', 
-        borderBottomWidth: 1, 
-        borderBottomColor: 'white'},
+        justifyContent: 'center'},
 
     headerTitle: {
         fontSize: 20, 
