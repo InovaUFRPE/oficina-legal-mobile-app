@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
+import api from '../../service/api';
+import {saveUserToken, saveUser, getUserToken, saveClient, saveMechanic} from '../../auth'
 
 
 export default class RegisterUser extends Component {
@@ -12,7 +14,9 @@ export default class RegisterUser extends Component {
         password: '',
         confirmPassword: '',
         checkBclient: false,
-        checkBmechanic: false
+        checkBmechanic: false,
+        errorMSG: '',
+        idUser: null
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
@@ -33,6 +37,83 @@ export default class RegisterUser extends Component {
         })
     }
 
+    _signUpAsyncUser = async () => {
+        saveUserToken();
+        const response = await api.post('/api/usuario', {
+            login: toString(this.state.name),
+            email: toString(this.state.email),
+            senha: toString(this.state.password),
+            ativo: toString(true)
+        })
+        if(!response.ok) {
+            alert("Erro ao inserir usuário")
+            return
+        }
+        alert(response.data)
+        const user = response.data 
+
+        if (await saveUser(user, getUserToken()) === true){
+            return true
+        } else{
+            this.setState({ errorMSG: "Não foi possível armazenar usuário"})
+        }
+        
+    }
+
+    findUser = async () => {
+        const response = await api.get(`/api/usuario/${this.state.email}/${this.state.password}`)
+        if(!response.ok) {
+            alert("Usuário não encontrado")
+            return
+        }
+        this.setState({ idUser = response.idUsuario })
+        
+    }
+
+    _signUpAsyncClient = async () => {
+        this.findUser()
+        const response = await api.post('/api/cliente', {
+            nome: toString(this.state.name),
+            cpf: toString(this.state.cpf),
+            idUsuario: toString(this.state.idUser),
+        })
+        if(!response.ok) {
+            alert("Erro ao inserir cliente")
+            return
+        }
+        alert(response.data)
+        const client = response.data 
+
+        if (await saveClient(client, getUserToken()) === true){
+            return true
+        } else{
+            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
+        }
+        
+    }
+
+    _signUpAsyncMechanic = async () => {
+        this.findUser()
+        const response = await api.post('/api/mecanico', {
+            nome: toString(this.state.name),
+            cpf: toString(this.state.cpf),
+            idUsuario: toString(this.state.idUser),
+        })
+        if(!response.ok) {
+            alert("Erro ao inserir mecânico")
+            return
+        }
+        alert(response.data)
+        const mechanic = response.data 
+
+        if (await saveMechanic(mechanic, getUserToken()) === true){
+            return true
+        } else{
+            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
+        }
+        
+    }
+
     Verify(){
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
@@ -44,8 +125,19 @@ export default class RegisterUser extends Component {
             this.state.cpf = RemoveEmptySpaces(this.state.cpf)
             this.state.email = RemoveEmptySpaces(this.state.email)
             this.state.password = RemoveEmptySpaces(this.state.password)
-            if(this.state.checkBclient) this.props.navigation.navigate('RegisterAdress')
-            else {this.props.navigation.navigate('LinkMechanicToWorkshop')}
+            if(!this._signUpAsyncUser()){
+                alert(this.state.errorMSG)
+                return
+            } 
+            if(this.state.checkBclient) {
+                this._signUpAsyncClient()
+                this.props.navigation.navigate('RegisterAdress')
+            
+            }
+            else {
+                this._signUpAsyncMechanic()
+                this.props.navigation.navigate('LinkMechanicToWorkshop')
+            }
         }else{
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
