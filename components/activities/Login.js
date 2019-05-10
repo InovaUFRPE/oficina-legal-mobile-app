@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {RemoveEmptySpaces, validateEmail, checkBlankCamps, validBlankCamps, getToken} from '../../busnisses/Validation';
 import {saveUserToken} from '../../auth'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 export default class Login extends Component {
@@ -44,6 +44,10 @@ export default class Login extends Component {
                 style = { styles.container }>
 
                 <View style={styles.infoContainer} >
+                    <Image
+                        source={require('../../images/Logo.png')}
+                        style={styles.logo}
+                    />
                     <FontAwesome 
                             name="user-circle"
                             size={30}
@@ -203,6 +207,13 @@ const styles = StyleSheet.create({
     forgot:{
         color: '#eee1d6',
         borderBottomColor: '#eee1d6',
+    },
+
+    logo:{
+        position: 'absolute',
+        width: 250,
+        height: 250,
+        bottom: 150
     }
 
 })

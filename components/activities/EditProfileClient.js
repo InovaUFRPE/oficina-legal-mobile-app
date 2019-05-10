@@ -235,12 +235,12 @@ export default class EditProfileClient extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eee1d6' ,
+        backgroundColor: 'white' ,
     },
 
     header: {
         fontSize: 30,
-        color: '#111e29',
+        color: '#2250d9',
         marginTop: 20
 
     },  
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     image: {
         width: 100,
         height: 100,
-        marginTop: 15
+        marginTop: 15,
     },
 
     inputContainer: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
 
     textCategoria: {   
         fontSize: 28, 
-        color: '#111e29',
+        color: '#2250d9',
         fontWeight: 'bold',
         alignContent: 'center'
     },
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         top: 15,
         marginBottom: 30,
         padding: 5,
-        backgroundColor: '#111e29',
+        backgroundColor: '#2250d9',
         alignItems: 'center',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,

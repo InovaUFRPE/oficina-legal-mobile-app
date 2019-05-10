@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Image} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -57,10 +57,14 @@ export default class VeicleHistory extends Component {
                     <FontAwesome
                         name="bars"
                         size={30}
-                        style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
+                        style={{padding: 20, color: '#2250d9', left: 1}}
                         onPress = {() => this.props.navigation.toggleDrawer()}
                     />
                     <Text style={styles.headerTitle}>Histórico do Veículo</Text>
+                    <Image
+                        source={require('../../images/LogoAzulR.png')}
+                        style={styles.logo}
+                        />
                 </View>
                 
                 <ScrollView style={{flex: 1, width: '100%'}}>
@@ -82,17 +86,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     headerContainer: {
-        width: '100%', 
-        height: 60, 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        borderBottomWidth: 1, 
-        borderBottomColor: 'white'},
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        height: 70,
+        backgroundColor: 'white'},
 
     headerTitle: {
-        fontSize: 20, 
+        fontSize: 25, 
         fontWeight: 'bold', 
-        color: 'white'
+        color: '#2250d9'
     },
 
     flatContainer : {
@@ -124,6 +128,12 @@ const styles = StyleSheet.create({
 
     rattingIcon: {
         marginLeft: 50
+    },
+
+    logo: {
+        width: 50,
+        height: 50,
+        marginRight: 5
     }
 
 })

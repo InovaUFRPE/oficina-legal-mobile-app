@@ -101,7 +101,6 @@ export default class EditProfileMechanic extends Component {
             <ScrollView 
                 style = { styles.container }>
                     <FontAwesome name="bars" size={30} 
-                    color="white" 
                     style={styles.menuIcon}
                     onPress = {() => this.props.navigation.toggleDrawer()}/>
                 
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
 
     header: {
         fontSize: 30,
-        color: '#111e29',
+        color: '#2250d9',
         marginTop: 20
 
     },  
@@ -268,7 +267,7 @@ const styles = StyleSheet.create({
 
     textCategoria: {   
         fontSize: 28, 
-        color: '#111e29',
+        color: '#2250d9',
         fontWeight: 'bold',
         alignContent: 'center'
     },
@@ -306,7 +305,7 @@ const styles = StyleSheet.create({
 
     menuIcon: {
         position: 'absolute',
-        color: 'black',
+        color: '#2250d9',
         padding: 19
 
     }

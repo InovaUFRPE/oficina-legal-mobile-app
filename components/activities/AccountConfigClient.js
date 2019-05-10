@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
-import BackButtom from '../../busnisses/BackButton'
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {createStackNavigator} from 'react-navigation'
 import AccountDesativationClient from './AccountDesativationClient'
@@ -20,10 +19,14 @@ export default class AccountConfigClient extends Component {
                     <FontAwesome
                         name="bars"
                         size={30}
-                        style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
+                        style={{padding: 20, color: '#2250d9', left: 1}}
                         onPress = {() => this.props.navigation.toggleDrawer()}
                     />
-                    <Text style={styles.headerTitle}>Buscar Oficina</Text>
+                    <Text style={styles.headerTitle}>Configurações</Text>
+                    <Image
+                        source={require('../../images/LogoAzulR.png')}
+                        style={styles.logo}
+                        />
                 </View>
 
                 <View style={styles.infoContainer}>
@@ -47,15 +50,17 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     headerContainer: {
-        width: '100%', 
-        height: 60, 
-        alignItems: 'center', 
-        justifyContent: 'center'},
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        height: 70,
+        backgroundColor: 'white'},
 
     headerTitle: {
         fontSize: 20, 
         fontWeight: 'bold', 
-        color: 'white'
+        color: '#2250d9'
     },
 
 
@@ -84,8 +89,14 @@ const styles = StyleSheet.create({
     },
 
     backIcon: {
-        position: 'absolute',
         padding: 14
+    },
+
+    
+    logo: {
+        width: 50,
+        height: 50,
+        marginRight: 5
     }
 })
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, BackHandler} from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import BackButtom from '../../busnisses/BackButton'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {createStackNavigator} from 'react-navigation'
@@ -21,10 +21,14 @@ export default class AccountConfigMechanic extends Component {
                     <FontAwesome
                         name="bars"
                         size={30}
-                        style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
+                        style={styles.menuIcon}
                         onPress = {() => this.props.navigation.toggleDrawer()}
                     />
                     <Text style={styles.headerTitle}>Buscar Oficina</Text>
+                    <Image
+                        source={require('../../images/LogoAzulR.png')}
+                        style={styles.logo}
+                        />
                 </View>
                 <View style={styles.infoContainer}>
                     <TouchableOpacity 
@@ -48,15 +52,18 @@ const styles = StyleSheet.create({
     },
     
     headerContainer: {
-        width: '100%', 
-        height: 60, 
-        alignItems: 'center', 
-        justifyContent: 'center'},
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        height: 70,
+        backgroundColor: 'white'
+    },
 
     headerTitle: {
         fontSize: 20, 
         fontWeight: 'bold', 
-        color: 'white'
+        color: '#2250d9'
     },
 
     infoContainer: {
@@ -83,9 +90,15 @@ const styles = StyleSheet.create({
         color: 'white'
     },
 
-    backIcon: {
-        position: 'absolute',
+    menuIcon: {
+        color: '#2250d9',
         padding: 14
+    },
+    
+    logo: {
+        width: 50,
+        height: 50,
+        marginRight: 5
     }
 })
 

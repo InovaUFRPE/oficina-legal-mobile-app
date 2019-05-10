@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {StyleSheet, View, Text, Alert, TouchableOpacity } from 'react-native'
+import {StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 
@@ -16,11 +16,15 @@ export default class HomeMechanic extends Component {
                 style={styles.container}>
                 <View style={styles.headerContainer}>
                     <FontAwesome name="bars" size={30} 
-                    color="white" 
+                    color="#2250d9" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.toggleDrawer()}/>                  
+                    onPress = {() => this.props.navigation.toggleDrawer()}/>  
+                    <Text style={{fontSize: 25, fontWeight: 'bold', color: '#2250d9', padding: 15}}>Mecânico</Text>
+                    <Image
+                        source={require('../../images/LogoAzulR.png')}
+                        style={styles.logo}
+                        />                
                 </View>
-                <Text style={{fontSize: 25, fontWeight: 'bold', position: 'absolute', color: 'white', padding: 15}}>HOME MECHANIC</Text>
                 <TouchableOpacity 
                 style={styles.buttonWorkshop}
                 onPress={() => {}}>
@@ -49,12 +53,14 @@ const styles = StyleSheet.create({
     
     headerContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         width: '100%',
-        height: 70
+        height: 70,
+        backgroundColor: 'white'
     },
 
     menuIcon: {
-        position: 'absolute',
         padding: 19,
     },
 
@@ -89,6 +95,11 @@ const styles = StyleSheet.create({
         top: 155,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    logo: {
+        width: 50,
+        height: 50,
+        marginRight: 5
     }
 
 })
