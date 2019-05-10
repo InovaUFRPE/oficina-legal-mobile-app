@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {RemoveEmptySpaces, validateEmail, checkBlankCamps, validBlankCamps, getToken} from '../../busnisses/Validation';
-import {saveUserToken} from '../../auth'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
+import {saveUserToken, saveUser, getUserToken} from '../../auth'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
+import api from '../../service/api'
 
 export default class Login extends Component {
     state = {
         password: '12345',
         username: 'mateus@hotmail.com',
+        errorMSG: ''
     };
 
     blankCamps() {
@@ -26,8 +29,21 @@ export default class Login extends Component {
 
     _signInAsync = async () => {
         saveUserToken();
-        this.props.navigation.navigate('AuthLoading');
-      };
+        const response = await api.post('/api/usuario/api/usuario/'+this.state.username+'/'+password)
+        if(!response.ok){ 
+            alert("Usuário não encontrado") 
+            return
+        }
+        alert(response.data); 
+        const user = response.data
+
+        if (await saveUser(user, getUserToken()) === true){
+            this.props.navigation.navigate('AuthLoading');
+        } else{
+            this.setState({ errorMSG: "Não foi possível armazenar usuário"})
+        }
+        
+    };
     
     Verify(){
         this.state.username = RemoveEmptySpaces(this.state.username)
