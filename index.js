@@ -25,12 +25,7 @@ import Routes from './components/navigation/Routes';
 
 
 const Stack = createStackNavigator({
-    AuthLoading:{
-        screen: AuthLoading,
-        navigationOptions: {
-            header: null
-        }
-    },
+    
     Login:{
         screen: Login,
         navigationOptions:  {
@@ -38,6 +33,14 @@ const Stack = createStackNavigator({
             headerTransparent: 'true'
         }
     },
+    
+    AuthLoading:{
+        screen: AuthLoading,
+        navigationOptions: {
+            header: null
+        }
+    },
+    
     RegisterUser:{
         screen: RegisterUser,
         navigationOptions:  {

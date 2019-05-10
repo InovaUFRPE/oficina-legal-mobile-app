@@ -66,7 +66,7 @@ export default class RegisterUser extends Component {
             alert("Usuário não encontrado")
             return
         }
-        this.setState({ idUser = response.idUsuario })
+        this.setState({ idUser: response.idUsuario })
         
     }
 

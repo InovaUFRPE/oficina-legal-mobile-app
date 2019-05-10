@@ -9,8 +9,8 @@ import api from '../../service/api'
 
 export default class Login extends Component {
     state = {
-        password: '12345',
-        username: 'mateus@hotmail.com',
+        username: '',
+        password: '',
         errorMSG: ''
     };
 
