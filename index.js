@@ -18,6 +18,7 @@ import AuthLoading from './components/activities/AuthLoading'
 import Home from './components/activities/HomeClient';
 import SearchWorkshop from './components/activities/SearchWorkshop'
 import Routes from './components/navigation/Routes';
+import HomeClient from './components/activities/HomeClient';
 
 
 
@@ -25,6 +26,13 @@ import Routes from './components/navigation/Routes';
 
 
 const Stack = createStackNavigator({
+    
+    AuthLoading:{
+        screen: AuthLoading,
+        navigationOptions: {
+            header: null
+        }
+    },
     
     Login:{
         screen: Login,
@@ -34,12 +42,7 @@ const Stack = createStackNavigator({
         }
     },
     
-    AuthLoading:{
-        screen: AuthLoading,
-        navigationOptions: {
-            header: null
-        }
-    },
+
     
     RegisterUser:{
         screen: RegisterUser,
