@@ -1,18 +1,43 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {RemoveEmptySpaces, validateEmail, checkBlankCamps, validBlankCamps, getToken} from '../../busnisses/Validation';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
-import {saveUserToken, saveUser, getUserToken} from '../../auth'
+import {validateEmail, checkBlankCamps, validBlankCamps, getToken} from '../../busnisses/Validation';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
-import api from '../../service/api'
+import {YellowBox} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 export default class Login extends Component {
     state = {
         username: '',
         password: '',
-        errorMSG: ''
+        errorMSG: '',
     };
+
+    saveDataStorage = (data) => {
+        let keyUser = getToken(25)
+        let obj = {
+            key: keyUser,
+            id: data.idUsuario,
+            username: data.email,
+            password: data.senha,
+        }
+        try{
+            AsyncStorage.setItem('userId', JSON.stringify(obj))
+        }catch(error){
+            alert('Não salvou')
+        }
+        
+    }
+
+    displayDataStorage = async () => {
+        try {
+            let user = await AsyncStorage.getItem('userId')
+            return JSON.parse(user)
+        }catch(error){
+            alert(error)
+        }
+    }
 
     blankCamps() {
         let blank = "\nCampo(s) em branco:\n"
@@ -27,33 +52,54 @@ export default class Login extends Component {
         return true
     }
 
-    _signInAsync = async () => {
-        saveUserToken();
-        const response = await api.post('/api/usuario/api/usuario/'+this.state.username+'/'+password)
-        if(!response.ok){ 
-            alert("Usuário não encontrado") 
-            return
+    createUserRequisition = () => {
+        let user = {
+            "login":(this.state.username).toString(), "senha":(this.state.password).toString()
         }
-        alert(response.data); 
-        const user = response.data
+        return user
+    }
 
-        if (await saveUser(user, getUserToken()) === true){
-            this.props.navigation.navigate('AuthLoading');
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar usuário"})
+    componentDidMount() {
+        let url = "http://192.168.0.10:3306/api/usuario/login"
+        axios.post(url, this.createUserRequisition())
+            .then(response => {
+                this.saveDataStorage(response.data)
+            })
+            .catch(err => {
+                Alert.alert(
+                    'Credenciais inválidas',
+                    err.response.data.error
+                );
+                return null
+        });
+    
+    }
+            
+
+    _signInAsync = async () => {
+        try{
+            this.componentDidMount()
+            if(typeof this.displayDataStorage() === 'object'){
+                this.props.navigation.navigate('AuthLoading');
+            }
+            
+            
+        }catch(error){
+            alert("Algo deu errado!")
         }
-        
     };
     
     Verify(){
-        this.state.username = RemoveEmptySpaces(this.state.username)
-        this.state.password = RemoveEmptySpaces(this.state.password)
+        this.state.username = (this.state.username).trim()
+        this.state.password = (this.state.password).trim()
+        this.setState({ primeiroAcesso: false })
         if(this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
-        if(!this.isEmail(this.state.username)){ alert("Email inválido."); return }
+        /* if(!this.isEmail(this.state.username)){ alert("Email inválido."); return } */
         this._signInAsync()
     }
 
     render() {
+        YellowBox.ignoreWarnings(['Warning: Async Storage has been extracted from react-native core']);  // <- insert the warning text here you wish to hide.
         return (
             <LinearGradient 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}

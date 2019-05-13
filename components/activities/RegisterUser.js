@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
-import api from '../../service/api';
-import {saveUserToken, saveUser, getUserToken, saveClient, saveMechanic} from '../../auth'
+import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox, Alert } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class RegisterUser extends Component {
@@ -16,7 +16,7 @@ export default class RegisterUser extends Component {
         checkBclient: false,
         checkBmechanic: false,
         errorMSG: '',
-        idUser: null
+        idUser: ''
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
@@ -36,82 +36,97 @@ export default class RegisterUser extends Component {
             checkBmechanic: !this.state.checkBmechanic
         })
     }
-
-    _signUpAsyncUser = async () => {
-        saveUserToken();
-        const response = await api.post('/api/usuario', {
-            login: toString(this.state.name),
-            email: toString(this.state.email),
-            senha: toString(this.state.password),
-            ativo: toString(true)
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir usuário")
-            return
-        }
-        alert(response.data)
-        const user = response.data 
-
-        if (await saveUser(user, getUserToken()) === true){
+    
+    displayUserDataStorage = async () => {
+        try {
+            let user = await AsyncStorage.getItem('userId')
+            this.setState({ idUser: (JSON.parse(user).id).toString() })
+            alert(JSON.stringify(user))
             return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar usuário"})
+        }catch(error){
+            alert(error)
+        }
+    }
+
+    displayClientDataStorage = async () => {
+        try {
+            let client = await AsyncStorage.getItem('ClientId')
+            alert(JSON.stringify(client))
+            return true
+        }catch(error){
+            alert(error)
+        }
+    }
+
+    saveUserDataStorage = (data) => {
+        let keyUser = getToken(25)
+        let obj = {
+            key: keyUser,
+            id: data.idUsuario,
+            username: data.login,
+            password: data.senha,
+
+        }
+        try{
+            AsyncStorage.setItem('userId', JSON.stringify(obj))
+        }catch(error){
+            alert('Não salvou')
         }
         
     }
 
-    findUser = async () => {
-        const response = await api.get(`/api/usuario/${this.state.email}/${this.state.password}`)
-        if(!response.ok) {
-            alert("Usuário não encontrado")
-            return
+    saveClientDataStorage = (data) => {
+        let obj = {
+            id: data.idUsuario,
+            name: this.state.name,
+            cpf: this.state.cpf,
+            idUsuario: data.idUsuario,
+            bairro: '',
+            cep: '',
+            endereco: '',
+            complemento: '',
         }
-        this.setState({ idUser: response.idUsuario })
-        
-    }
-
-    _signUpAsyncClient = async () => {
-        this.findUser()
-        const response = await api.post('/api/cliente', {
-            nome: toString(this.state.name),
-            cpf: toString(this.state.cpf),
-            idUsuario: toString(this.state.idUser),
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir cliente")
-            return
-        }
-        alert(response.data)
-        const client = response.data 
-
-        if (await saveClient(client, getUserToken()) === true){
-            return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
+        alert(obj)
+        try{
+            AsyncStorage.setItem('ClientId', JSON.stringify(obj))
+        }catch(error){
+            alert('Não salvou')
         }
         
     }
 
-    _signUpAsyncMechanic = async () => {
-        this.findUser()
-        const response = await api.post('/api/mecanico', {
-            nome: toString(this.state.name),
-            cpf: toString(this.state.cpf),
-            idUsuario: toString(this.state.idUser),
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir mecânico")
-            return
-        }
-        alert(response.data)
-        const mechanic = response.data 
 
-        if (await saveMechanic(mechanic, getUserToken()) === true){
-            return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
+    createClientRequisition = () => {
+        alert(JSON.stringify(this.displayDataStorage()))
+    }
+    
+
+    createMechanicRequisition = () => {
+
+    }
+
+    createUserRequisition = () => {
+        let user = {
+            "login":(this.state.email).toString(), "senha":(this.state.password).toString(), 
+            "email":(this.state.email).toString(), "ativo": "1"
         }
-        
+        return user
+    }
+    
+    componentDidMountPostUser() {
+        let url = "http://192.168.0.10:3306/api/usuario"
+        axios.post(url, this.createUserRequisition())
+            .then(response => {
+                this.saveUserDataStorage(response.data)
+                this.saveClientDataStorage(response.data)
+                alert('Usuario criado com sucesso.')
+            })
+            .catch(err => {
+                Alert.alert(
+                    'Credenciais inválidas',
+                    err.response.data.error
+                );
+        });
     }
 
     Verify(){
@@ -121,30 +136,28 @@ export default class RegisterUser extends Component {
             return
         }
         else if(this.VerifyErrors()){
-            this.state.name = RemoveEmptySpaces(this.state.name)
-            this.state.cpf = RemoveEmptySpaces(this.state.cpf)
-            this.state.email = RemoveEmptySpaces(this.state.email)
-            this.state.password = RemoveEmptySpaces(this.state.password)
-            if(!this._signUpAsyncUser()){
-                alert(this.state.errorMSG)
+            this.state.name = (this.state.name).trim()
+            this.state.cpf = (this.state.cpf).trim()
+            this.state.email = (this.state.email).trim()
+            this.state.password = (this.state.password).trim()
+            if(this.displayUserDataStorage()){
+                this.componentDidMountPostUser()
+                this.displayClientDataStorage()
+                /*if(this.state.checkBclient) {
+                    this.createClientRequisition()
+                    this.props.navigation.navigate('RegisterAdress') 
+                } else {
+                    this._signUpAsyncMechanic()
+                    this.props.navigation.navigate('LinkMechanicToWorkshop')
+                } 
+                
+            }else{
+                alert(this.errors.str2)
+                this.errors.str2 = "\nErro(s)\n"
                 return
-            } 
-            if(this.state.checkBclient) {
-                this._signUpAsyncClient()
-                this.props.navigation.navigate('RegisterAdress')
-            
+            } */
             }
-            else {
-                this._signUpAsyncMechanic()
-                this.props.navigation.navigate('LinkMechanicToWorkshop')
-            }
-        }else{
-            alert(this.errors.str2)
-            this.errors.str2 = "\nErro(s)\n"
-            return
         }
-        
-        
     }
 
     VerifyErrors(){

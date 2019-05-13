@@ -1,5 +1,5 @@
 import { getToken } from './busnisses/Validation';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const Token = (token) => ({
     type: 'GET_TOKEN',
@@ -25,15 +25,6 @@ export const error = error => ({
     error,
 });
 
-
-
-export const getUserToken = () =>{
-    const Token = AsyncStorage.getItem('userToken')
-    return Token
-}
-
-export const saveUserToken = () =>
-    AsyncStorage.setItem('userToken', getToken(25))
 
 export const removeUserToken = () =>
     AsyncStorage.removeItem('userToken')

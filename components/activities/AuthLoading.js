@@ -14,17 +14,20 @@ export default class AuthLoading extends Component {
     this._bootstrapAsync();
   }
 
+  displayDataStorage = async () => {
+    try {
+        let user = await AsyncStorage.getItem('userId')
+        return JSON.parse(user).key
+    }catch(error){
+        alert(error)
+    }
+}
 
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem('userToken');
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'Routes' : 'Login');
+  _bootstrapAsync = () => {
+    const user = this.displayDataStorage()
+    this.props.navigation.navigate(user ? 'Routes' : 'Login');
   };
 
-  // Render any loading content that you like here
   render() {
     return (
       <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}

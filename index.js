@@ -18,7 +18,7 @@ import AuthLoading from './components/activities/AuthLoading'
 import Home from './components/activities/HomeClient';
 import SearchWorkshop from './components/activities/SearchWorkshop'
 import Routes from './components/navigation/Routes';
-
+import choseProfile from './components/activities/ChoseProfile';
 
 
 
@@ -40,7 +40,6 @@ const Stack = createStackNavigator({
             header: null
         }
     },
-    
     RegisterUser:{
         screen: RegisterUser,
         navigationOptions:  {
