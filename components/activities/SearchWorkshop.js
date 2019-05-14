@@ -3,7 +3,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { ActivityIndicator ,StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, SafeAreaView, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import {SearchBar, List, ListItem, Icon, Button} from 'react-native-elements'
+import {SearchBar} from 'react-native-elements'
 import {getUsers, contains} from '../SearchConfig'
 import Data from '../users'
 import _ from 'lodash'
@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderRadius: 10
     },
-
 
     workContainer: {
         flexDirection: 'row',

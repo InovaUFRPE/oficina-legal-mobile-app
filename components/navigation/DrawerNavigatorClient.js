@@ -4,7 +4,6 @@ import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'reac
 
 import HomeClient from '../activities/HomeClient'
 import EditProfileClient from '../activities/EditProfileClient'
-
 import CustomDrawer from './CustomDrawerMenuClient'
 import {StackClient} from '../activities/AccountConfigClient'
 import SeachWorkshop from '../activities/SearchWorkshop'
@@ -26,7 +25,8 @@ export default createDrawerNavigator({
             title: 'Perfil'
         }
     },
-
+    
+    //Rotas das configurações
     StackClient: {
         screen: StackClient
     },
@@ -41,7 +41,7 @@ export default createDrawerNavigator({
 
 }, {contentComponent: ({ navigation }) => {
     return(<CustomDrawer navigation={navigation}/>)
-}, drawerOpenRoute: 'DrawerOpen', 
+},  drawerOpenRoute: 'DrawerOpen', 
     drawerCloseRoute: 'DrawerClose', 
     drawerToggleRoute: 'DrawerToggle'})
 

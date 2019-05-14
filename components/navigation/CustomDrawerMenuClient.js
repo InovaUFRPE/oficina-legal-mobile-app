@@ -21,7 +21,7 @@ export default class CustomDrawerMenu extends React.Component {
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
               },
-              {text: 'Sim', onPress: () => this.props.navigation.navigate('Login')},
+              {text: 'Sim', onPress: () => this.props.navigation.navigate('AppStack')},
             ],
             {cancelable: false},
           );
