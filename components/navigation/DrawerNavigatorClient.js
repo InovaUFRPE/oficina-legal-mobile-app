@@ -8,6 +8,7 @@ import CustomDrawer from './CustomDrawerMenuClient'
 import {StackClient} from '../activities/AccountConfigClient'
 import SeachWorkshop from '../activities/SearchWorkshop'
 import VeicleHistory from '../activities/VeicleHistory'
+import Agendamento from '../activities/Agendamento'
 
 
 
@@ -38,6 +39,10 @@ export default createDrawerNavigator({
     VeicleHistory: {
         screen: VeicleHistory
     },
+
+    Agendamento: {
+        screen: Agendamento
+    }
 
 }, {contentComponent: ({ navigation }) => {
     return(<CustomDrawer navigation={navigation}/>)

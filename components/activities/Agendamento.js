@@ -7,6 +7,7 @@ import imageOficina from '../../images/Oficina.jpg'
 
 
 const initialState = { desc: '', date: new Date(), workShopInformation: [{name: '', adress: '', phoneNumber: ''}]}
+
 export default class Agendamento extends Component {
     state = { ...initialState}
 

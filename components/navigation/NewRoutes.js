@@ -17,6 +17,7 @@ import ChoseProfile from '../activities/ChoseProfile';
 import DrawerNavigatorClient from './DrawerNavigatorClient'
 import DrawerNavigatorMechanic from './DrawerNavigatorMechanic'
 
+
 const defaultHeader = {
     headerTintColor: '#eee1d6',
     headerTransparent: 'true'
@@ -45,6 +46,6 @@ export default Switch = createSwitchNavigator(
         AuthStack: AuthStack
     },
     {
-        initialRouteName: 'AuthLoading'
+        initialRouteName: 'AuthStack'
     }
 )

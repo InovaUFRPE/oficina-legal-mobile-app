@@ -1,6 +1,6 @@
 export default [
 
-    {id:1 ,gender: 'female', name: {title: 'mr', first: 'martelinho de ouro', last: 'costa'}, location: {street: '541 xingu', city: 'bragança', state: 'alagoas', postcod: '51240040'}, email: 'jane@hotmail.com'}, 
+    {id:1 ,gender: 'female', name: {title: 'mr', first: 'Oficina Da hora', last: 'costa'}, location: {street: '482 Rio Pajeu, Ibura', city: 'Recife', state: 'Pernambuco', postcod: '51240040'}, email: 'dahoralins@hotmail.com'}, 
     {id:2 ,gender: 'male', name: {title: 'mr', first: 'funilaria', last: 'marinho'}, location: {street: '541 xingu', city: 'bragança', state: 'alagoas', postcod: '51240040'}, email: 'mateus@hotmail.com'}, 
     {id:3 ,gender: 'male', name: {title: 'mr', first: 'bateu Concertou', last: 'silva'}, location: {street: '541 xingu', city: 'bragança', state: 'alagoas', postcod: '51240040'}, email: 'joao@hotmail.com'}, 
     {id:4 ,gender: 'female', name: {title: 'mr', first: 'melhor preço', last: 'brag'}, location: {street: '541 xingu', city: 'bragança', state: 'alagoas', postcod: '51240040'}, email: 'raqyuel@hotmail.com'}, 

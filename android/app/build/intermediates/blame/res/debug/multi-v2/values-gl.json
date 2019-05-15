@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\AMMM\\Desktop\\oficina-legal-mobile-app\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-gl\\values-gl.xml",
+            "outputFile": "C:\\Users\\AMMM\\Desktop\\Processos\\oficina-legal-mobile-app\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-gl\\values-gl.xml",
             "map": [
                 {
                     "source": "C:\\Users\\AMMM\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\2e5b134f6208fe112e86f8921faae1fa\\res\\values-gl\\values-gl.xml",

@@ -8,6 +8,7 @@ import {getUsers, contains} from '../SearchConfig'
 import Data from '../users'
 import _ from 'lodash'
 
+
 export default class SearchWorkshop extends Component {
     state = {
         loading: false,
@@ -48,12 +49,17 @@ export default class SearchWorkshop extends Component {
                 <View>
                     <Text style={{fontSize: 20, color: 'white'}}>{obj.item.name.first.toUpperCase() }</Text>
                 </View>
-                <FontAwesome
-                    name="star"
-                    size={30}
-                    style={{padding: 5}}
-                    color="#f6e58d"
-                />
+                <View style={{alignItems: 'center', marginRight: 10}}>
+                    <FontAwesome
+                        name="thumbs-up"
+                        size={30}
+                        style={{padding: 5}}
+                        color="lightgray"
+                    />
+                    <Text style={{color: '#ffffff'}}>
+                        234
+                    </Text>
+                </View>
             </TouchableOpacity>
         )
     }
