@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
@@ -29,83 +29,79 @@ export default class WorkShopLayout extends Component {
                     </View>
                 </LinearGradient>
 
-                <View style={styles.buttonContainer}>
-                    <View style={styles.allButtonsContainer}>
-                        <Button
-                            icon={
-                                <Icon
-                                    name="calendar"
-                                    size={30}
-                                    color="white"
-                                    style={styles.iconButton}
-                                />
-                            }
-                            title="Agendamento"
-                            buttonStyle={[styles.button, {backgroundColor: "#2250d9"}]}
-                            titleStyle={styles.textButton}
-                        />
+                <ScrollView style={styles.buttonContainer}>
+                    <Button
+                        icon={
+                            <Icon
+                                name="calendar"
+                                size={30}
+                                color="white"
+                                style={[styles.iconButton]}
+                            />
+                        }
+                        onPress={() => this.props.navigation.navigate('Agendamento')}
+                        title="Agendamento"
+                        titleStyle={styles.textButton}
+                        buttonStyle={styles.button}
+                    />
 
-                        <Button
-                            icon={
-                                <Icon
-                                    name="arrow-left"
-                                    size={30}
-                                    color="white"
-                                    style={styles.iconButton}
-                                />
-                            }
-                            title="Voltar"
-                            buttonStyle={[styles.button, {backgroundColor: "#1d43b7"}]}
-                            titleStyle={styles.textButton}
-                        />
+                    <Button
+                        icon={
+                            <Icon
+                                name="user"
+                                size={30}
+                                color="white"
+                                style={styles.iconButton}
+                            />
+                        }
+                        title="Mecanicos"
+                        titleStyle={styles.textButton}
+                        buttonStyle={styles.button}
+                    />
 
+                    <Button
+                        icon={
+                            <Icon
+                                name="phone"
+                                size={30}
+                                color="white"
+                                style={styles.iconButton}
+                            />
+                        }
+                        title="Contato"
+                        titleStyle={styles.textButton}
+                        buttonStyle={styles.button}
+                    />
 
-                    </View>
+                    <Button
+                        icon={
+                            <Icon
+                                name="star"
+                                size={30}
+                                color="white"
+                                style={styles.iconButton}
+                            />
+                        }
+                        title="Especialidades"
+                        titleStyle={styles.textButton}
+                        buttonStyle={styles.button}
+                    />
 
+                    <Button
+                        icon={
+                            <Icon
+                                name="comments"
+                                size={30}
+                                color="white"
+                                style={styles.iconButton}
+                            />
+                        }
+                        title="Comentarios"
+                        titleStyle={styles.textButton}
+                        buttonStyle={styles.button}
+                    />
+                </ScrollView>
 
-                    <View style={styles.allButtonsContainer}>
-                        <Button
-                            icon={
-                                <Icon
-                                    name="user"
-                                    size={30}
-                                    color="white"
-                                    style={styles.iconButton}
-                                />
-                            }
-                            title="Mecanicos"
-                            buttonStyle={[styles.button, {backgroundColor: "#2250d9"}]}
-                            titleStyle={styles.textButton}
-                        />
-
-                        <Button
-                            icon={
-                                <Icon
-                                    name="phone"
-                                    size={30}
-                                    color="white"
-                                    style={styles.iconButton}
-                                />
-                            }
-                            title="Contato"
-                            buttonStyle={[styles.button, {backgroundColor: "#1d43b7"}]}
-                            titleStyle={styles.textButton}
-                        />
-                    </View>
-                </View>
-                <Button
-                    icon={
-                        <Icon
-                            name="comment"
-                            size={30}
-                            color="white"
-                            style={styles.iconButton}
-                        />
-                    }
-                    title="Deixe um comentário"
-                    buttonStyle={{width: '98%', height:80, position: 'absolute', bottom: 1, marginLeft: 4}}
-                    titleStyle={styles.textButton}
-                />
             </View>
         )
     }
@@ -118,17 +114,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5F5F5"
     },
     headerContainer: {
-        flex: 2,
-        borderBottomWidth: 1,
         backgroundColor: 'blue',
         justifyContent: 'center',
         alignItems: 'center'
     },
 
     buttonContainer: {
-        flex: 6,
-        flexDirection: 'row',
-        backgroundColor: '#E3FEFB'
+        backgroundColor: 'blue'
     },
 
     allButtonsContainer: {
@@ -139,18 +131,19 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        marginTop: 5,
-        width: 175,
-        height: 200,
+        borderBottomWidth: 1,
+        height: 100,
         backgroundColor: '#2250d9'
     },
 
     textButton: {
-        fontSize: 20
+        paddingTop: 25,
+        fontSize: 25
     },
 
     iconButton: {
-        paddingRight: 10
+        position: 'absolute',
+        paddingBottom: 40
     },
 
     image: {

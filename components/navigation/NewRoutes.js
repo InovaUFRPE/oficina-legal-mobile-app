@@ -1,6 +1,6 @@
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 
-//Nao Logado
+//Not Loged
 import Login from '../activities/Login'
 import RegisterUser from '../activities/RegisterUser'
 import RegisterAdress from '../activities/RegisterAdress'
@@ -14,7 +14,11 @@ import AuthLoading from '../activities/AuthLoading'
 
 //LoggedIn
 import ChoseProfile from '../activities/ChoseProfile';
+
+//LoggedInClient
 import DrawerNavigatorClient from './DrawerNavigatorClient'
+
+//LoggendInMechanic
 import DrawerNavigatorMechanic from './DrawerNavigatorMechanic'
 
 

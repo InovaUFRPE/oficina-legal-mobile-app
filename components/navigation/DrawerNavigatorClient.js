@@ -6,7 +6,7 @@ import HomeClient from '../activities/HomeClient'
 import EditProfileClient from '../activities/EditProfileClient'
 import CustomDrawer from './CustomDrawerMenuClient'
 import {StackClient} from '../activities/AccountConfigClient'
-import SeachWorkshop from '../activities/SearchWorkshop'
+import {SearchWorkShopNavigation} from '../activities/SearchWorkshop'
 import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
 
@@ -32,8 +32,8 @@ export default createDrawerNavigator({
         screen: StackClient
     },
 
-    SeachWorkshop: {
-        screen: SeachWorkshop
+    SearchWorkShopNavigation: {
+        screen: SearchWorkShopNavigation
     },
 
     VeicleHistory: {

@@ -6,6 +6,7 @@ import HomeMechanic from '../activities/HomeMechanic'
 import EditProfileMechanic from '../activities/EditProfileMechanic'
 import {StackMechanic} from '../activities/AccountConfigMechanic'
 import CustomDrawer from './CustomDrawerMenuMechanic'
+import Diagnostic from '../activities/DiagnosticMechanic'
 
 
 
@@ -28,6 +29,13 @@ export default createDrawerNavigator({
 
     StackMechanic: {
         screen: StackMechanic
+    },
+
+    Diagnostic: {
+        screen: Diagnostic,
+        navigationOptions: {
+            title: 'Diagnostico do Veículo'
+        }
     }
 },
 

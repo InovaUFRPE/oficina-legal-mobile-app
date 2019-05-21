@@ -12,6 +12,8 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
+    
+
     blankCamps() {
         let blank = "\nCampo(s) em branco:\n"
         blank += checkBlankCamps(this.state.username, "LOGIN")
@@ -27,11 +29,13 @@ export default class Login extends Component {
 
     _signInAsync = async () => {
         saveUserToken();
-        const response = await api.post('/api/usuario/api/usuario/' + this.state.username + '/' + password)
+        const response = await api.post('/api/usuario/api/usuario/' + this.state.username + '/' + password.state.password)
+
         if (!response.ok) {
             alert("Usuário não encontrado")
             return
         }
+
         alert(response.data);
         const user = response.data
 
@@ -46,12 +50,15 @@ export default class Login extends Component {
     Verify() {
         this.state.username = RemoveEmptySpaces(this.state.username)
         this.state.password = RemoveEmptySpaces(this.state.password)
+        console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         if (!this.isEmail(this.state.username)) { alert("Email inválido."); return }
+        console.log(this.state.password + " ESTAGIO 2 ")
         this._signInAsync()
     }
 
     render() {
+        console.log(this.state.password)
         return (
             <View
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
@@ -68,6 +75,8 @@ export default class Login extends Component {
                     autoCapitalize='none'
                     autoCorrect={false}
                     onChangeText={(username) => this.setState({ username })} />
+
+
 
                 <TextInput style={styles.input}
                     secureTextEntry={true}

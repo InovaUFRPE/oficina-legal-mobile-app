@@ -42,7 +42,7 @@ export default class HomeClient extends Component {
                 
                 <TouchableOpacity 
                 style={styles.buttonWorkshop}
-                onPress={() => this.props.navigation.navigate('SeachWorkshop')}>
+                onPress={() => this.props.navigation.navigate('SearchWorkShopNavigation')}>
                         <Text style={styles.workshop}>Deseja encontrar uma oficina?</Text>
                         <FontAwesome
                                 name="search"

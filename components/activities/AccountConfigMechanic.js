@@ -24,7 +24,7 @@ export default class AccountConfigMechanic extends Component {
                         style={styles.menuIcon}
                         onPress = {() => this.props.navigation.toggleDrawer()}
                     />
-                    <Text style={styles.headerTitle}>Buscar Oficina</Text>
+                    <Text style={styles.headerTitle}>Configurações</Text>
                     <Image
                         source={require('../../images/LogoAzulR.png')}
                         style={styles.logo}

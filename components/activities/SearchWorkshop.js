@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import LinearGradient from 'react-native-linear-gradient';
-import { ActivityIndicator ,StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, SafeAreaView, Alert} from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { createStackNavigator } from 'react-navigation'
 import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import {SearchBar} from 'react-native-elements'
-import {getUsers, contains} from '../SearchConfig'
+import { SearchBar } from 'react-native-elements'
+import { getUsers, contains } from '../SearchConfig'
 import Data from '../users'
 import _ from 'lodash'
+import { withNavigation } from 'react-navigation'
+
+import WorkShopLayout from './WorkShopLayout'
+import Agendamento from './Agendamento'
 
 
 export default class SearchWorkshop extends Component {
@@ -23,7 +28,7 @@ export default class SearchWorkshop extends Component {
     }
 
     makeRemoteRequest = _.debounce(() => {
-        this.setState({loading: true});
+        this.setState({ loading: true });
 
         getUsers(20, this.state.query)
             .then(users => {
@@ -34,29 +39,29 @@ export default class SearchWorkshop extends Component {
                 });
             })
             .catch(error => {
-                this.setState({error, loading: false})
+                this.setState({ error, loading: false })
             })
     }, 150)
 
-    RenderItem(obj){
-        return(
-            <TouchableOpacity onPress={() => Alert.alert("Informaçoes da Oficina", "Rua: " + obj.item.location.street + "\nCidade: " + obj.item.location.city + "\nContato: " + obj.item.email)} style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10}}>
+    RenderItem = (obj) => {
+        return (
+            <TouchableOpacity onPress={() => { this.props.navigation.navigate('WorkShopLayout') }} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 10 }}>
                 <FontAwesome
                     name="wrench"
                     size={50}
-                    style={{padding: 5, color: 'lightgray'}}
+                    style={{ padding: 5, color: 'lightgray' }}
                 />
                 <View>
-                    <Text style={{fontSize: 20, color: 'white'}}>{obj.item.name.first.toUpperCase() }</Text>
+                    <Text style={{ fontSize: 20, color: 'white' }}>{obj.item.name.first.toUpperCase()}</Text>
                 </View>
-                <View style={{alignItems: 'center', marginRight: 10}}>
+                <View style={{ alignItems: 'center', marginRight: 10 }}>
                     <FontAwesome
                         name="thumbs-up"
                         size={30}
-                        style={{padding: 5}}
+                        style={{ padding: 5 }}
                         color="lightgray"
                     />
-                    <Text style={{color: '#ffffff'}}>
+                    <Text style={{ color: '#ffffff' }}>
                         234
                     </Text>
                 </View>
@@ -72,7 +77,7 @@ export default class SearchWorkshop extends Component {
         const data = _.filter(this.state.fullData, user => {
             return contains(user, formatQuery)
         })
-        this.setState({query: formatQuery, data}, () => this.makeRemoteRequest())
+        this.setState({ query: formatQuery, data }, () => this.makeRemoteRequest())
     }
 
     renderSeparator = () => {
@@ -88,38 +93,38 @@ export default class SearchWorkshop extends Component {
     }
 
     renderHeader = () => {
-        return  <SearchBar 
-                    inputStyle={{color:'black'}}
-                    placeholderTextColor='black'
-                    placeholder="Pesquise aqui.."
-                    containerStyle={{backgroundColor: '#2250d9', borderRadius: 15}}
-                    inputContainerStyle={{backgroundColor: 'white'}}
-                    value={this.state.query} 
-                    onChangeText={this.handlerSearch}       
-                    round                         
-                        />
+        return <SearchBar
+            inputStyle={{ color: 'black' }}
+            placeholderTextColor='black'
+            placeholder="Pesquise aqui.."
+            containerStyle={{ backgroundColor: '#2250d9', borderRadius: 15 }}
+            inputContainerStyle={{ backgroundColor: 'white' }}
+            value={this.state.query}
+            onChangeText={this.handlerSearch}
+            round
+        />
 
     }
 
     renderFooter = () => {
         if (!this.state.loading) return null;
 
-        return(
-            <View style={{paddingVertical: 20, borderTopWidth: 1, borderColor: "'#2250d9'",}}>
-                <ActivityIndicator animating size="large"/>
+        return (
+            <View style={{ paddingVertical: 20, borderTopWidth: 1, borderColor: "'#2250d9'", }}>
+                <ActivityIndicator animating size="large" />
             </View>
         )
     }
     render() {
         return (
-            <LinearGradient 
-                    colors={['#2250d9', '#204ac8', '#1d43b7']} style={{flex: 1}}>
+            <LinearGradient
+                colors={['#2250d9', '#204ac8', '#1d43b7']} style={{ flex: 1 }}>
                 <View style={styles.headerContainer}>
                     <FontAwesome
                         name="bars"
                         size={30}
-                        style={{padding: 20, color: 'white', position: 'absolute', left: 1}}
-                        onPress = {() => this.props.navigation.toggleDrawer()}
+                        style={{ padding: 20, color: 'white', position: 'absolute', left: 1 }}
+                        onPress={() => this.props.navigation.toggleDrawer()}
                     />
                     <Text style={styles.headerTitle}>Buscar Oficina</Text>
                 </View>
@@ -137,25 +142,26 @@ export default class SearchWorkshop extends Component {
 }
 
 const styles = StyleSheet.create({
-    
-    container:{
+
+    container: {
         alignItems: 'center',
         justifyContent: 'center'
     },
 
     headerContainer: {
-        width: '100%', 
-        height: 70, 
-        alignItems: 'center', 
-        justifyContent: 'center'},
+        width: '100%',
+        height: 70,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 
     headerTitle: {
-        fontSize: 20, 
-        fontWeight: 'bold', 
+        fontSize: 20,
+        fontWeight: 'bold',
         color: 'white'
     },
 
-    cell:{
+    cell: {
         margin: 5,
         marginHorizontal: 10,
         borderRadius: 10
@@ -169,8 +175,8 @@ const styles = StyleSheet.create({
         marginRight: 20,
         height: 80
 
-    },  
-    workText:{
+    },
+    workText: {
         fontSize: 20,
     },
     menuIcon: {
@@ -188,6 +194,32 @@ const styles = StyleSheet.create({
         height: 50,
         marginVertical: 10,
         color: 'black',
-        backgroundColor:'white'
+        backgroundColor: 'white'
+    }
+})
+
+export const SearchWorkShopNavigation = createStackNavigator({
+    SearchWorkshop: {
+        screen: SearchWorkshop,
+        navigationOptions: {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
+    WorkShopLayout: {
+        screen: WorkShopLayout,
+        navigationOptions: {
+            headerTintColor: '#eee1d6',
+            headerTransparent: 'true'
+        }
+    },
+
+    Agendamento: {
+        screen: Agendamento,
+        navigationOptions: {
+            headerTransparent: 'true',
+            headerTintColor: '#2250d9'
+        }
     }
 })
