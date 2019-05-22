@@ -15,8 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 
 export default class DiagnosticMechanic extends Component {
     state = {
-        tasks: [
-        ],
+        tasks: [],
 
         totalPrice: 0,
         showAddTask: false,

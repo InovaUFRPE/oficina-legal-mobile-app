@@ -6,9 +6,6 @@ import Swipeable from 'react-native-swipeable'
 
 //props: serviceName, serviceType, price, date
 
-
-
-
 export default props => {
     const leftContent = (
         <View style={styles.exclude}>
@@ -37,7 +34,7 @@ export default props => {
 
                 <View style={styles.priceContainer}>
                     <Text style={styles.princeText}>R$ {props.price}</Text>
-                    <Text>{moment(props.date).locale('pt-br').format('D[/]MM[/]YYYY')}</Text>
+                    <Text>{moment(props.date).locale('pt-br').format('DD[/]MM[/]YYYY')}</Text>
                 </View>
             </View>
         </Swipeable>

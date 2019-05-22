@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
+import { ScrollView } from 'react-native-gesture-handler';
+import TasksOnHome from '../TasksOnHome'
 
 
 
 export default class HomeMechanic extends Component {
-
 
     render() {
 
@@ -24,6 +25,28 @@ export default class HomeMechanic extends Component {
                         style={styles.logo}
                     />
                 </View>
+                <ScrollView
+                    scrollEventThrottle={16}
+                >
+                    <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}>
+                        <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }}>
+                            Aqui estao seus serviços pendentes
+                        </Text>
+
+                        <View style={{ height: 250, marginTop: 20, }}>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                                <TasksOnHome imageUri={require('../../images/cars/gol.jpg')} clientName='Joao Carlos' date='05/02/2019'/>
+                                <TasksOnHome imageUri={require('../../images/cars/ecosport.jpg')} clientName='Maria Josi' date='13/07/2019'/>
+                                <TasksOnHome imageUri={require('../../images/cars/compss.jpg')} clientName='Gabrielly Silva' date='21/03/2019'/>
+                                <TasksOnHome imageUri={require('../../images/cars/onix.jpg')} clientName='Mateus Santos' date='07/04/2019'/>
+                                <TasksOnHome imageUri={require('../../images/cars/toro.jpg')} clientName='Danielle Rosa' date='15/03/2019'/>
+                            </ScrollView>
+                        </View>
+                    </View>
+
+
+                </ScrollView>
+
                 <TouchableOpacity
                     activeOpacity={0.7}
                     style={styles.touchableOpacityStyle}
