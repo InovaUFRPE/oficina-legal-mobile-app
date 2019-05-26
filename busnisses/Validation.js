@@ -79,10 +79,6 @@ export function ValidateCEP(cep){
     
 };
 
-export function RemoveEmptySpaces(strTexto){
-    // Substitui os espaços vazios no inicio e no fim da string por vazio.
-    return strTexto.replace(/^s+|s+$/g, '');
-}
 
 export function validURL(str) {
     var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
