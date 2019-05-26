@@ -7,8 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.4.1",
     "adb": "^0.2.0",
     "apisauce": "^1.0.2",
+    "axios": "^0.18.0",
     "lodash": "^4.17.11",
     "moment": "2.22.2",
     "react": "16.8.3",

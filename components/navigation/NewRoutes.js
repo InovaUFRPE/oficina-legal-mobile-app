@@ -27,6 +27,11 @@ const defaultHeader = {
     headerTransparent: 'true'
 }
 
+const blueHeader = {
+    headerTintColor: '#2250d9',
+    headerTransparent: 'true'
+}
+
 const AppStack = createStackNavigator({
     Home:             { screen: Login, navigationOptions: { header: null }},
     RegisterUser:     { screen: RegisterUser, navigationOptions: defaultHeader },

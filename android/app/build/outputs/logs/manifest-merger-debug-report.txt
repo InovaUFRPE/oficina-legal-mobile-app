@@ -5,6 +5,7 @@ INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/ofic
 INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-26:12
 INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-26:12
 MERGED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-26:12
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-gesture-handler] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
 MERGED from [:react-native-linear-gradient] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
@@ -132,6 +133,8 @@ uses-sdk
 INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
 MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-gesture-handler] /home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41

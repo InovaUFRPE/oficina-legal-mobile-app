@@ -1,22 +1,29 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, CheckBox } from 'react-native';
-import api from '../../service/api';
-import {saveUserToken, saveUser, getUserToken, saveClient, saveMechanic} from '../../auth'
+import {ConfirmPassword, validateCPF, validateEmail,  ValidateCEP } from '../../busnisses/Validation'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { CheckBox } from 'react-native-elements';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class RegisterUser extends Component {
     state =  {
+        login: '',
         name: '',
         cpf: '',
         email: '',
         password: '',
         confirmPassword: '',
+        street: '',
+        cep: '',
+        complement: '',
+        neighborhood: '',
+        link: '',
+
         checkBclient: false,
-        checkBmechanic: false,
+        checkBMechanic: false,
         errorMSG: '',
-        idUser: null
     }
     errors = {
         str: "\nCampo(s) em branco:\n",
@@ -24,222 +31,266 @@ export default class RegisterUser extends Component {
     }
 
     CheckBoxCPress(){
-        if(this.state.checkBmechanic) this.CheckBoxMPress()
+        if(this.state.checkBMechanic) this.CheckBoxMPress()
         this.setState({
             checkBclient: !this.state.checkBclient
         })
     }
-
     CheckBoxMPress(){
         if(this.state.checkBclient) this.CheckBoxCPress()
         this.setState({
-            checkBmechanic: !this.state.checkBmechanic
+            checkBMechanic: !this.state.checkBMechanic
         })
     }
 
-    _signUpAsyncUser = async () => {
-        saveUserToken();
-        const response = await api.post('/api/usuario', {
-            login: toString(this.state.name),
-            email: toString(this.state.email),
-            senha: toString(this.state.password),
-            ativo: toString(true)
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir usuário")
-            return
-        }
-        alert(response.data)
-        const user = response.data 
 
-        if (await saveUser(user, getUserToken()) === true){
-            return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar usuário"})
+    saveDataStorage = (client) => {
+        try{
+            AsyncStorage.setItem('client', JSON.stringify(client))
+            .then(this.props.navigation.navigate('RegisterVehicle'))
+        }catch(error){
+            alert('Não foi possível salvar o usuário')
         }
         
     }
 
-    findUser = async () => {
-        const response = await api.get(`/api/usuario/${this.state.email}/${this.state.password}`)
-        if(!response.ok) {
-            alert("Usuário não encontrado")
-            return
+    createUserRequisition = () => {
+        const user = {
+            login: this.state.login.trim(),
+            email: this.state.email.trim(),
+            senha: this.state.password.trim(),
+            ativo: true
         }
-        this.setState({ idUser: response.idUsuario })
+        return user
+    }
+
+    createClientRequisition = () => {
+        let user = this.createUserRequisition();
+        user.Client = {
+            nome: this.state.name.trim(),
+            cpf: this.state.cpf.trim(),
+            bairro: this.state.neighborhood.trim(),
+            cep: this.state.cep.trim(),
+            endereco: this.state.street.trim(),
+            complemento: this.state.complement.trim(),
+        }
+        return user
+    }
+
+    createMechanicRequisition = () => {
+        let user = this.createUserRequisition();
+        user.Mechanic = {
+            link: this.state.link.trim()
+        }
+        return user
+    }
+    
+    componentDidMountGetClient = async () => {
+        let client = await axios.get(`http://192.168.0.10:3306/api/cliente/api/cliente/:${this.state.cpf}`)
         
     }
 
-    _signUpAsyncClient = async () => {
-        this.findUser()
-        const response = await api.post('/api/cliente', {
-            nome: toString(this.state.name),
-            cpf: toString(this.state.cpf),
-            idUsuario: toString(this.state.idUser),
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir cliente")
-            return
-        }
-        alert(response.data)
-        const client = response.data 
-
-        if (await saveClient(client, getUserToken()) === true){
-            return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
-        }
-        
-    }
-
-    _signUpAsyncMechanic = async () => {
-        this.findUser()
-        const response = await api.post('/api/mecanico', {
-            nome: toString(this.state.name),
-            cpf: toString(this.state.cpf),
-            idUsuario: toString(this.state.idUser),
-        })
-        if(!response.ok) {
-            alert("Erro ao inserir mecânico")
-            return
-        }
-        alert(response.data)
-        const mechanic = response.data 
-
-        if (await saveMechanic(mechanic, getUserToken()) === true){
-            return true
-        } else{
-            this.setState({ errorMSG: "Não foi possível armazenar mecânico"})
-        }
-        
+    componentDidMountPostClient = async () => {
+        let client = await axios.post("http://192.168.0.10:3306/api/cliente/api/cliente/", this.createClientRequisition())
+        return client
     }
 
     Verify(){
         if (!this.checkBlankCamps()){
-            alert(this.errors.str)
+            Alert.alert("Erro", this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
         else if(this.VerifyErrors()){
-            this.state.name = RemoveEmptySpaces(this.state.name)
-            this.state.cpf = RemoveEmptySpaces(this.state.cpf)
-            this.state.email = RemoveEmptySpaces(this.state.email)
-            this.state.password = RemoveEmptySpaces(this.state.password)
-            if(!this._signUpAsyncUser()){
-                alert(this.state.errorMSG)
-                return
-            } 
+            this.state.login = (this.state.login).trim()
+            this.state.email = (this.state.email).trim()
+            this.state.password = (this.state.password).trim()
             if(this.state.checkBclient) {
-                this._signUpAsyncClient()
-                this.props.navigation.navigate('RegisterAdress')
-            
-            }
-            else {
-                this._signUpAsyncMechanic()
-                this.props.navigation.navigate('LinkMechanicToWorkshop')
-            }
+                let client = this.componentDidMountPostClient()
+                saveDataStorage(client)
+            }    
         }else{
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
             return
         }
         
-        
     }
 
     VerifyErrors(){
         if(!ConfirmPassword(this.state.password, this.state.confirmPassword)){ this.errors.str2 += "\n- As senhas não conferem." }
-        if(!validateCPF(this.state.cpf)){ this.errors.str2 += "\n- Insira um CPF válido." }
-        if(!validateEmail(this.state.email)){ this.errors.str2 += "\n- Insira um email válido." }
+        if(!validateCPF(this.state.cpf.trim())){ this.errors.str2 += "\n- Insira um CPF válido." }
+        if(!validateEmail(this.state.email.trim())){ this.errors.str2 += "\n- Insira um email válido." }
+        if(this.checkBclient){
+            if(!ValidateCEP(this.state.cep.trim())){
+                this.errors.str2 += "\n- Insira um CEP válido."
+            }
+        }
         if(this.errors.str2 == "\nErro(s)\n") return true
     }
 
     checkBlankCamps(){
+        if(this.state.login == ""){ this.errors.str += "\n- Login" }
         if(this.state.name == ""){ this.errors.str += "\n- Nome" }
         if(this.state.cpf == ""){ this.errors.str += "\n- CPF" }
         if(this.state.email == ""){ this.errors.str += "\n- Email" }
         if(this.state.password == ""){ this.errors.str += "\n- Senha" }
         if(this.state.confirmPassword == ""){ this.errors.str += "\n- Confirmar senha" }
-        if(this.state.checkBclient == false && this.state.checkBmechanic == false){ this.errors.str += "\n- Você é cliente ou mecânico?" }
+        if(this.state.checkBclient){
+            if(this.state.cep == ""){ this.errors.str += "\n- CEP" }
+            if(this.state.street == ""){ this.errors.str += "\n- Logradouro" } 
+            if(this.state.neighborhood == ""){ this.errors.str += "\n- Bairro" }
+        }
+        if(this.state.checkBMechanic){
+            if(this.state.link == ""){ this.errors.str += "\n- Link do curriculo" }
+        }
         if(this.errors.str == "\nCampo(s) em branco:\n") return true
     }
-    
     render() {
         return (
-            <LinearGradient 
+            <View 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
                 <View style={styles.inputContainer}>  
-                    <Text style={styles.header}>
-                        Insira seus dados
-                    </Text>          
-                    <TextInput placeholder='Nome' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value={this.state.name}
-                        returnKeyType="next"
-                        onChangeText={name => this.setState({ name })}
-                        onSubmitEditing={() => this.cpfInput.focus()}/>
+                <ScrollView>
+                        <View style={{alignItems: 'center'}}><Text style={styles.header}>Em qual perfil você se enquadra ?</Text></View>
+                        <View >
+                            <CheckBox
+                                left
+                                title='Cliente'
+                                checked={this.state.checkBclient}
+                                textStyle={{color: "#eee1d6"}}
+                                containerStyle={{backgroundColor:'transparent', borderColor: 'transparent'}}
+                                uncheckedColor="#eee1d6"
+                                checkedColor="#acd922"
+                                onPress={() => this.CheckBoxCPress()}
+                            />
+                            <CheckBox
+                                title='Mecânico'
+                                checked={this.state.checkBMechanic}
+                                textStyle={{color: "#eee1d6"}}
+                                uncheckedColor="#eee1d6"
+                                checkedColor= "#acd922"
+                                containerStyle={{backgroundColor:'transparent', borderColor: 'transparent', position: 'absolute', left: '55%' }}
+                                onPress={() => this.CheckBoxMPress()}
+                            />
+                        </View>
 
-                    <TextInput placeholder='CPF'  
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.cpf} 
-                        returnKeyType="next"
-                        keyboardType='numeric'
-                        onChangeText={cpf => this.setState({ cpf })}
-                        ref={(input) => this.cpfInput = input}
-                        onSubmitEditing={() => this.emailInput.focus()}/>
+                        {this.state.checkBclient ?
+                            <View>
+                                <TextInput placeholder='Login'
+                                    tintColor={"black"} 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value={this.state.login}
+                                    returnKeyType="next"
+                                    onChangeText={login => this.setState({ login })}
+                                    onSubmitEditing={() => this.nameInput.focus()}/>         
+                                
+                                <TextInput placeholder='Nome' 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value={this.state.name}
+                                    returnKeyType="next"
+                                    ref={(input) => this.nameInput = input}
+                                    onChangeText={name => this.setState({ name })}
+                                    onSubmitEditing={() => this.cpfInput.focus()}/> 
 
-                    <TextInput placeholder='E-mail' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.email} 
-                        returnKeyType="next"
-                        keyboardType='email-address'
-                        onChangeText={email => this.setState({ email })}
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        ref={(input) => this.emailInput = input}/> 
+                                <TextInput placeholder='CPF'  
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value= {this.state.cpf} 
+                                    returnKeyType="next"
+                                    keyboardType='numeric'
+                                    onChangeText={cpf => this.setState({ cpf })}
+                                    ref={(input) => this.cpfInput = input}
+                                    onSubmitEditing={() => this.emailInput.focus()}/>
+            
+                                <TextInput placeholder='E-mail' 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value= {this.state.email} 
+                                    returnKeyType="next"
+                                    keyboardType='email-address'
+                                    onChangeText={email => this.setState({ email })}
+                                    onSubmitEditing={() => this.passwordInput.focus()}
+                                    ref={(input) => this.emailInput = input}/> 
 
-                    <TextInput placeholder='Senha' 
-                        placeholderTextColor="#eee1d6" style={styles.input}
-                        value= {this.state.password} 
-                        returnKeyType="next"
-                        secureTextEntry={true}
-                        onChangeText={password => this.setState({ password })}
-                        onSubmitEditing={() => this.confirmPasswordInput.focus()}
-                        ref={(input) => this.passwordInput = input}/> 
+                                <TextInput placeholder='Senha' 
+                                    placeholderTextColor="#eee1d6" style={styles.input}
+                                    value= {this.state.password} 
+                                    returnKeyType="next"
+                                    secureTextEntry={true}
+                                    onChangeText={password => this.setState({ password })}
+                                    onSubmitEditing={() => this.confirmPasswordInput.focus()}
+                                    ref={(input) => this.passwordInput = input}/> 
 
-                    <TextInput placeholder='Confirmar Senha' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.confirmPassword} 
-                        returnKeyType="go"
-                        placeholderTextColor="#eee1d6" 
-                        secureTextEntry={true}
-                        onChangeText={confirmPassword => this.setState({ confirmPassword })}
-                        ref={(input) => this.confirmPasswordInput = input}/> 
-                    
-                    <View style={{top:25}}>
-                        <CheckBox style={{position: 'absolute', left: 100}}
-                                  value = {this.state.checkBclient}
-                                  onChange={() => this.CheckBoxCPress()}></CheckBox>
-                        <CheckBox style={{right:100}}
-                                  value = {this.state.checkBmechanic}
-                                  onChange={() => this.CheckBoxMPress()}></CheckBox>
-                    </View>
+                                <TextInput placeholder='Confirmar Senha' 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value= {this.state.confirmPassword} 
+                                    returnKeyType="go"
+                                    placeholderTextColor="#eee1d6" 
+                                    secureTextEntry={true}
+                                    onChangeText={confirmPassword => this.setState({ confirmPassword })}
+                                    onSubmitEditing={() => this.cepInput.focus()}
+                                    ref={(input) => this.confirmPasswordInput = input}/>
+                                <TextInput placeholder='CEP'  
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value= {this.state.cep} 
+                                    returnKeyType="next"
+                                    keyboardType='numeric'
+                                    onChangeText={cep => this.setState({ cep })}
+                                    ref={(input) => this.cepInput = input}
+                                    onSubmitEditing={() => this.streetInput.focus()}/>
+                                <TextInput placeholder='Logradouro' 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value={this.state.street}
+                                    returnKeyType="next"
+                                    ref={(input) => this.streetInput = input}
+                                    onChangeText={street => this.setState({ street })}
+                                    onSubmitEditing={() => this.neighborhoodInput.focus()}/>
+                                <TextInput placeholder='Bairro' 
+                                    placeholderTextColor="#eee1d6" style={styles.input}
+                                    value= {this.state.neighborhood} 
+                                    returnKeyType="go"
+                                    onChangeText={neighborhood => this.setState({ neighborhood })}
+                                    ref={(input) => this.neighborhoodInput = input}
+                                    onSubmitEditing={() => this.complementInput.focus()}/> 
+                                <TextInput placeholder='Complemento (Opcional)' 
+                                    placeholderTextColor="#eee1d6" 
+                                    style={styles.input}
+                                    value= {this.state.complement} 
+                                    returnKeyType="next"
+                                    onChangeText={complement => this.setState({ complement })}
+                                    ref={(input) => this.complementInput = input}/> 
+                                <TouchableOpacity onPress={() => this.Verify()} 
+                                    style={styles.buttonRegister}>
+                                    <Text style={styles.buttonRegisterText}>Seguir</Text>
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            null
+                        }
 
-                    <View>
-                        <Text style={{position: 'absolute',color: '#eee1d6', right: 45}}>Mecânico</Text>
-                        <Text style={{color: '#eee1d6', left: 60}}>Cliente</Text>
-                    </View>
+                        {this.state.checkBMechanic ?
 
-                    <TouchableOpacity onPress={() => this.Verify()} 
-                        style={styles.buttonRegister}>
-                        <Text style={styles.buttonRegisterText}>Seguir</Text>
-                    </TouchableOpacity>  
+                            <TextInput placeholder='Link de seu curriculo' 
+                                placeholderTextColor="#eee1d6" 
+                                style={styles.input}
+                                value= {this.state.link} 
+                                returnKeyType="next"
+                                onChangeText={link => this.setState({ link })}
+                                ref={(input) => this.HyperlinkInput = input}
+                                onSubmitEditing={() => this.descriptionInput.focus()}/>
+                            :
+                            null
+                        }
+                    </ScrollView>
                 </View>
-            </LinearGradient>
+            </View>
         )
     }
 }
@@ -249,53 +300,48 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5'
     },
 
     header: {
         color: '#eee1d6',
-        fontSize: 25,
+        fontSize: 20,
         borderBottomWidth: 0.5,
         borderBottomColor: 'white',
-        bottom: 20
     },
 
     inputContainer: {
-        height: '100%',
-        width: '100%',
-        top: 20,
-        position: 'absolute',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: '80%',
+        width: "90%",
+        top: "10%",
+        padding: 10,
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+        backgroundColor: '#2250d9'
     },
 
     input: {
         marginTop: 15,
-        width: '90%',
         height: 40,
-        paddingLeft: 15,
+        paddingLeft: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#eee1d6',
         borderBottomWidth: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        color: 'white',
+        color: '#eee1d6',
     },
 
     buttonRegister  : {
         backgroundColor: '#eee1d6' ,
-        height: 40,
-        width: 250,
+        height: 75,
+        width: '100%',
         top: 30,
         alignItems: 'center',  
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        borderRadius: 20,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        color: '#111e29',
     },
 
     buttonRegisterText:{
