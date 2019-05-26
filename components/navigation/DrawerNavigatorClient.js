@@ -2,7 +2,7 @@ import React from 'react'
 import {Platform, Dimensions} from 'react-native'
 import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'react-navigation'
 
-import HomeClient from '../activities/HomeClient'
+import HomeClient from '../map/Map'
 import EditProfileClient from '../activities/EditProfileClient'
 import CustomDrawer from './CustomDrawerMenuClient'
 import {StackClient} from '../activities/AccountConfigClient'

@@ -107,7 +107,7 @@ export default class RegisterUser extends Component {
             this.state.password = (this.state.password).trim()
             if(this.state.checkBclient) {
                 let client = this.componentDidMountPostClient()
-                saveDataStorage(client)
+                this.saveDataStorage(client)
             }    
         }else{
             alert(this.errors.str2)

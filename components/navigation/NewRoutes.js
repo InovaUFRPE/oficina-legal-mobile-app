@@ -34,7 +34,7 @@ const blueHeader = {
 
 const AppStack = createStackNavigator({
     Home:             { screen: Login, navigationOptions: { header: null }},
-    RegisterUser:     { screen: RegisterUser, navigationOptions: defaultHeader },
+    RegisterUser:     { screen: RegisterUser, navigationOptions: blueHeader },
     RegisterAdress:   { screen: RegisterAdress, navigationOptions: defaultHeader },
     RegisterVehicle:  { screen: RegisterVehicle, navigationOptions: defaultHeader },
     ForgotPassword:   { screen: ForgotPassword, navigationOptions: defaultHeader },
@@ -55,6 +55,6 @@ export default Switch = createSwitchNavigator(
         AuthStack: AuthStack
     },
     {
-        initialRouteName: 'AppStack'
+        initialRouteName: 'AuthStack'
     }
 )

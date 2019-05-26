@@ -30,8 +30,8 @@ export default class Login extends Component {
    
 
     Verify() {
-        this.state.username = RemoveEmptySpaces(this.state.username)
-        this.state.password = RemoveEmptySpaces(this.state.password)
+        this.state.username = this.state.username.trim()
+        this.state.password = this.state.password.trim()
         console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         if (!this.isEmail(this.state.username)) { alert("Email inválido."); return }
