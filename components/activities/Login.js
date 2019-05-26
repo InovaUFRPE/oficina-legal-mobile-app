@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { RemoveEmptySpaces, validateEmail, checkBlankCamps, validBlankCamps, getToken } from '../../busnisses/Validation';
+import { validateEmail, checkBlankCamps, validBlankCamps, getToken } from '../../busnisses/Validation';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-import { saveUserToken, saveUser, getUserToken } from '../../auth'
+import { getUserToken } from '../../auth'
 
 import api from '../../service/api'
 
@@ -27,25 +27,7 @@ export default class Login extends Component {
         return true
     }
 
-    _signInAsync = async () => {
-        saveUserToken();
-        const response = await api.post('/api/usuario/api/usuario/' + this.state.username + '/' + password.state.password)
-
-        if (!response.ok) {
-            alert("Usuário não encontrado")
-            return
-        }
-
-        alert(response.data);
-        const user = response.data
-
-        if (await saveUser(user, getUserToken()) === true) {
-            this.props.navigation.navigate('AppStack');
-        } else {
-            this.setState({ errorMSG: "Não foi possível armazenar usuário" })
-        }
-
-    };
+   
 
     Verify() {
         this.state.username = RemoveEmptySpaces(this.state.username)
@@ -113,8 +95,8 @@ const styles = StyleSheet.create({
     },
 
     logo: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         marginBottom: 60
     },
 

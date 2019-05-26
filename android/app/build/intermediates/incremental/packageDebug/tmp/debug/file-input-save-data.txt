@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun May 26 00:01:43 BRT 2019
+#Sun May 26 00:25:43 BRT 2019
 33.base=/home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
 47.base=/home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
 50.base=/home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/build/intermediates/transforms/mergeJniLibs/debug/0
