@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import {RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 export default class RegisterVehicle extends Component {
@@ -45,48 +45,49 @@ export default class RegisterVehicle extends Component {
     
     render() {
         return (
-            <LinearGradient 
+            <View 
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style = { styles.container }>
                 <View style={styles.inputContainer}>  
-                    <Text style={styles.header}>
-                        Informações do seu veículo
-                    </Text>          
-                    <TextInput placeholder='Modelo' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value={this.state.model}
-                        returnKeyType="next"
-                        onChangeText={model => this.setState({ model })}/>
+                      <ScrollView>  
+                            
+                      <View style={{alignItems: 'center'}}><Text style={styles.header}>Infomações do veículo</Text></View>
+                        <TextInput placeholder='Modelo' 
+                            placeholderTextColor="white" 
+                            style={styles.input}
+                            value={this.state.model}
+                            returnKeyType="next"
+                            onChangeText={model => this.setState({ model })}/>
 
-                    <TextInput placeholder='ano'  
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.year} 
-                        returnKeyType="next"
-                        keyboardType='numeric'
-                        onChangeText={year => this.setState({ year })}/>
+                        <TextInput placeholder='ano'  
+                            placeholderTextColor="white" 
+                            style={styles.input}
+                            value= {this.state.year} 
+                            returnKeyType="next"
+                            keyboardType='numeric'
+                            onChangeText={year => this.setState({ year })}/>
 
-                    <TextInput placeholder='Renavam' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.renavam} 
-                        returnKeyType="next"
-                        onChangeText={renavam => this.setState({ renavam })}/> 
+                        <TextInput placeholder='Renavam' 
+                            placeholderTextColor="white" 
+                            style={styles.input}
+                            value= {this.state.renavam} 
+                            returnKeyType="next"
+                            onChangeText={renavam => this.setState({ renavam })}/> 
 
-                    <TextInput placeholder='Placa' 
-                        placeholderTextColor="#eee1d6" style={styles.input}
-                        value= {this.state.Vplate} 
-                        returnKeyType="next"
-                        onChangeText={Vplate => this.setState({ Vplate })}/> 
- 
-                                    
-                    <TouchableOpacity onPress={() => this.Verify()} 
-                        style={styles.buttonRegister}>
-                        <Text style={styles.buttonRegisterText}>Cadastrar</Text>
-                    </TouchableOpacity>  
+                        <TextInput placeholder='Placa' 
+                            placeholderTextColor="white" style={styles.input}
+                            value= {this.state.Vplate} 
+                            returnKeyType="next"
+                            onChangeText={Vplate => this.setState({ Vplate })}/> 
+    
+                                        
+                        <TouchableOpacity onPress={() => this.Verify()} 
+                            style={styles.buttonRegister}>
+                            <Text style={styles.buttonRegisterText}>Cadastrar</Text>
+                        </TouchableOpacity>  
+                    </ScrollView>
                 </View>
-            </LinearGradient>
+            </View>
         )
     }
 }
@@ -96,23 +97,36 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5'
     },
 
     header: {
-        color: '#eee1d6',
-        fontSize: 25,
+        color: 'white',
+        fontSize: 20,
         borderBottomWidth: 0.5,
         borderBottomColor: 'white',
-        bottom: 20
     },
 
     inputContainer: {
-        height: '100%',
-        width: '100%',
-        position: 'absolute',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: '60%',
+        width: "90%",
+        top: "20%",
+        padding: 10,
+        borderBottomRightRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
+        backgroundColor: '#2250d9',
+        borderWidth: 1,
+        borderRadius: 2,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.4,
+        shadowRadius: 2,
+        elevation: 4,
     },
 
     input: {
@@ -121,7 +135,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingLeft: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee1d6',
+        borderBottomColor: 'white',
         borderBottomWidth: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
@@ -129,19 +143,12 @@ const styles = StyleSheet.create({
     },
 
     buttonRegister  : {
-        backgroundColor: '#eee1d6' ,
-        height: 40,
-        width: 250,
-        top: 50,
+        backgroundColor: 'white' ,
+        height: 75,
+        width: '100%',
+        top: 30,
         alignItems: 'center',  
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        borderRadius: 20,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        color: '#111e29',
     },
 
     buttonRegisterText:{

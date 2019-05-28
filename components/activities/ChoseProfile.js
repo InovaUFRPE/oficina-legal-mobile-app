@@ -1,31 +1,48 @@
 import React, {Component} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import { StyleSheet, Text, View, AsyncStorage, ActivityIndicator ,StatusBar, TouchableOpacity} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import {createSwitchNavigator} from 'react-navigation'
+import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {YellowBox} from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class ChoseProfile extends Component {
     constructor(props) {
         super(props);
-        this._bootstrapAsync();
-      }
-    
-    
-      // Fetch the token from storage then navigate to our appropriate place
-      _bootstrapAsync = async () => {
-        const userToken = await AsyncStorage.getItem('userToken');
-    
-        // This will switch to the App screen or Auth screen and this loading
-        // screen will be unmounted and thrown away.
-        this.props.navigation.navigate(userToken ? 'ChoseProfile' : 'Login');
-      };
+        this.displayDataStorage()
+    }
 
+    componentDidMountGetClientByUser = async (id) => {
+        try{
+        await axios.post("http://192.168.0.10:3306/api/cliente/idUsuario", { idUsuario:id })
+            .then(response => { alert(JSON.stringify(response))
+                    if(response.status == 201){
+                        this.props.navigation.navigate('DrawerNavigatorClient')
+                }
+            })
 
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+    
+    
+    displayDataStorage = async () => {
+        try {
+            let user = await AsyncStorage.getItem('userToken')
+            if(user != null){
+                let id = await AsyncStorage.getItem('userId')
+                this.componentDidMountGetClientByUser(JSON.parse(id))
+            }
+        }catch(error){
+            alert(error)
+        }
+    }
 
     render() {
+        YellowBox.ignoreWarnings(['Warning: Async Storage has been extracted from react-native core']);  // <- insert the warning text here you wish to hide.
         return (
-                <LinearGradient 
+                <View 
                     colors={['#2250d9', '#204ac8', '#1d43b7']}
                     style = { styles.container }>
 
@@ -36,31 +53,19 @@ export default class ChoseProfile extends Component {
                         </View>
                         
                         <TouchableOpacity 
-                            style={[styles.buttonC, {backgroundColor: '#111e29'}]}
-                            onPress={() => this.props.navigation.navigate('DrawerNavigatorClient')}>
-                            <Text style={[styles.buttonText, {color: '#eee1d6'}]}>Cliente</Text>
-                            <FontAwesome
-                                name="user"
-                                color="#eee1d6"
-                                size={20}
-                                />
+                            style={styles.button}
+                            onPress={() => this.displayDataStorage()}>
+                            <Text style={[styles.buttonText, {color: 'white'}]}>Cliente</Text>
                         </TouchableOpacity>
                         
                         <TouchableOpacity 
-                            style={styles.buttonM}
+                            style={styles.button}
                             onPress={() => this.props.navigation.navigate('DrawerNavigatorMechanic')}>
-                            <Text style={[styles.buttonText, {color:'#111e29'}]}>Mecanico</Text>
-                            <FontAwesome
-                                name="wrench"
-                                color="#111e29"
-                                size={20}
-                                />
+                            <Text style={[styles.buttonText, {color:'white'}]}>Mecanico</Text>
                         </TouchableOpacity>
                     
                     </View>
-
-                    
-                </LinearGradient>         
+                </View>         
         )
     }
 }
@@ -69,12 +74,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-
+        backgroundColor: '#F5F5F5'
     },
 
     header: {
         fontSize: 20,
-        color: 'white',
+        color: '#2250d9',
         marginBottom: 100
     },
 
@@ -83,44 +88,21 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
 
-    buttonC: {
-        position: 'absolute',
-        backgroundColor: '#eee1d6',
-        height: 50,
-        width: 300,
-        bottom: 20,
-        top: 50,
-        alignItems: 'center',
-        borderTopLeftRadius: 50,
-        borderBottomLeftRadius: 50,
-        borderTopRightRadius: 50,
-        borderBottomRightRadius: 50,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        
-    },
-    buttonM: {
-        position: 'absolute',
-        backgroundColor: '#eee1d6',
-        height: 50,
-        width: 300,
-        top: 130,
-        alignItems: 'center',
-        borderTopLeftRadius:50,
-        borderBottomLeftRadius: 50,
-        borderTopRightRadius: 50,
-        borderBottomRightRadius: 50,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        
+    button: {
+        padding: 20,
+        borderRadius: 5,
+        backgroundColor: "#2250d9",
+        alignSelf: 'stretch',
+        margin: 15,
+        marginHorizontal: 20,
     },
 
     buttonText: {
+        color: "#FFF",
+        fontWeight: "bold",
         fontSize: 20,
-        fontWeight: 'bold'
-    }
+        textAlign: "center",
+    },
 
 
 })

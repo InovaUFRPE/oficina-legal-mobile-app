@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import {ConfirmPassword, validateCPF, validateEmail,  ValidateCEP } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
@@ -44,12 +43,12 @@ export default class RegisterUser extends Component {
     }
 
 
-    saveDataStorage = (client) => {
+    saveDataStorage = (user) => {
         try{
-            AsyncStorage.setItem('client', JSON.stringify(client))
+            AsyncStorage.setItem('user', JSON.stringify(user))
             .then(this.props.navigation.navigate('RegisterVehicle'))
         }catch(error){
-            alert('Não foi possível salvar o usuário')
+            alert('Não foi possível salvar o usuário no armazenamento interno')
         }
         
     }
@@ -86,13 +85,27 @@ export default class RegisterUser extends Component {
     }
     
     componentDidMountGetClient = async () => {
-        let client = await axios.get(`http://192.168.0.10:3306/api/cliente/api/cliente/:${this.state.cpf}`)
-        
+        try{
+            await axios.post("http://192.168.0.10:3306/api/usuario/cpf", {cpf:this.state.cpf})
+                .then(response => { 
+                    if(response.status == 201){
+                        alert("Já existe um cliente cadastrado com esse cpf.")
+                        return null
+                    }
+                })
+
+        }catch(err){
+            this.componentDidMountPostClient()
+            this.saveDataStorage(this.createClientRequisition())
+        }
     }
 
     componentDidMountPostClient = async () => {
-        let client = await axios.post("http://192.168.0.10:3306/api/cliente/api/cliente/", this.createClientRequisition())
-        return client
+        try{
+            await axios.post("http://192.168.0.10:3306/api/cliente/register", this.createClientRequisition())
+        }catch(err){
+            alert("Não foi possível salvar o usuário")
+        }
     }
 
     Verify(){
@@ -106,8 +119,7 @@ export default class RegisterUser extends Component {
             this.state.email = (this.state.email).trim()
             this.state.password = (this.state.password).trim()
             if(this.state.checkBclient) {
-                let client = this.componentDidMountPostClient()
-                saveDataStorage(client)
+                this.componentDidMountGetClient()
             }    
         }else{
             alert(this.errors.str2)
@@ -159,17 +171,17 @@ export default class RegisterUser extends Component {
                                 left
                                 title='Cliente'
                                 checked={this.state.checkBclient}
-                                textStyle={{color: "#eee1d6"}}
+                                textStyle={{color: "white"}}
                                 containerStyle={{backgroundColor:'transparent', borderColor: 'transparent'}}
-                                uncheckedColor="#eee1d6"
+                                uncheckedColor="white"
                                 checkedColor="#acd922"
                                 onPress={() => this.CheckBoxCPress()}
                             />
                             <CheckBox
                                 title='Mecânico'
                                 checked={this.state.checkBMechanic}
-                                textStyle={{color: "#eee1d6"}}
-                                uncheckedColor="#eee1d6"
+                                textStyle={{color: "white"}}
+                                uncheckedColor="white"
                                 checkedColor= "#acd922"
                                 containerStyle={{backgroundColor:'transparent', borderColor: 'transparent', position: 'absolute', left: '55%' }}
                                 onPress={() => this.CheckBoxMPress()}
@@ -180,7 +192,7 @@ export default class RegisterUser extends Component {
                             <View>
                                 <TextInput placeholder='Login'
                                     tintColor={"black"} 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value={this.state.login}
                                     returnKeyType="next"
@@ -188,7 +200,7 @@ export default class RegisterUser extends Component {
                                     onSubmitEditing={() => this.nameInput.focus()}/>         
                                 
                                 <TextInput placeholder='Nome' 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value={this.state.name}
                                     returnKeyType="next"
@@ -197,9 +209,10 @@ export default class RegisterUser extends Component {
                                     onSubmitEditing={() => this.cpfInput.focus()}/> 
 
                                 <TextInput placeholder='CPF'  
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value= {this.state.cpf} 
+                                    maxLength={11}
                                     returnKeyType="next"
                                     keyboardType='numeric'
                                     onChangeText={cpf => this.setState({ cpf })}
@@ -207,7 +220,7 @@ export default class RegisterUser extends Component {
                                     onSubmitEditing={() => this.emailInput.focus()}/>
             
                                 <TextInput placeholder='E-mail' 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value= {this.state.email} 
                                     returnKeyType="next"
@@ -217,7 +230,7 @@ export default class RegisterUser extends Component {
                                     ref={(input) => this.emailInput = input}/> 
 
                                 <TextInput placeholder='Senha' 
-                                    placeholderTextColor="#eee1d6" style={styles.input}
+                                    placeholderTextColor="white" style={styles.input}
                                     value= {this.state.password} 
                                     returnKeyType="next"
                                     secureTextEntry={true}
@@ -226,26 +239,27 @@ export default class RegisterUser extends Component {
                                     ref={(input) => this.passwordInput = input}/> 
 
                                 <TextInput placeholder='Confirmar Senha' 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value= {this.state.confirmPassword} 
                                     returnKeyType="go"
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     secureTextEntry={true}
                                     onChangeText={confirmPassword => this.setState({ confirmPassword })}
                                     onSubmitEditing={() => this.cepInput.focus()}
                                     ref={(input) => this.confirmPasswordInput = input}/>
                                 <TextInput placeholder='CEP'  
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value= {this.state.cep} 
+                                    maxLength={8}
                                     returnKeyType="next"
                                     keyboardType='numeric'
                                     onChangeText={cep => this.setState({ cep })}
                                     ref={(input) => this.cepInput = input}
                                     onSubmitEditing={() => this.streetInput.focus()}/>
                                 <TextInput placeholder='Logradouro' 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value={this.state.street}
                                     returnKeyType="next"
@@ -253,14 +267,14 @@ export default class RegisterUser extends Component {
                                     onChangeText={street => this.setState({ street })}
                                     onSubmitEditing={() => this.neighborhoodInput.focus()}/>
                                 <TextInput placeholder='Bairro' 
-                                    placeholderTextColor="#eee1d6" style={styles.input}
+                                    placeholderTextColor="white" style={styles.input}
                                     value= {this.state.neighborhood} 
                                     returnKeyType="go"
                                     onChangeText={neighborhood => this.setState({ neighborhood })}
                                     ref={(input) => this.neighborhoodInput = input}
                                     onSubmitEditing={() => this.complementInput.focus()}/> 
                                 <TextInput placeholder='Complemento (Opcional)' 
-                                    placeholderTextColor="#eee1d6" 
+                                    placeholderTextColor="white" 
                                     style={styles.input}
                                     value= {this.state.complement} 
                                     returnKeyType="next"
@@ -278,7 +292,7 @@ export default class RegisterUser extends Component {
                         {this.state.checkBMechanic ?
 
                             <TextInput placeholder='Link de seu curriculo' 
-                                placeholderTextColor="#eee1d6" 
+                                placeholderTextColor="white" 
                                 style={styles.input}
                                 value= {this.state.link} 
                                 returnKeyType="next"
@@ -305,7 +319,7 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        color: '#eee1d6',
+        color: 'white',
         fontSize: 20,
         borderBottomWidth: 0.5,
         borderBottomColor: 'white',
@@ -320,7 +334,16 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 5,
         borderTopRightRadius: 5,
         borderTopLeftRadius: 5,
-        backgroundColor: '#2250d9'
+        backgroundColor: '#2250d9',
+        borderWidth: 1,
+        borderRadius: 2,
+        borderColor: '#ddd',
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.4,
+        shadowRadius: 2,
+        elevation: 4,
     },
 
     input: {
@@ -328,15 +351,15 @@ const styles = StyleSheet.create({
         height: 40,
         paddingLeft: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee1d6',
+        borderBottomColor: 'white',
         borderBottomWidth: 1,
         borderBottomRightRadius: 10,
         borderBottomLeftRadius: 10,
-        color: '#eee1d6',
+        color: 'white',
     },
 
     buttonRegister  : {
-        backgroundColor: '#eee1d6' ,
+        backgroundColor: 'white' ,
         height: 75,
         width: '100%',
         top: 30,

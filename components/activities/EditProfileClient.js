@@ -1,14 +1,22 @@
 import React, {Component} from 'react';
-import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
+import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
 export default class EditProfileClient extends Component {
+    constructor(props) {
+        super(props);
+        this.displayDataStorage()
+        alert(JSON.stringify(this.state.name))
+    }
     
     state =  {
         name: '',
+        login: '',
         email: '',
         cep: '',
         street: '',
@@ -24,6 +32,26 @@ export default class EditProfileClient extends Component {
         str2: "\nErro(s)\n"
     }
 
+    componentDidMountGetClientByUser = async (id) => {
+        try{
+            await axios.post("http://192.168.0.10:3306/api/cliente/idUsuario", { idUsuario:id })
+                .then(response => { 
+                        if(response.status == 201){
+                            this.setState({ cep: response.data.cep,
+                                            street: response.data.endereco,
+                                            complement: response.data.complemento,
+                                            neighborhood: response.data.bairro,
+                                            cpf: response.data.cpf,
+                                            name: response.data.nome })
+                    }
+                })
+
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+
     Verify(){
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
@@ -31,17 +59,17 @@ export default class EditProfileClient extends Component {
             return
         }
         else if(this.VerifyErrors()){
-            this.state.name = RemoveEmptySpaces(this.state.name)
-            this.state.cpf = RemoveEmptySpaces(this.state.cpf)
-            this.state.email = RemoveEmptySpaces(this.state.email)
-            this.state.cep = RemoveEmptySpaces(this.state.cep)
-            this.state.street = RemoveEmptySpaces(this.state.street)
-            this.state.complement = RemoveEmptySpaces(this.state.complement)
-            this.state.neighborhood = RemoveEmptySpaces(this.state.neighborhood)
-            this.state.model = RemoveEmptySpaces(this.state.model)
-            this.state.year = RemoveEmptySpaces(this.state.year)
-            this.state.renavam = RemoveEmptySpaces(this.state.renavam)
-            this.state.Vplate = RemoveEmptySpaces(this.state.Vplate)
+            this.state.name = this.state.name.trim()
+            this.state.cpf = this.state.cpf.trim()
+            this.state.email = this.state.email.trim()
+            this.state.cep = this.state.cep.trim()
+            this.state.street = this.state.street.trim()
+            this.state.complement = this.state.complement.trim()
+            this.state.neighborhood = this.state.neighborhood.trim()
+            this.state.model = this.state.model.trim()
+            this.state.year = this.state.year.trim()
+            this.state.renavam = this.state.renavam.trim()
+            this.state.Vplate = this.state.Vplate.trim()
         }else{
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
@@ -49,6 +77,22 @@ export default class EditProfileClient extends Component {
         }
         
         
+    }
+
+    displayDataStorage = async () => {
+        try {
+            let user = await AsyncStorage.getItem('userToken')
+            if(user != null){
+                let id = await AsyncStorage.getItem('userId')
+                this.setState({ login: await AsyncStorage.getItem('userLogin') })
+                this.setState({ email: await AsyncStorage.getItem('userEmail') })
+                this.componentDidMountGetClientByUser(JSON.parse(id))
+            }else{
+                this.props.navigation.navigate('Home')
+            }
+        }catch(error){
+            alert(error)
+        }
     }
 
     VerifyErrors(){
@@ -103,14 +147,14 @@ export default class EditProfileClient extends Component {
 
                 <View style = { styles.container } style={styles.inputContainer}> 
                     
-                    <Text style={styles.header}>USER_NAME</Text>
+                    <Text style={styles.header}>{this.state.name}</Text>
                     <Image
                     source={require('../../images/profile.jpg')}
                     style={styles.image}/>
                     
                     <TouchableOpacity style={styles.ButtonEdit}
                             onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center'}}>Alterar perfil</Text>    
+                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center'}}>Alterar foto de perfil</Text>    
                     </TouchableOpacity>
 
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
@@ -135,6 +179,10 @@ export default class EditProfileClient extends Component {
                             placeholderTextColor='#586069'
                             value= {this.state.email} 
                             onChangeText={email => this.setState({ email })}/>
+                    </View>
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>CPF</Text>
+                        <Text style={[styles.input, {paddingLeft: 8, paddingTop: 5}]}>{this.state.cpf}</Text>
                     </View>
                     
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
@@ -224,7 +272,10 @@ export default class EditProfileClient extends Component {
                             value= {this.state.Vplate} 
                             onChangeText={Vplate => this.setState({ Vplate })}/>
                     </View>
-
+                    <TouchableOpacity style={[styles.ButtonEdit, {paddingTop: 20}]}
+                            onPress = {() => {}}>
+                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center', bottom: 10}}>Alterar perfil</Text>    
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
             
@@ -254,7 +305,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',   
-        width: '85%',
+        width: '90%',
     },
 
     image: {
@@ -271,7 +322,6 @@ const styles = StyleSheet.create({
 
     inputDescription: {
         fontSize: 18,
-        marginLeft: 10,
         color: '#111e29'
     },
 
@@ -285,7 +335,6 @@ const styles = StyleSheet.create({
     input: {
         fontSize: 18,
         width: '100%',
-        marginLeft: 10,
         marginRight: 10,
         height: 40,
         borderBottomWidth: 1,
