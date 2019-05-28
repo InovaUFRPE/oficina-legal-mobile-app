@@ -1,0 +1,166 @@
+import React, {Component} from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import { ValidateCEP, RemoveEmptySpaces } from '../../busnisses/Validation'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+
+
+export default class RegisterAdress extends Component {
+    state =  {
+        street: '',
+        cep: '',
+        complement: '',
+        neighborhood: ''
+    }
+    errors = {
+        str: "\nCampo(s) em branco:\n",
+    }
+
+
+    Verify(){
+        if (!this.checkBlankCamps()){
+            alert(this.errors.str)
+            this.errors.str = "\nCampo(s) em branco:\n"
+            return
+        }
+        if(!ValidateCEP(this.state.cep)){
+            alert("Erro\n\nO Formato do CEP é inválido.")
+            return
+        }
+        this.state.street = RemoveEmptySpaces(this.state.street)
+        this.state.cep = RemoveEmptySpaces(this.state.cep)
+        this.state.complement = RemoveEmptySpaces(this.state.complement)
+        this.state.neighborhood = RemoveEmptySpaces(this.state.neighborhood)
+        this.props.navigation.navigate('RegisterVehicle')
+    }
+
+
+    checkBlankCamps(){
+        if(this.state.street == ""){
+            this.errors.str += "\n- Rua"
+        }
+        if(this.state.cep == ""){
+            this.errors.str += "\n- CEP"
+        }
+        if(this.state.neighborhood == ""){
+            this.errors.str += "\n- Bairro"
+        }
+        if(this.errors.str == "\nCampo(s) em branco:\n"){
+            return true
+        }
+    }
+    
+    render() {
+        return (
+            <LinearGradient 
+                colors={['#2250d9', '#204ac8', '#1d43b7']}
+                style = { styles.container }>
+                <View style={styles.inputContainer}>  
+                    <Text style={styles.header}>
+                        Insira seu endereço 
+                    </Text>          
+                    <TextInput placeholder='Rua' 
+                        placeholderTextColor="#eee1d6" 
+                        style={styles.input}
+                        value={this.state.street}
+                        returnKeyType="next"
+                        onChangeText={street => this.setState({ street })}
+                        onSubmitEditing={() => this.cepInput.focus()}/>
+
+                    <TextInput placeholder='CEP'  
+                        placeholderTextColor="#eee1d6" 
+                        style={styles.input}
+                        value= {this.state.cep} 
+                        returnKeyType="next"
+                        keyboardType='numeric'
+                        onChangeText={cep => this.setState({ cep })}
+                        ref={(input) => this.cepInput = input}
+                        onSubmitEditing={() => this.complementInput.focus()}/>
+
+                    <TextInput placeholder='Complemento (Opcional)' 
+                        placeholderTextColor="#eee1d6" 
+                        style={styles.input}
+                        value= {this.state.complement} 
+                        returnKeyType="next"
+                        onChangeText={complement => this.setState({ complement })}
+                        ref={(input) => this.complementInput = input}
+                        onSubmitEditing={() => this.neighborhoodInput.focus()}/> 
+                        
+
+                    <TextInput placeholder='Bairro' 
+                        placeholderTextColor="#eee1d6" style={styles.input}
+                        value= {this.state.neighborhood} 
+                        returnKeyType="go"
+                        onChangeText={neighborhood => this.setState({ neighborhood })}
+                        ref={(input) => this.neighborhoodInput = input}/> 
+ 
+                                    
+                    <TouchableOpacity onPress={() => this.Verify()} 
+                        style={styles.buttonRegister}>
+                        <Text style={styles.buttonRegisterText}>Seguir</Text>
+                    </TouchableOpacity>  
+                </View>
+            </LinearGradient>
+        )
+    }
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+
+    header: {
+        color: '#eee1d6',
+        fontSize: 25,
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'white',
+        bottom: 20
+    },
+
+    inputContainer: {
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    input: {
+        marginTop: 15,
+        width: '90%',
+        height: 40,
+        paddingLeft: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee1d6',
+        borderBottomWidth: 1,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        color: 'white',
+    },
+
+    buttonRegister  : {
+        backgroundColor: '#eee1d6' ,
+        height: 40,
+        width: 250,
+        top: 50,
+        alignItems: 'center',  
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        borderRadius: 20,
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+
+    buttonRegisterText:{
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#111e29',
+        top: 8,
+    },
+})
