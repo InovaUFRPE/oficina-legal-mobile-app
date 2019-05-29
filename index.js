@@ -4,8 +4,7 @@
 import Navigator from './components/navigation/NewRoutes'
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
-import Switch from './components/navigation/NewRoutes'
-import Map from './components/map/Map'
+import ServiceProgress from './components/activities/ServiceProgressClient'
 
 
-AppRegistry.registerComponent(appName, () => Navigator);
+AppRegistry.registerComponent(appName, () => ServiceProgress);

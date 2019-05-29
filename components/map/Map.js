@@ -24,7 +24,7 @@ export default class Map extends Component {
                 })
             }, //Sucesso
 
-            () => { }, //Erro
+            () => {console.log('Erro')}, //Erro
             {
                 timeout: 2000,
                 enableHighAccuracy: false,
@@ -53,9 +53,7 @@ export default class Map extends Component {
                     style={{ flex: 1 }}
                     initialRegion={region}
                     showsUserLocation
-                    showsMyLocationButton
-                    loadingEnabled
-                    ref={el => this.mapView = el}
+                    ref={map => this.mapView = map}
                 >
                     {destination && (
                         <Directions

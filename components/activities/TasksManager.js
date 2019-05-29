@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, Image, ImageBackground, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, FlatList } from 'react-native'
 import Task from '../TasksMechanic'
 import moment from 'moment'
 import 'moment/locale/pt-br'

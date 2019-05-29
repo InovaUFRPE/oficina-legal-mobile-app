@@ -18,8 +18,9 @@ export default props => {
         check = <View style={styles.pending} />
     }
 
-    const deskStyle = props.done !== null ?
-        { textDecorationLine: 'line-through' } : {}
+    const deskStyle = props.done !== null
+        ? { textDecorationLine: 'line-through' }
+        : {}
 
 
     return (
