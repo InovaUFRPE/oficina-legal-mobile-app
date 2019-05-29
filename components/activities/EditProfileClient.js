@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 
 
@@ -95,10 +95,10 @@ export default class EditProfileClient extends Component {
             
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="bars" size={30} 
+                    <FontAwesome name="arrow-left" size={20} 
                     color="white" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.toggleDrawer()}/>
+                    onPress = {() => this.props.navigation.goBack()}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 

@@ -7,4 +7,4 @@ import { name as appName } from './app.json';
 import ServiceProgress from './components/activities/ServiceProgressClient'
 
 
-AppRegistry.registerComponent(appName, () => ServiceProgress);
+AppRegistry.registerComponent(appName, () => Navigator);

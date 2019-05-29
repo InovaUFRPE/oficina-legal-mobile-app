@@ -16,7 +16,7 @@ export default class ServiceProgressClient extends Component {
             { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
             { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
             { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
+             { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
         ]
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { View } from 'react-native'
 import MapView from 'react-native-maps'
 import Search from './Search'
 import Directions from './Directions'
@@ -81,11 +81,6 @@ export default class Map extends Component {
                     color='#2250d9'
                     style={{ position: 'absolute', padding: 10 }}
                     onPress={() => this.props.navigation.toggleDrawer()}
-                />
-
-                <Image
-                    source={require('../../images/LogoAzulR.png')}
-                    style={{position: 'absolute', width: 50, height: 50, bottom: 1, right: 1, paddingBottom: 20, paddingRight: 20}}
                 />
 
             </View>

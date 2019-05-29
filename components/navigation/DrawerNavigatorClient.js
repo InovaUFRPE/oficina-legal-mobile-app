@@ -22,14 +22,17 @@ export default createDrawerNavigator({
 
     EditProfileClient: {
         screen: EditProfileClient,
-        navigationOptions: {
-            title: 'Perfil'
-        }
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     },
     
     //Rotas das configurações
     StackClient: {
-        screen: StackClient
+        screen: StackClient,
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     },
 
     SearchWorkShopNavigation: {
@@ -37,7 +40,10 @@ export default createDrawerNavigator({
     },
 
     VeicleHistory: {
-        screen: VeicleHistory
+        screen: VeicleHistory,
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     },
 
     Agendamento: {
