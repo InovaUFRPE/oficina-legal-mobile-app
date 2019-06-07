@@ -23,6 +23,7 @@ export default props => {
             <Icon name="trash" size={30} color="#ffffff" />
         </TouchableOpacity>
     )
+    
     return (
         <Swipeable
             leftActionActivationDistance={250}

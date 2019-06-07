@@ -9,6 +9,7 @@ import {StackClient} from '../activities/AccountConfigClient'
 import {SearchWorkShopNavigation} from '../activities/SearchWorkshop'
 import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
+import ServiceProgress from '../activities/ServiceProgressClient'
 
 
 
@@ -48,6 +49,10 @@ export default createDrawerNavigator({
 
     Agendamento: {
         screen: Agendamento
+    },
+
+    ServiceProgress: {
+        screen: ServiceProgress
     }
 
 }, {contentComponent: ({ navigation }) => {

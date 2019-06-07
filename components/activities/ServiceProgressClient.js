@@ -7,16 +7,16 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 export default class ServiceProgressClient extends Component {
     state = {
         tasks: [
-            { id: Math.random(), serviceName: "Troca de Pneu", date:"03/26/19", isDone:"concluido" },
-            { id: Math.random(), serviceName: "Troca de Óleo", date:"03/26/19", isDone:"concluido" },
-            { id: Math.random(), serviceName: "Pintura do capô", date:"03/26/19", isDone:"concluido" },
-            { id: Math.random(), serviceName: "Troca da maçaneta", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Suspensão", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Ar-condicionado", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
-            { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
-             { id: Math.random(), serviceName: "Jante Dianteira", date:"03/26/19", isDone:"pendente" },
+            { id: Math.random(), serviceName: "Troca de Pneu", date: "03/26/19", isDone: "concluido" },
+            { id: Math.random(), serviceName: "Troca de Óleo", date: "03/26/19", isDone: "concluido" },
+            { id: Math.random(), serviceName: "Pintura do capô", date: "03/26/19", isDone: "concluido" },
+            { id: Math.random(), serviceName: "Troca da maçaneta", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Suspensão", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Ar-condicionado", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
+            { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
         ]
     }
 
@@ -25,7 +25,11 @@ export default class ServiceProgressClient extends Component {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity>
-                        <Icon name="arrow-left" size={20} color="#fff" style={{ paddingBottom: 50, paddingLeft: 15 }} />
+                        <Icon name="arrow-left"
+                            size={20}
+                            color="#fff"
+                            style={{ paddingBottom: 50, paddingLeft: 15 }}
+                            onPress={() => this.props.navigation.goBack()} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Progresso do Serviço</Text>
                     <Text style={styles.headerInformation}>Oficina_name</Text>

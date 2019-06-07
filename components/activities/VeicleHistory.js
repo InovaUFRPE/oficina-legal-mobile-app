@@ -23,7 +23,7 @@ export default class VeicleHistory extends Component {
 
     RenderItem(obj) {
         return (
-            <TouchableOpacity style={[styles.cell, { backgroundColor: '#eee1d6' }]}
+            <TouchableOpacity style={[styles.cell, { backgroundColor: '#fff' }]}
                 onPress={() => Alert.alert("Serviços Realizados", obj.item.servico + "\nR$ " + obj.item.custo)}>
                 <View style={styles.workContainer}>
                     <Text style={styles.workText}>Oficina {obj.item.oficina}</Text>
@@ -50,14 +50,13 @@ export default class VeicleHistory extends Component {
 
     render() {
         return (
-            <LinearGradient
-                colors={['#2250d9', '#204ac8', '#1d43b7']}
+            <View
                 style={styles.container}>
                 <View style={styles.headerContainer}>
                     <FontAwesome
                         name="arrow-left"
                         size={20}
-                        style={{ padding: 20, color: '#2250d9', left: 1 }}
+                        style={{ padding: 20, color: '#fff', left: 1 }}
                         onPress={() => this.props.navigation.goBack()}
                     />
                     <Text style={styles.headerTitle}>Histórico do Veículo</Text>
@@ -74,7 +73,7 @@ export default class VeicleHistory extends Component {
                         keyExtractor={item => `${item.id}`}
                         renderItem={this.RenderItem} ></FlatList>
                 </ScrollView>
-            </LinearGradient>
+            </View>
         )
     }
 }
@@ -83,7 +82,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#ecf0f1'
     },
     headerContainer: {
         flexDirection: 'row',
@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: 70,
-        backgroundColor: 'white'
+        backgroundColor: '#2250d9'
     },
 
     headerTitle: {
         fontSize: 25,
         fontWeight: 'bold',
-        color: '#2250d9'
+        color: '#fff'
     },
 
     flatContainer: {

@@ -25,15 +25,16 @@ export default props => {
 
     return (
         <View style={styles.container}>
-            <TouchableWithoutFeedback onPress={() => props.toggleTask(props.id)}>
-                <View style={styles.checkContainer}>{check}</View>
-            </TouchableWithoutFeedback>
             <View>
                 <Text style={[styles.description, deskStyle]}>
                     {props.description}
                 </Text>
                 <Text style={styles.date}>Previsão: {moment(props.estimateAt).locale('pt-br').format('DD [/] MM [/] YYYY')}</Text>
             </View>
+            
+            <TouchableWithoutFeedback onPress={() => props.toggleTask(props.id)}>
+                <View style={styles.checkContainer}>{check}</View>
+            </TouchableWithoutFeedback>
         </View>
     )
 }

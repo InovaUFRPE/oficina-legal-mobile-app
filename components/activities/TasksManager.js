@@ -1,37 +1,35 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, FlatList } from 'react-native'
-import Task from '../TasksMechanic'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, FlatList } from 'react-native'
+import Task from '../TaskForMechanic'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import imageCar from '../../images/cars/gol.jpg'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 
-
-//done - description - estimateAt
+//Visualização das tarefas atribuidas ao mecanico
 
 export default class TaskMechanic extends Component {
     state = {
         tasks: [
-            { id: Math.random(), description: 'Troca de oleo', estimateAt: new Date(), done: null },
-            { id: Math.random(), description: 'Lataria', estimateAt: new Date(), done: null },
-            { id: Math.random(), description: 'Piso do carro', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
-            { id: Math.random(), description: 'Reparo do parabrisa', estimateAt: new Date(), done: null  },
+            { id: Math.random(), initialHour: '06:00', finishHour: '09:25', serviceName: 'Troca de óleo', serviceDescription: 'Aplica dentro do capô do carro', carModel: 'Uno', carPlate: 'KFA-3219', finishDate: '09/08/2019' },
+            { id: Math.random(), initialHour: '06:00', finishHour: '09:25', serviceName: 'Troca de Pneu', serviceDescription: 'Trocar pneu dianteiro esquerdo', carModel: 'Uno', carPlate: 'KFA-3219', finishDate: '09/08/2019' }
         ]
+    }
+
+    deleteTask = id => {
+        const tasks = this.state.tasks.filter(task => task.id !== id)
+        const item = this.state.tasks.find(item => item.id === id)
+        const totalPrice = (parseFloat(this.state.totalPrice) - parseFloat(item.price)).toFixed(2)  /* Definindo o preço total */
+        this.setState({ tasks }, this.filterTasks)
+        this.setState({ totalPrice })
     }
 
 
     toggleTask = id => {
         const tasks = this.state.tasks.map(task => {
             if (task.id === id) {
-                task = {...task}
+                task = { ...task }
                 task.done = task.done ? null : new Date()
             }
             return task
@@ -43,28 +41,13 @@ export default class TaskMechanic extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <ImageBackground source={imageCar}
-                    style={styles.background}>
-                    <TouchableOpacity onPress={() => this.navigation.goBack()} >
-                        <Icon
-                            name='arrow-left'
-                            size={25}
-                            color='#2250d9'
-                            style={{ position: 'absolute', padding: 14 }}
-                        />
-                    </TouchableOpacity>
-                    <View style={styles.titleBar}>
-                        <Text style={styles.title}>Car_name</Text>
-                    </View>
-                </ImageBackground>
                 <View style={styles.tasksContainer}>
-                    <FlatList data={this.state.tasks}
-                        keyExtractor={item => `${item.id}`}
-                        renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask}/>} />
+                    <ScrollView>
+                        <FlatList data={this.state.tasks}
+                            keyExtractor={item => `${item.id}`}
+                            renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} onDelete={this.deleteTask}/>} />
+                    </ScrollView>
                 </View>
-                <TouchableOpacity style={styles.Button}>
-                    <Text style={styles.buttonText}>Enviar Atualização</Text>
-                </TouchableOpacity>
             </View>
         )
     }
@@ -74,6 +57,8 @@ export default class TaskMechanic extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 
     background: {
