@@ -1,107 +1,60 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
 import { Button } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/FontAwesome';
-import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Especialitys from '../TasksOnHome'
 
+// onPress={() => this.props.navigation.navigate('Agendamento')}
+
+const { width, height } = Dimensions.get("window")
 
 export default class WorkShopLayout extends Component {
+    state={
+        workShopname: '',
+        distance: '',
+        Especialitys: []
+    }
     render() {
         return (
             <View style={styles.container}>
-                <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']} style={styles.headerContainer}>
-                    <Image
-                        source={require('../../images/profileWorkShop.png')}
-                        style={styles.image} />
-                    <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                        Workshop_Name
-                    </Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Icon
-                            name="thumbs-up"
-                            size={15}
-                            color="white"
-                            style={{ marginRight: 5, marginTop: 2 }}
-                        />
-                        <Text style={{ color: 'white' }}>
-                            304
-                        </Text>
+                <View style={styles.headerContainer}>
+                    <Icon
+                        name="md-arrow-back"
+                        size={30}
+                        style={{ padding: 16, color: '#fff' }}
+                        onPress={() => this.props.navigation.goBack()} />
+                    <Icon
+                        name="md-heart"
+                        size={30}
+                        style={{ padding: 16, color: '#fff' }} />
+                </View>
+                <View style={styles.bodyContainer}>
+                    <View style={styles.workShopContainer}>
+                        <Text style={styles.workShopName}>Oficina do Manoel - Ipsep</Text>
+                        <View style={styles.workShopInformation}>
+                            <Icon name="md-navigate" size={20} />
+                            <Text style={{ fontSize: 16, marginLeft: 5 }}>1.8 KM</Text>
+                        </View>
+
+                        <View style={{ alignItems: 'center', marginTop: 16 }}>
+                            <TouchableOpacity
+                                style={styles.buttonAgendamento}
+                                onPress={() => this.props.navigation.navigate('Agendamento')}>
+                                <Text style={styles.buttonText}>Fazer Agendamento</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </LinearGradient>
 
-                <ScrollView style={styles.buttonContainer}>
-                    <Button
-                        icon={
-                            <Icon
-                                name="calendar"
-                                size={30}
-                                color="white"
-                                style={[styles.iconButton]}
-                            />
-                        }
-                        onPress={() => this.props.navigation.navigate('Agendamento')}
-                        title="Agendamento"
-                        titleStyle={styles.textButton}
-                        buttonStyle={styles.button}
-                    />
+                    <View style={styles.EspecialitysContainer}>
+                        <Text style={{ paddingHorizontal: 20, marginBottom: 20, fontSize: 24, }}>Essas são nossas especialidades</Text>
+                        <ScrollView style={{backgroundColor: "#F5F5F5"}} horizontal showsHorizontalScrollIndicator={false}>
+                            <Especialitys imageUri={require('../../images/Services/Funilaria.jpg')} name='Funilaria'/>
+                            <Especialitys imageUri={require('../../images/Services/Eletrica.jpg')} name='Elétrica'/>
+                            <Especialitys imageUri={require('../../images/Services/Mecanica.jpg')} name='Mecânica'/>
+                        </ScrollView>
 
-                    <Button
-                        icon={
-                            <Icon
-                                name="user"
-                                size={30}
-                                color="white"
-                                style={styles.iconButton}
-                            />
-                        }
-                        title="Mecanicos"
-                        titleStyle={styles.textButton}
-                        buttonStyle={styles.button}
-                    />
-
-                    <Button
-                        icon={
-                            <Icon
-                                name="phone"
-                                size={30}
-                                color="white"
-                                style={styles.iconButton}
-                            />
-                        }
-                        title="Contato"
-                        titleStyle={styles.textButton}
-                        buttonStyle={styles.button}
-                    />
-
-                    <Button
-                        icon={
-                            <Icon
-                                name="star"
-                                size={30}
-                                color="white"
-                                style={styles.iconButton}
-                            />
-                        }
-                        title="Especialidades"
-                        titleStyle={styles.textButton}
-                        buttonStyle={styles.button}
-                    />
-
-                    <Button
-                        icon={
-                            <Icon
-                                name="comments"
-                                size={30}
-                                color="white"
-                                style={styles.iconButton}
-                            />
-                        }
-                        title="Comentarios"
-                        titleStyle={styles.textButton}
-                        buttonStyle={styles.button}
-                    />
-                </ScrollView>
-
+                    </View>
+                </View>
             </View>
         )
     }
@@ -111,43 +64,51 @@ export default class WorkShopLayout extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F5F5F5"
+        backgroundColor: "#0d47a1"
     },
     headerContainer: {
-        backgroundColor: 'blue',
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: '#0d47a1'
+    },
+    bodyContainer: {
+        flex: 1,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        backgroundColor: "#F5F5F5"
+    },
+    workShopContainer: {
+        width: width,
+        height: height / 4,
     },
 
-    buttonContainer: {
-        backgroundColor: 'blue'
+    workShopName: {
+        marginLeft: 20,
+        marginTop: 30,
+        fontSize: 23,
+        fontWeight: 'bold'
+
     },
 
-    allButtonsContainer: {
-        justifyContent: 'flex-start',
+    workShopInformation: {
+        flexDirection: 'row',
+        marginLeft: 20,
+    },
+
+    buttonAgendamento: {
         alignItems: 'center',
-        width: '50%',
-        height: '85%'
+        borderRadius: 5,
+        width: width - 80,
+        padding: 16,
+        backgroundColor: '#0d47a1'
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: '500'
     },
 
-    button: {
-        borderBottomWidth: 1,
-        height: 100,
-        backgroundColor: '#2250d9'
-    },
-
-    textButton: {
-        paddingTop: 25,
-        fontSize: 25
-    },
-
-    iconButton: {
-        position: 'absolute',
-        paddingBottom: 40
-    },
-
-    image: {
-        width: 120,
-        height: 120
+    EspecialitysContainer: {
+        marginTop: 20
     }
 })

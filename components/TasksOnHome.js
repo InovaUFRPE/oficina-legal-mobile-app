@@ -5,19 +5,17 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 export default class TaskOnHome extends Component {
     render() {
         return (
-            <TouchableOpacity>
-            <View style={{ height: 250, width: 250, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd' }}>
+
+            <View style={{ height: 140, width: 160, marginLeft: 20, borderWidth: 0.5, borderColor: '#dddddd', borderRadius: 10 }}>
                 <View style={{ flex: 2, borderRadius: 5 }}>
                     <Image source={this.props.imageUri}
-                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover', borderRadius: 5 }} />
+                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
-                <View style={{ flex: 1, paddingLeft: 10, paddingTop: 10 }}>
-                    <Text style={styles.informationText}>Cliente: {this.props.clientName}</Text>
-                    <Text style={styles.informationText}>Concluido: 50%</Text>
-                    <Text style={styles.informationText}>Vencimento: {this.props.date}</Text>
+                <View style={styles.nameContainer}>
+                    <Text style={styles.nameText}>{this.props.name}</Text>
                 </View>
             </View>
-            </TouchableOpacity>
+
         )
     }
 }
@@ -29,7 +27,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    informationText: {
-        fontWeight: '700'
+    nameText: {
+        fontSize: 20,
+        marginLeft: 15,
+        marginBottom: 5
+    },
+
+    nameContainer: {
+        position: 'absolute',
+        justifyContent: 'center',
+        width: 160,
+        height: 40,
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+        bottom: 0
     }
 })
