@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import {createStackNavigator} from 'react-navigation'
 import AccountDesativationClient from './AccountDesativationClient'
 
@@ -17,10 +17,10 @@ export default class AccountConfigClient extends Component {
                 style = { styles.container }>
                 <View style={styles.headerContainer}>
                     <FontAwesome
-                        name="bars"
-                        size={30}
+                        name="arrow-left"
+                        size={20}
                         style={{padding: 20, color: '#2250d9', left: 1}}
-                        onPress = {() => this.props.navigation.toggleDrawer()}
+                        onPress = {() => this.props.navigation.navigate('HomeClient')}
                     />
                     <Text style={styles.headerTitle}>Configurações</Text>
                     <Image

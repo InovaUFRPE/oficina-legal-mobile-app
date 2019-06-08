@@ -4,6 +4,8 @@ import moment from 'moment'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Swipeable from 'react-native-swipeable'
 
+
+
 //props: serviceName, serviceType, price, date
 
 export default props => {
@@ -21,6 +23,7 @@ export default props => {
             <Icon name="trash" size={30} color="#ffffff" />
         </TouchableOpacity>
     )
+    
     return (
         <Swipeable
             leftActionActivationDistance={250}

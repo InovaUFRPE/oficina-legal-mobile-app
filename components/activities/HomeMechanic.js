@@ -1,69 +1,34 @@
 import React, { Component } from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome5'
-import { ScrollView } from 'react-native-gesture-handler';
-import TasksOnHome from '../TasksOnHome'
-
+import Icon from 'react-native-vector-icons/FontAwesome5'
+import TabNavigatorMechanic from '../navigation/TabNavigatorMechanic'
 
 
 export default class HomeMechanic extends Component {
-
     render() {
 
         return (
-
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
-                    <FontAwesome name="bars" size={30}
+                    <Icon name="bars" size={30}
                         color="#ffffff"
                         style={styles.menuIcon}
                         onPress={() => this.props.navigation.toggleDrawer()} />
                     <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#ffffff', padding: 15 }}>Mecânico</Text>
                     <Image
-                        source={require('../../images/LogoAzulR.png')}
+                        source={require('../../images/LogoBranca.png')}
                         style={styles.logo}
                     />
                 </View>
-                <ScrollView
-                    scrollEventThrottle={16}
-                >
-                    <View style={{ flex: 1, backgroundColor: 'white', paddingTop: 20 }}>
-                        <Text style={{ fontSize: 24, fontWeight: '700', paddingHorizontal: 20 }}>
-                            Aqui estao seus serviços pendentes
-                        </Text>
-
-                        <View style={{ height: 250, marginTop: 20, }}>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                <TasksOnHome imageUri={require('../../images/cars/gol.jpg')} clientName='Joao Carlos' date='05/02/2019'/>
-                                <TasksOnHome imageUri={require('../../images/cars/ecosport.jpg')} clientName='Maria Josi' date='13/07/2019'/>
-                                <TasksOnHome imageUri={require('../../images/cars/compss.jpg')} clientName='Gabrielly Silva' date='21/03/2019'/>
-                                <TasksOnHome imageUri={require('../../images/cars/onix.jpg')} clientName='Mateus Santos' date='07/04/2019'/>
-                                <TasksOnHome imageUri={require('../../images/cars/toro.jpg')} clientName='Danielle Rosa' date='15/03/2019'/>
-                            </ScrollView>
-                        </View>
-                    </View>
-
-
-                </ScrollView>
-
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    style={styles.touchableOpacityStyle}
-                    onPress={() => this.props.navigation.navigate('Diagnostic')}
-                >
-                    <FontAwesome
-                        name="plus"
-                        size={25}
-                        style={{ color: '#ffffff', }}
-                    />
-                </TouchableOpacity>
-
+                <View style={{ flex: 1,width: '100%', height: '100%', backgroundColor: '#F5F5F5'}}>
+                    <TabNavigatorMechanic/>
+                </View>
             </View>
 
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -100,6 +65,23 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         marginRight: 5
+    },
+    item: {
+        justifyContent: 'space-between',
+        backgroundColor: 'white',
+        flex: 1,
+        borderRadius: 5,
+        padding: 10,
+        marginRight: 10,
+        marginVertical: 10,
+        height: 100
+    },
+    emptyDate: {
+        height: 100,
+        borderBottomWidth: 0.5,
+        borderTopWidth: 0.5,
+        flex: 1,
+        paddingTop: 30
     }
 
 })

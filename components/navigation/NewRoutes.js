@@ -55,6 +55,6 @@ export default Switch = createSwitchNavigator(
         AuthStack: AuthStack
     },
     {
-        initialRouteName: 'AppStack'
+        initialRouteName: 'AuthStack'
     }
 )

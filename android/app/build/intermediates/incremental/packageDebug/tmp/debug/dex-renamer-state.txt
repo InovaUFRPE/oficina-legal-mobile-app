@@ -1,4 +1,4 @@
-#Sun May 26 00:46:45 BRT 2019
-base.0=/home/thalesg/RNprojects/UFRPE/processos/ajeitandoArquitetura/oficina-legal-mobile-app/android/app/build/intermediates/transforms/dexMerger/debug/0
-renamed.0=classes.dex
+#Sun May 26 16:41:56 BRT 2019
+base.0=C\:\\Users\\AMMM\\Desktop\\Processos\\oficina-legal-mobile-app\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
+renamed.0=classes.dex

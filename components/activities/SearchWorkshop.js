@@ -6,7 +6,6 @@ import { FlatList } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { SearchBar } from 'react-native-elements'
 import { getUsers, contains } from '../SearchConfig'
-import Data from '../users'
 import _ from 'lodash'
 import { withNavigation } from 'react-navigation'
 
@@ -17,7 +16,6 @@ import Agendamento from './Agendamento'
 export default class SearchWorkshop extends Component {
     state = {
         loading: false,
-        data: Data,
         error: null,
         query: "",
         fullData: [],

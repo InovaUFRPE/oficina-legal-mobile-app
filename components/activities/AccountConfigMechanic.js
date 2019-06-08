@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
-import BackButtom from '../../busnisses/BackButton'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import {createStackNavigator} from 'react-navigation'
 import AccountDesativationMechanic from './AccountDesativationMechanic'
 
@@ -19,10 +18,10 @@ export default class AccountConfigMechanic extends Component {
                 style = { styles.container }>
                 <View style={styles.headerContainer}>
                     <FontAwesome
-                        name="bars"
-                        size={30}
+                        name="arrow-left"
+                        size={20}
                         style={styles.menuIcon}
-                        onPress = {() => this.props.navigation.toggleDrawer()}
+                        onPress = {() => this.props.navigation.navigate('HomeMechanic')}
                     />
                     <Text style={styles.headerTitle}>Configurações</Text>
                     <Image

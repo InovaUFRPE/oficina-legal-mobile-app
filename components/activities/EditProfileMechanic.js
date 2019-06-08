@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ConfirmPassword, validateCPF, validateEmail, RemoveEmptySpaces} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import BackButton from '../../busnisses/BackButton'
 
 
@@ -97,12 +97,11 @@ export default class EditProfileMechanic extends Component {
     render() {
         return (
             
-            <BackButton onBack = {this.onBack}>
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="bars" size={30} 
+                    <FontAwesome name="arrow-left" size={20} 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.toggleDrawer()}/>
+                    onPress = {() => this.props.navigation.goBack()}/>
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 
@@ -114,7 +113,7 @@ export default class EditProfileMechanic extends Component {
                     
                     <TouchableOpacity style={styles.ButtonEdit}
                             onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center'}}>Alterar perfil</Text>    
+                        <Text style={{fontSize: 18, color:'#fff', width: 300, textAlign: 'center'}}>Alterar perfil</Text>    
                     </TouchableOpacity>
 
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
@@ -216,7 +215,6 @@ export default class EditProfileMechanic extends Component {
 
                 </View>
             </ScrollView>
-            </BackButton>
             
         )
     }
@@ -225,7 +223,7 @@ export default class EditProfileMechanic extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#eee1d6' ,
+        backgroundColor: 'white' ,
     },
 
     header: {
