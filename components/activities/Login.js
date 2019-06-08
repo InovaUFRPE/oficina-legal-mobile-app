@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { validateEmail, checkBlankCamps, validBlankCamps, getToken } from '../../busnisses/Validation';
+import { validateEmail, checkBlankCamps, validBlankCamps} from '../../busnisses/Validation';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
-import { getUserToken } from '../../auth'
-
-import api from '../../service/api'
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class Login extends Component {
     state = {
@@ -12,10 +11,41 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
-    
+    saveDataStorage = (userToken, id, login, email) => {
+        try{
+            AsyncStorage.setItem('userToken', userToken)
+            AsyncStorage.setItem('userId', id)
+            AsyncStorage.setItem('userLogin', login)
+            AsyncStorage.setItem('userEmail', email)
+            this.props.navigation.navigate('DrawerNavigatorClient')
+        }catch(error){
+            alert('Não foi possível salvar o usuário no armazenamento interno')
+        }
+        
+    }
 
+    componentDidMountGetUser = async () => {
+         try{
+            await axios.post("http://192.168.0.10:3306/api/usuario/login", 
+                { login:this.state.username, senha:this.state.password }
+                )
+                .then(response => { 
+                    if(response.status == 200){
+                        this.saveDataStorage(JSON.stringify(response.data.token), 
+                                             JSON.stringify(response.data.user.id),
+                                             JSON.stringify(response.data.user.login),
+                                             JSON.stringify(response.data.user.email)                                             )
+                    }
+                })
+
+         }catch(err){
+            alert("Email e/ou senha incorreto(s).")
+            return null
+        }
+    }
+    
     blankCamps() {
-        let blank = "\nCampo(s) em branco:\n"
+        let blank = "\nCampo(s) em branco:\n", getToken 
         blank += checkBlankCamps(this.state.username, "LOGIN")
         blank += checkBlankCamps(this.state.password, "SENHA")
         if (validBlankCamps(blank)) return validBlankCamps(blank)
@@ -27,16 +57,13 @@ export default class Login extends Component {
         return true
     }
 
-   
-
     Verify() {
         this.state.username = this.state.username.trim()
         this.state.password = this.state.password.trim()
         console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
-        if (!this.isEmail(this.state.username)) { alert("Email inválido."); return }
         console.log(this.state.password + " ESTAGIO 2 ")
-        this._signInAsync()
+        this.componentDidMountGetUser()
     }
 
     render() {
@@ -51,7 +78,7 @@ export default class Login extends Component {
                 />
 
                 <TextInput style={styles.input}
-                    placeholder="Digite seu email."
+                    placeholder="Digite seu email ou login."
                     keyboardType='email-address'
                     value={this.state.username}
                     autoCapitalize='none'
