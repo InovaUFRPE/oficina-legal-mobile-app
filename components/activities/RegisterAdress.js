@@ -1,105 +1,139 @@
-import React, {Component} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import { ValidateCEP, RemoveEmptySpaces } from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { validateEmail, checkBlankCamps, validBlankCamps} from '../../busnisses/Validation';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
+export default class LoginMechanic extends Component {
+    state = {
+        username: '',
+        password: '',
+        errorMSG: ''
+    };
 
-export default class RegisterAdress extends Component {
-    state =  {
-        street: '',
-        cep: '',
-        complement: '',
-        neighborhood: ''
-    }
-    errors = {
-        str: "\nCampo(s) em branco:\n",
-    }
-
-
-    Verify(){
-        if (!this.checkBlankCamps()){
-            alert(this.errors.str)
-            this.errors.str = "\nCampo(s) em branco:\n"
-            return
+    saveDataStorage = (id, login, email, token) => {
+        try{
+            AsyncStorage.setItem('userToken', token)
+            AsyncStorage.setItem('userId', id)
+            AsyncStorage.setItem('userLogin', login)
+            AsyncStorage.setItem('userEmail', email)
+            this.props.navigation.navigate('DrawerNavigatorMechanic')
+        }catch(error){
+            alert('Não foi possível salvar o usuário no armazenamento interno')
         }
-        if(!ValidateCEP(this.state.cep)){
-            alert("Erro\n\nO Formato do CEP é inválido.")
-            return
-        }
-        this.state.street = RemoveEmptySpaces(this.state.street)
-        this.state.cep = RemoveEmptySpaces(this.state.cep)
-        this.state.complement = RemoveEmptySpaces(this.state.complement)
-        this.state.neighborhood = RemoveEmptySpaces(this.state.neighborhood)
-        this.props.navigation.navigate('RegisterVehicle')
+        
     }
 
+    saveClientDataStorage = (data) => {
+        try{
+            AsyncStorage.setItem('clientId', data.id)
+            AsyncStorage.setItem('clientName', data.nome)
+            AsyncStorage.setItem('clientCpf', data.cpf)
+            AsyncStorage.setItem('clientNeighborhood', data.bairro)
+            AsyncStorage.setItem('clientStreet', data.endereco)
+            AsyncStorage.setItem('clientComplement', data.complemento)
+            AsyncStorage.setItem('clientCep', data.cep)
+            this.props.navigation.navigate('DrawerNavigatorClient')
+        }catch(error){
+            alert('Não foi possível salvar o usuário no armazenamento interno')
+        }
+        
+    }
 
-    checkBlankCamps(){
-        if(this.state.street == ""){
-            this.errors.str += "\n- Rua"
+    componentDidMountGetClientByUser = async (id) => {
+        try{
+        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
+            .then(response => { this.saveClientDataStorage(response.data)})
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
         }
-        if(this.state.cep == ""){
-            this.errors.str += "\n- CEP"
-        }
-        if(this.state.neighborhood == ""){
-            this.errors.str += "\n- Bairro"
-        }
-        if(this.errors.str == "\nCampo(s) em branco:\n"){
-            return true
+    }
+
+    componentDidMountGetUser = async () => {
+         try{
+            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
+                            { login: this.state.username, email:this.state.username, senha: this.state.password })
+                .then(response => { 
+                    if(response.status == 200){
+                        this.saveDataStorage( JSON.stringify(response.data.user.id),
+                                            JSON.stringify(response.data.user.login),
+                                            JSON.stringify(response.data.user.email),
+                                            JSON.stringify(response.data.token)
+                                            )};
+                })
+
+         }catch(err){
+            alert("Email e/ou senha incorreto(s).")
+            return null
         }
     }
     
+    blankCamps() {
+        let blank = "\nCampo(s) em branco:\n", getToken 
+        blank += checkBlankCamps(this.state.username, "LOGIN")
+        blank += checkBlankCamps(this.state.password, "SENHA")
+        if (validBlankCamps(blank)) return validBlankCamps(blank)
+        return false
+    }
+
+    isEmail() {
+        if (!validateEmail(this.state.username)) { return false }
+        return true
+    }
+
+    Verify() {
+        this.state.username = this.state.username.trim()
+        this.state.password = this.state.password.trim()
+        console.log(this.state.password + " ESTAGIO 1 ")
+        if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
+        console.log(this.state.password + " ESTAGIO 2 ")
+        this.componentDidMountGetUser()
+    }
+
     render() {
+        console.log(this.state.password)
         return (
-            <LinearGradient 
+            <View
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
-                style = { styles.container }>
-                <View style={styles.inputContainer}>  
-                    <Text style={styles.header}>
-                        Insira seu endereço 
-                    </Text>          
-                    <TextInput placeholder='Rua' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value={this.state.street}
-                        returnKeyType="next"
-                        onChangeText={street => this.setState({ street })}
-                        onSubmitEditing={() => this.cepInput.focus()}/>
+                style={styles.container}>
+                <Image
+                    source={require('../../images/LogoAzulR.png')}
+                    style={styles.logo}
+                />
 
-                    <TextInput placeholder='CEP'  
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.cep} 
-                        returnKeyType="next"
-                        keyboardType='numeric'
-                        onChangeText={cep => this.setState({ cep })}
-                        ref={(input) => this.cepInput = input}
-                        onSubmitEditing={() => this.complementInput.focus()}/>
+                <TextInput style={styles.input}
+                    placeholder="Digite seu email ou login."
+                    keyboardType='email-address'
+                    value={this.state.username}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    onChangeText={(username) => this.setState({ username })} />
 
-                    <TextInput placeholder='Complemento (Opcional)' 
-                        placeholderTextColor="#eee1d6" 
-                        style={styles.input}
-                        value= {this.state.complement} 
-                        returnKeyType="next"
-                        onChangeText={complement => this.setState({ complement })}
-                        ref={(input) => this.complementInput = input}
-                        onSubmitEditing={() => this.neighborhoodInput.focus()}/> 
-                        
 
-                    <TextInput placeholder='Bairro' 
-                        placeholderTextColor="#eee1d6" style={styles.input}
-                        value= {this.state.neighborhood} 
-                        returnKeyType="go"
-                        onChangeText={neighborhood => this.setState({ neighborhood })}
-                        ref={(input) => this.neighborhoodInput = input}/> 
- 
-                                    
-                    <TouchableOpacity onPress={() => this.Verify()} 
-                        style={styles.buttonRegister}>
-                        <Text style={styles.buttonRegisterText}>Seguir</Text>
-                    </TouchableOpacity>  
-                </View>
-            </LinearGradient>
+
+                <TextInput style={styles.input}
+                    secureTextEntry={true}
+                    placeholder="Digite sua senha."
+                    value={this.state.password}
+                    onChangeText={(password) => this.setState({ password })} />
+
+                <TouchableOpacity style={styles.button}
+                    onPress={() => this.Verify()}>
+                    <Text style={styles.buttonText}>Entrar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.signUpLink}
+                    onPress={() => this.props.navigation.navigate('RegisterUser')}>
+                    <Text style={styles.signUpLinkText}>Criar conta grátis</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.signUpLink}
+                    onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+                    <Text style={[styles.signUpLinkText, { fontWeight: 'normal', marginTop: 0 }]}>Esqueceu a senha?</Text>
+                </TouchableOpacity>
+            </View>
+
         )
     }
 }
@@ -107,60 +141,52 @@ export default class RegisterAdress extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-
-    header: {
-        color: '#eee1d6',
-        fontSize: 25,
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'white',
-        bottom: 20
-    },
-
-    inputContainer: {
-        height: '100%',
-        width: '100%',
-        position: 'absolute',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: "#F5F5F5"
+    },
+
+    logo: {
+        width: 150,
+        height: 150,
+        marginBottom: 60
     },
 
     input: {
-        marginTop: 15,
-        width: '90%',
-        height: 40,
-        paddingLeft: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee1d6',
-        borderBottomWidth: 1,
-        borderBottomRightRadius: 10,
-        borderBottomLeftRadius: 10,
-        color: 'white',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        borderRadius: 5,
+        backgroundColor: '#FFF',
+        alignSelf: 'stretch',
+        marginBottom: 15,
+        marginHorizontal: 20,
+        fontSize: 16
     },
 
-    buttonRegister  : {
-        backgroundColor: '#eee1d6' ,
-        height: 40,
-        width: 250,
-        top: 50,
-        alignItems: 'center',  
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        borderRadius: 20,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+    button: {
+        padding: 20,
+        borderRadius: 5,
+        backgroundColor: "#2250d9",
+        alignSelf: 'stretch',
+        margin: 15,
+        marginHorizontal: 20,
     },
 
-    buttonRegisterText:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#111e29',
-        top: 8,
+    buttonText: {
+        color: "#FFF",
+        fontWeight: "bold",
+        fontSize: 16,
+        textAlign: "center",
+    },
+
+    signUpLink: {
+        padding: 10,
+    },
+
+    signUpLinkText: {
+        color: "#999",
+        fontWeight: "bold",
+        fontSize: 16,
+        textAlign: "center"
     },
 })

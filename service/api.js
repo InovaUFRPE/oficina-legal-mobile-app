@@ -2,7 +2,7 @@ import {create} from 'apisauce'
 import {getUserToken} from '../auth'
 
 const api = create ({
-    baseURL: 'http://localhost:3306'
+    baseURL: 'http://localhost:6001'
 })
 
 api.addResponseTransform(Response =>{

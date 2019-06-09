@@ -42,7 +42,6 @@ export default class RegisterUser extends Component {
         })
     }
 
-
     saveDataStorage = (user) => {
         try{
             AsyncStorage.setItem('user', JSON.stringify(user))
@@ -50,7 +49,6 @@ export default class RegisterUser extends Component {
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
-        
     }
 
     createUserRequisition = () => {
@@ -65,14 +63,13 @@ export default class RegisterUser extends Component {
 
     createClientRequisition = () => {
         let user = this.createUserRequisition();
-        user.Client = {
-            nome: this.state.name.trim(),
-            cpf: this.state.cpf.trim(),
-            bairro: this.state.neighborhood.trim(),
-            cep: this.state.cep.trim(),
-            endereco: this.state.street.trim(),
-            complemento: this.state.complement.trim(),
-        }
+        user.nome = this.state.name.trim();
+        user.cpf = this.state.cpf.trim();
+        user.bairro = this.state.neighborhood.trim();
+        user.cep = this.state.cep.trim();
+        user.endereco = this.state.street.trim();
+        user.complemento = this.state.complement.trim();
+        
         return user
     }
 
@@ -86,7 +83,7 @@ export default class RegisterUser extends Component {
     
     componentDidMountGetClient = async () => {
         try{
-            await axios.post("http://192.168.0.10:3306/api/usuario/cpf", {cpf:this.state.cpf})
+            await axios.post("http://192.168.0.10:6001/api/usuario/cpf", {cpf:this.state.cpf})
                 .then(response => { 
                     if(response.status == 201){
                         alert("Já existe um cliente cadastrado com esse cpf.")
@@ -102,7 +99,7 @@ export default class RegisterUser extends Component {
 
     componentDidMountPostClient = async () => {
         try{
-            await axios.post("http://192.168.0.10:3306/api/cliente/register", this.createClientRequisition())
+            await axios.post("http://192.168.0.10:6001/api/cliente/register", this.createClientRequisition())
         }catch(err){
             alert("Não foi possível salvar o usuário")
         }
@@ -120,9 +117,6 @@ export default class RegisterUser extends Component {
             this.state.password = (this.state.password).trim()
             if(this.state.checkBclient) {
                 this.componentDidMountGetClient()
-                let client = this.componentDidMountPostClient()
-                this.saveDataStorage(client)
-
             }    
         }else{
             alert(this.errors.str2)

@@ -11,12 +11,27 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
-    saveDataStorage = (userToken, id, login, email) => {
+    saveDataStorage = (id, login, email, token) => {
         try{
-            AsyncStorage.setItem('userToken', userToken)
+            AsyncStorage.setItem('userToken', token)
             AsyncStorage.setItem('userId', id)
             AsyncStorage.setItem('userLogin', login)
             AsyncStorage.setItem('userEmail', email)
+        }catch(error){
+            alert('Não foi possível salvar o usuário no armazenamento interno')
+        }
+        
+    }
+
+    saveClientDataStorage = (data) => {
+        try{
+            AsyncStorage.setItem('clientId', data.id)
+            AsyncStorage.setItem('clientName', data.nome)
+            AsyncStorage.setItem('clientCpf', data.cpf)
+            AsyncStorage.setItem('clientNeighborhood', data.bairro)
+            AsyncStorage.setItem('clientStreet', data.endereco)
+            AsyncStorage.setItem('clientComplement', data.complemento)
+            AsyncStorage.setItem('clientCep', data.cep)
             this.props.navigation.navigate('DrawerNavigatorClient')
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
@@ -24,18 +39,28 @@ export default class Login extends Component {
         
     }
 
+    componentDidMountGetClientByUser = async (id) => {
+        try{
+        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
+            .then(response => { this.saveClientDataStorage(response.data) })
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+
     componentDidMountGetUser = async () => {
          try{
-            await axios.post("http://192.168.0.10:3306/api/usuario/login", 
-                { login:this.state.username, senha:this.state.password }
-                )
+            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
+                            { login: this.state.username, email:this.state.username, senha: this.state.password })
                 .then(response => { 
                     if(response.status == 200){
-                        this.saveDataStorage(JSON.stringify(response.data.token), 
-                                             JSON.stringify(response.data.user.id),
-                                             JSON.stringify(response.data.user.login),
-                                             JSON.stringify(response.data.user.email)                                             )
-                    }
+                        this.saveDataStorage( JSON.stringify(response.data.user.id),
+                                            JSON.stringify(response.data.user.login),
+                                            JSON.stringify(response.data.user.email),
+                                            JSON.stringify(response.data.token)
+                                            )};
+                        this.componentDidMountGetClientByUser(response.data.user.id)
                 })
 
          }catch(err){

@@ -1,42 +1,15 @@
 import React, {Component} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {YellowBox} from 'react-native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class ChoseProfile extends Component {
     constructor(props) {
         super(props);
-        this.displayDataStorage()
     }
 
-    componentDidMountGetClientByUser = async (id) => {
-        try{
-        await axios.post("http://192.168.0.10:3306/api/cliente/idUsuario", { idUsuario:id })
-            .then(response => { alert(JSON.stringify(response))
-                    if(response.status == 201){
-                        this.props.navigation.navigate('DrawerNavigatorClient')
-                }
-            })
-
-        }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente.")
-            return null
-        }
-    }
-    
-    
-    displayDataStorage = async () => {
-        try {
-            let user = await AsyncStorage.getItem('userToken')
-            if(user != null){
-                let id = await AsyncStorage.getItem('userId')
-                this.componentDidMountGetClientByUser(JSON.parse(id))
-            }
-        }catch(error){
-            alert(error)
-        }
+    state = {
+        profile: ''
     }
 
     render() {
@@ -54,7 +27,7 @@ export default class ChoseProfile extends Component {
                         
                         <TouchableOpacity 
                             style={styles.button}
-                            onPress={() => this.displayDataStorage()}>
+                            onPress={() => { this.props.navigation.navigate('Home') }}>
                             <Text style={[styles.buttonText, {color: 'white'}]}>Cliente</Text>
                         </TouchableOpacity>
                         
@@ -106,6 +79,3 @@ const styles = StyleSheet.create({
 
 
 })
-
-
-
