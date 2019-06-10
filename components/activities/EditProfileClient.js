@@ -12,7 +12,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 export default class EditProfileClient extends Component {
     constructor(props) {
         super(props);
-        this.displayDataStorage()
+        //this.displayDataStorage()
         alert(JSON.stringify(this.state.name))
     }
     

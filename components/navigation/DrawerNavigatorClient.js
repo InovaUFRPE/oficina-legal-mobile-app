@@ -50,15 +50,24 @@ export default createDrawerNavigator({
     },
 
     WorkShopLayout: {
-        screen: WorkShopLayout
+        screen: WorkShopLayout,
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     },
 
     Agendamento: {
-        screen: Agendamento
+        screen: Agendamento,
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     },
 
     ServiceProgress: {
-        screen: ServiceProgress
+        screen: ServiceProgress,
+        navigationOptions: ({ navigation }) => ({
+            drawerLockMode: "locked-closed",
+          })
     }
 
 }, {contentComponent: ({ navigation }) => {

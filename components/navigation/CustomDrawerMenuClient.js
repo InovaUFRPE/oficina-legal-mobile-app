@@ -7,7 +7,7 @@ import {
     Image,
     Alert
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 export default class CustomDrawerMenu extends React.Component {
@@ -33,7 +33,7 @@ export default class CustomDrawerMenu extends React.Component {
                 <View style={{alignItems: 'center', width: 50}}>
                 <Icon
                     name={iconName}
-                    size={30}
+                    size={33}
                     style={{marginTop: 11, marginLeft: 10, color: 'black'}}
                 />
                 </View>
@@ -58,16 +58,16 @@ export default class CustomDrawerMenu extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    {this.navLink('EditProfileClient', 'Perfil', "user")}
-                    {this.navLink('VeicleHistory','Histórico do veículo', "car")}
-                    {this.navLink('ServiceProgress', 'Progresso do serviço', "wrench")}
+                    {this.navLink('EditProfileClient', 'Perfil', "md-contact")}
+                    {this.navLink('VeicleHistory','Histórico do veículo', "md-car")}
+                    {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
                 </View>
 
                 <View style={styles.configButtomContainer}>
-                    {this.navLink('StackClient', 'Configurações', "cog")}
+                    {this.navLink('StackClient', 'Configurações', "md-code-working")}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.logOut()}>
                         <Icon                       
-                            name="angle-left"
+                            name="md-log-out"
                             size={30}
                             style={{position: 'absolute',marginTop: 11, marginLeft: 20, color: 'black'}}
                         />

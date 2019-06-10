@@ -1,31 +1,36 @@
 import React, { Component } from 'react'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/Ionicons'
 import { StyleSheet, Text, View, ImageBackground, DatePickerAndroid, DatePickerIOS, Platform, TouchableOpacity, TextInput, ScrollView, Image, Picker } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import imageOficina from '../../images/Oficina.jpg'
+import DateTimePicker from 'react-native-modal-datetime-picker'
 
 
-const initialState = { desc: '', date: new Date(), workShopInformation: [{ name: '', adress: '', phoneNumber: '' }], pickerSection: '' }
+const initialState = { desc: '', date: null, workShopInformation: [{ name: '', adress: '', phoneNumber: '' }], pickerSection: '', agendamentoLabel: 'Escolha o melhor horário para você' }
 
 export default class Agendamento extends Component {
-    state = { ...initialState }
-
-    handleDateAndroidChanged = () => {
-        DatePickerAndroid.open({
-            date: this.state.date,
-            minDate: this.state.date,
-            mode: 'default'
-        }).then(e => {
-            if (e.action !== DatePickerAndroid.dismissedAction) {
-                const momentDate = moment(this.state.date)
-                momentDate.date(e.day)
-                momentDate.month(e.month)
-                momentDate.year(e.year)
-                this.setState({ date: momentDate.toDate() })
-            }
-        })
+    state = {
+        ...initialState,
+        isDateTimePickerVisible: false
     }
+
+    showDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: true });
+    };
+
+    hideDateTimePicker = () => {
+        this.setState({ isDateTimePickerVisible: false });
+    };
+
+    handleDatePicked = date => {
+        this.setState({
+            date,
+            agendamentoLabel: moment(date).format('llll')
+        })
+        this.hideDateTimePicker();
+    };
+
     render() {
         let datePicker = null
         if (Platform.OS === 'ios') {
@@ -33,19 +38,32 @@ export default class Agendamento extends Component {
                 onDateChange={date => this.setState({ date })} />
         } else {
             datePicker = (
-                <TouchableOpacity onPress={this.handleDateAndroidChanged} style={{ paddingLeft: 60, width: '100%' }}>
-                    <Text style={styles.date}>
-                        {moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY')}
-                    </Text>
+                <TouchableOpacity onPress={this.showDateTimePicker} style={{ paddingLeft: 60, width: '100%' }}>
+                    <Text style={{ fontSize: 20, paddingRight: 20}}>{this.state.agendamentoLabel}</Text>
+                    <DateTimePicker
+                        mode='datetime'
+                        isVisible={this.state.isDateTimePickerVisible}
+                        onConfirm={this.handleDatePicked}
+                        onCancel={this.hideDateTimePicker}
+                        minimumDate={new Date()}
+                    />
                 </TouchableOpacity>
             )
         }
 
         return (
             <View style={styles.container}>
+
                 <ImageBackground
                     source={imageOficina}
                     style={styles.background}>
+                    <Icon
+                        name="md-arrow-back"
+                        size={30}
+                        color='blue'
+                        style={{padding: 15}}
+                        onPress={() => {this.props.navigation.goBack()}}
+                    />
                     <View style={styles.titleBar}>
                         <Image
                             source={require('../../images/profileWorkShop.png')}
@@ -59,12 +77,12 @@ export default class Agendamento extends Component {
                         <Text style={{ fontSize: 15, marginLeft: 30 }}>Rua Rio da Dores, Recife, Penambuco</Text>
                         <Text style={{ fontSize: 15, marginLeft: 30 }}>3339-2210</Text>
                         <Icon
-                            name='map-marker'
+                            name='md-navigate'
                             size={15}
                             style={{ position: 'absolute', marginLeft: 15, marginTop: 35 }}
                         />
                         <Icon
-                            name='phone'
+                            name='md-call'
                             size={15}
                             style={{ position: 'absolute', marginLeft: 15, marginTop: 58 }}
                         />
@@ -72,7 +90,7 @@ export default class Agendamento extends Component {
 
                     <View style={[styles.infoContainer, { height: 70, marginTop: 20 }]}>
                         <Icon
-                            name='calendar'
+                            name='md-alarm'
                             size={30}
                             style={{ marginLeft: 25 }}
                         />
@@ -81,7 +99,7 @@ export default class Agendamento extends Component {
 
                     <View style={styles.infoContainer}>
                         <Icon
-                            name='exclamation-circle'
+                            name='md-alert'
                             size={30}
                         />
                         <TextInput
@@ -94,7 +112,7 @@ export default class Agendamento extends Component {
 
                     <View style={styles.infoContainer}>
                         <Icon
-                            name='car'
+                            name='md-car'
                             size={30}
                             style={{ paddingRight: 5 }}
                         />

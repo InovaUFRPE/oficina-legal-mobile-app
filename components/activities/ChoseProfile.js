@@ -54,7 +54,7 @@ export default class ChoseProfile extends Component {
                         
                         <TouchableOpacity 
                             style={styles.button}
-                            onPress={() => this.displayDataStorage()}>
+                            onPress={() => this.props.navigation.navigate('DrawerNavigatorClient')}>
                             <Text style={[styles.buttonText, {color: 'white'}]}>Cliente</Text>
                         </TouchableOpacity>
                         

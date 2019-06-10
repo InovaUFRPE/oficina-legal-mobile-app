@@ -14,7 +14,7 @@ export default class HomeClient extends Component {
 
     state = {
         loading: false,
-        data: Data,
+        data: [],
         error: null,
         query: "",
         fullData: [],
@@ -24,8 +24,9 @@ export default class HomeClient extends Component {
         this.makeRemoteRequest();
     }
 
-    makeRemoteRequest = _.debounce(() => {
+    makeRemoteRequest = () => {
         this.setState({ loading: true });
+        console.log(this.state.loading)
 
         getUsers(20, this.state.query)
             .then(users => {
@@ -38,19 +39,34 @@ export default class HomeClient extends Component {
             .catch(error => {
                 this.setState({ error, loading: false })
             })
-    }, 150)
+    }
+
+    
+    handlerSearch = (text) => {
+        const formatQuery = text
+        const data = _.filter(this.state.fullData, user => {
+            return contains(user, formatQuery)
+        })
+        this.setState({ query: formatQuery, data }, () => this.makeRemoteRequest())
+    }
 
     RenderItem = (obj) => {
+        const name = obj.item.name.first
+        const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
+        const especialidade = obj.item.especialidade
+        const formatedEspecialidade = especialidade.charAt(0).toUpperCase() + especialidade.slice(1)
+        const logo = obj.item.logo
+    
         return (
             <TouchableOpacity onPress={() => { this.props.navigation.navigate('WorkShopLayout') }} style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
-                <View style={{ width: '30%', height: 100, borderRightWidth: 0.2 }}>
-                    
-                    <Image source={require('../../images/Services/logo.jpg')}
+                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5}}>
+
+                    <Image source={{uri: logo}}
                         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 10 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{obj.item.name.first.toUpperCase()}</Text>
+                        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Oficina {formatedName}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-thumbs-up"
@@ -75,51 +91,19 @@ export default class HomeClient extends Component {
                             color='#0d47a1'
                             style={{ marginBottom: 4 }}
                         />
-                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{obj.item.especialidade}</Text>
+                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{formatedEspecialidade}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
         )
     }
 
-
-
-
-    handlerSearch = (text) => {
-        const formatQuery = text
-        const data = _.filter(this.state.fullData, user => {
-            return contains(user, formatQuery)
-        })
-        this.setState({ query: formatQuery, data }, () => this.makeRemoteRequest())
-    }
-
-    renderSeparator = () => {
-        return (
-            <View style={{
-                height: 1,
-                width: '86%',
-                backgroundColor: "black",
-                marginLeft: "14%"
-            }}>
-            </View>
-        )
-    }
-
-    renderFooter = () => {
-        if (!this.state.loading) return null;
-
-        return (
-            <View style={{ paddingVertical: 20, borderTopWidth: 1 }}>
-                <ActivityIndicator animating size="large" />
-            </View>
-        )
-    }
     render() {
         return (
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1' }}>
+                <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center'}}>
                     <FontAwersome
                         name="bars"
                         size={30}
@@ -129,6 +113,11 @@ export default class HomeClient extends Component {
                     <View>
                         <Text style={{ padding: 15, fontSize: 25, color: '#fff', fontWeight: 'bold' }}>Oficina legal</Text>
                     </View>
+
+                    <Image
+                        source={require('../../images/LogoBranca.png')}
+                        style={styles.logo}
+                    />
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ marginLeft: 20, marginVertical: 10, flexDirection: 'row', backgroundColor: '#f1f2f6', borderRadius: 5, justifyContent: 'flex-start', alignItems: 'center', width: width - 100 }}>
