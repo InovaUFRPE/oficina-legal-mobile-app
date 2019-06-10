@@ -10,10 +10,7 @@ import {SearchWorkShopNavigation} from '../activities/SearchWorkshop'
 import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
 import ServiceProgress from '../activities/ServiceProgressClient'
-
 import WorkShopLayout from '../activities/WorkShopLayout'
-
-
 
 export default createDrawerNavigator({
     HomeClient: {

@@ -1,18 +1,17 @@
 import React, {Component} from 'react';
 import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
-import FontAwesome from 'react-native-vector-icons/FontAwesome5'
-
 
 
 
 export default class EditProfileClient extends Component {
     constructor(props) {
         super(props);
-        //this.displayDataStorage()
+        this.setIdUser()
+        this.displayDataStorage()
         alert(JSON.stringify(this.state.name))
     }
     
@@ -20,6 +19,9 @@ export default class EditProfileClient extends Component {
         name: '',
         login: '',
         email: '',
+        idCliente: 0,
+        password: '' ,
+        confirmPassword: '',
         cep: '',
         street: '',
         complement: '',
@@ -29,29 +31,11 @@ export default class EditProfileClient extends Component {
         renavam: '',
         Vplate: '',
     }
+    stateDB = {}
+
     errors = {
         str: "\nCampo(s) em branco:\n",
         str2: "\nErro(s)\n"
-    }
-
-    componentDidMountGetClientByUser = async (id) => {
-        try{
-            await axios.post("http://192.168.0.10:3306/api/cliente/idUsuario", { idUsuario:id })
-                .then(response => { 
-                        if(response.status == 201){
-                            this.setState({ cep: response.data.cep,
-                                            street: response.data.endereco,
-                                            complement: response.data.complemento,
-                                            neighborhood: response.data.bairro,
-                                            cpf: response.data.cpf,
-                                            name: response.data.nome })
-                    }
-                })
-
-        }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente.")
-            return null
-        }
     }
 
     Verify(){
@@ -62,6 +46,9 @@ export default class EditProfileClient extends Component {
         }
         else if(this.VerifyErrors()){
             this.state.name = this.state.name.trim()
+            this.state.login = this.state.login.trim()
+            this.state.password = this.state.password.trim()
+            this.state.confirmPassword = this.state.confirmPassword.trim()
             this.state.cpf = this.state.cpf.trim()
             this.state.email = this.state.email.trim()
             this.state.cep = this.state.cep.trim()
@@ -76,19 +63,64 @@ export default class EditProfileClient extends Component {
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
             return
+        }   
+    }
+
+    componentDidMountGetClientId = async (idUsuario) => {
+        try{
+            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", idUsuario)
+                .then(response => alert(response.data), this.setState({idCliente: response.data.id}))
+             
+        }catch(err){
+            alert("Talvez esse usuário não tenha um cliente")
         }
-        
-        
+    }
+
+    setIdUser = async () => {
+        this.state.idUsuario = await AsyncStorage.getItem('userId');
+        this.componentDidMountGetClientId({idUsuario: this.state.idUsuario})
+    }
+
+    saveClient = async () => {
+        try{
+            await axios.put(`http://192.168.0.10:6001/api/cliente/update/:${this.state.idCliente}`, this.state)
+                .then(response => alert("Modificações salvas com sucesso."))
+        }catch{
+            alert("Não foi possível salvar o cliente")
+        }
+    }
+
+    saveUser = async () => {
+        try{
+            await axios.put(`http://192.168.0.10:6001/api/usuario/update/:${this.state.idUsuario}`, this.state)
+                .then(response => this.saveClient())
+        }catch{
+            alert("Não foi possível salvar o usuário")
+        }
+    }
+
+    save = () => {
+        if(this.stateDB != this.state){
+           this.saveUser()
+        }
+        else{
+            alert("O banco de dados já contém as informações atuais")
+        }
     }
 
     displayDataStorage = async () => {
         try {
             let user = await AsyncStorage.getItem('userToken')
             if(user != null){
-                let id = await AsyncStorage.getItem('userId')
                 this.setState({ login: await AsyncStorage.getItem('userLogin') })
                 this.setState({ email: await AsyncStorage.getItem('userEmail') })
-                this.componentDidMountGetClientByUser(JSON.parse(id))
+                this.setState({ name: await AsyncStorage.getItem('clientName') })
+                this.setState({ cpf: await AsyncStorage.getItem('clientCpf') })
+                this.setState({ neighborhood: await AsyncStorage.getItem('clientNeighborhood') })
+                this.setState({ street: await AsyncStorage.getItem('clientStreet') })
+                this.setState({ complement: await AsyncStorage.getItem('clientComplement') })
+                this.setState({ cep: await AsyncStorage.getItem('clientCep') })
+                this.stateDB = this.state;
             }else{
                 this.props.navigation.navigate('Home')
             }
@@ -141,10 +173,14 @@ export default class EditProfileClient extends Component {
             
             <ScrollView 
                 style = { styles.container }>
-                    <FontAwesome name="arrow-left" size={20} 
+                    <FontAwesome name="bars" size={30} 
                     color="white" 
                     style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.goBack()}/>
+                    onPress = {() => this.props.navigation.toggleDrawer()}/>
+                    <FontAwesome name='check' size={30}
+                    onPress={() => this.save()}
+                    style={{marginTop: 15, marginLeft: "87%", color: 'black', fontWeight: 1,  }}
+                />
                 
 
                 <View style = { styles.container } style={styles.inputContainer}> 
@@ -172,6 +208,16 @@ export default class EditProfileClient extends Component {
                             value= {this.state.name} 
                             onChangeText={name => this.setState({ name })}/>
                     </View> 
+
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>Login</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_login'
+                            placeholderTextColor='#586069'
+                            value= {this.state.login} 
+                            onChangeText={name => this.setState({ login })}/>
+                    </View> 
                     
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>E-mail</Text>
@@ -186,6 +232,16 @@ export default class EditProfileClient extends Component {
                         <Text style={styles.inputDescription}>CPF</Text>
                         <Text style={[styles.input, {paddingLeft: 8, paddingTop: 5}]}>{this.state.cpf}</Text>
                     </View>
+
+                    <View style={styles.editContainer}>
+                        <Text style={styles.inputDescription}>Senha</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='user_password'
+                            placeholderTextColor='#586069'
+                            value= {this.state.password} 
+                            onChangeText={password => this.setState({ password })}/>
+                    </View> 
                     
                     <View style={[styles.editContainerCat, {paddingTop: 10}]}>
                         <Text style={styles.textCategoria}>Endereço</Text>
@@ -274,10 +330,6 @@ export default class EditProfileClient extends Component {
                             value= {this.state.Vplate} 
                             onChangeText={Vplate => this.setState({ Vplate })}/>
                     </View>
-                    <TouchableOpacity style={[styles.ButtonEdit, {paddingTop: 20}]}
-                            onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center', bottom: 10}}>Alterar perfil</Text>    
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
             

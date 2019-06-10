@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class RegisterVehicle extends Component {
     state =  {
@@ -15,6 +16,70 @@ export default class RegisterVehicle extends Component {
         str: "\nCampo(s) em branco:\n",
     }
 
+    clearAsyncStorage = async() => {
+        AsyncStorage.clear();
+    }
+
+    displayDataStorage = async () => {
+        try {
+            let user = await AsyncStorage.getItem('user')
+            this.clearAsyncStorage()
+            if(user != null){
+                userObj = JSON.parse(user)
+                let login = userObj.login
+                let email = userObj.login
+                let senha = userObj.senha
+                this.componentDidMountGetJwt({login: login, email:email, senha: senha})
+            } 
+        }catch(error){
+            alert(error)
+        }
+    }
+
+    componentDidMountPostVehicle = async (jwt, vehicle) => {
+        axios.defaults.headers.common['x-access-token'] = JSON.stringify(jwt)
+        try{
+            await axios.post("http://192.168.0.10:6001/api/veiculo/add", vehicle)
+                .then(response => this.props.navigation.navigate('Home'))
+        }catch(err){
+            alert("Não foi possível salvar o veículo")
+        }
+    }
+
+    componentDidMountGetClientId = async (idUsuario, jwt) => {
+        try{
+            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", idUsuario)
+                .then(response => this.createVehicleRequisition(response.data.id, jwt))
+             
+        }catch(err){
+            alert("Talvez esse usuário não tenha um cliente")
+        }
+    }
+
+    componentDidMountGetJwt = async (loginEsenha) => {
+        try{
+            const user = await axios.post("http://192.168.0.10:6001/api/usuario/login", loginEsenha)
+            const jwt = user.data.token
+            const userId = {idUsuario: user.data.user.id}
+            this.componentDidMountGetClientId(userId, jwt)
+        }catch(err){
+            alert("Algo deu errado, não foi possível resgatar usuário")
+        }
+    }
+
+    createVehicleRequisition = (clientId, jwt) => {
+        const vehicle = {
+            modelo: this.state.model,
+            ano: this.state.year,
+            renavam: this.state.renavam,
+            placa: this.state.Vplate,
+            Cliente: {
+                id: clientId
+            }
+        }
+        this.componentDidMountPostVehicle(jwt, vehicle)
+        return vehicle
+    }
 
     Verify(){
         if (!this.checkBlankCamps()){
@@ -22,7 +87,7 @@ export default class RegisterVehicle extends Component {
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
-        alert("Pode seguir")
+        this.displayDataStorage()
     }
 
     checkBlankCamps(){

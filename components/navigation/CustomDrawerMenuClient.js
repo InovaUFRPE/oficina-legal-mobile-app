@@ -8,9 +8,16 @@ import {
     Alert
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class CustomDrawerMenu extends React.Component {
+    constructor(props){
+        super(props);
+        this.getUserName()
+    }
+    state = {
+        username: 'Username'
+    }
     logOut(){
         Alert.alert(
             'Mensagem',
@@ -24,8 +31,12 @@ export default class CustomDrawerMenu extends React.Component {
               {text: 'Sim', onPress: () => this.props.navigation.navigate('AppStack')},
             ],
             {cancelable: false},
-          );
+        );
+        AsyncStorage.clear()
     }
+
+    getUserName = async () => this.setState({ username: await AsyncStorage.getItem('clientName')})
+    
 
     navLink(nav, text, iconName){
         return(
@@ -52,7 +63,7 @@ export default class CustomDrawerMenu extends React.Component {
                             style={styles.profileImage}
                         />
                         <Text style={styles.usernameText}>
-                            USER_NAME
+                            {this.state.username}
                         </Text>
                     </View>
                 </View>
