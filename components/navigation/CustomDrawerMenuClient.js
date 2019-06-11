@@ -28,15 +28,22 @@ export default class CustomDrawerMenu extends React.Component {
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
               },
-              {text: 'Sim', onPress: () => this.props.navigation.navigate('AppStack')},
-            ],
+              {text: 'Sim', onPress: () => {
+                this.props.navigation.navigate('AppStack')
+                this.cleanData()
+            }},],
             {cancelable: false},
         );
+    }
+
+    cleanData = () => {
         AsyncStorage.clear()
     }
 
-    getUserName = async () => this.setState({ username: await AsyncStorage.getItem('clientName')})
-    
+    getUserName = async () => {
+        const cliente = JSON.parse(await AsyncStorage.getItem('client'))
+        this.setState({ username: cliente.nome})
+    }
 
     navLink(nav, text, iconName){
         return(

@@ -10,9 +10,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class EditProfileClient extends Component {
     constructor(props) {
         super(props);
-        this.setIdUser()
         this.displayDataStorage()
-        alert(JSON.stringify(this.state.name))
     }
     
     state =  {
@@ -30,6 +28,8 @@ export default class EditProfileClient extends Component {
         year: '',
         renavam: '',
         Vplate: '',
+        cliente: {},
+        usuario: {}
     }
     stateDB = {}
 
@@ -66,25 +66,37 @@ export default class EditProfileClient extends Component {
         }   
     }
 
-    componentDidMountGetClientId = async (idUsuario) => {
+    componentDidMountGetClientByUser = async (id) => {
         try{
-            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", idUsuario)
-                .then(response => alert(response.data), this.setState({idCliente: response.data.id}))
-             
+        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
+            .then(response => { this.saveClientDataStorage(response.data) })
         }catch(err){
-            alert("Talvez esse usuário não tenha um cliente")
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
         }
     }
 
-    setIdUser = async () => {
-        this.state.idUsuario = await AsyncStorage.getItem('userId');
-        this.componentDidMountGetClientId({idUsuario: this.state.idUsuario})
+    componentDidMountGetUser = async () => {
+         try{
+            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
+                            { login: this.state.username, email:this.state.username, senha: this.state.password })
+                .then(response => { 
+                    if(response.status == 200){
+                        this.saveDataStorage(JSON.stringify(response.data))};
+                        this.componentDidMountGetClientByUser(response.data.user.id)
+                })
+
+         }catch(err){
+            alert("Email e/ou senha incorreto(s).")
+            return null
+        }
     }
 
     saveClient = async () => {
+        alert(this.state.idCliente)
         try{
-            await axios.put(`http://192.168.0.10:6001/api/cliente/update/:${this.state.idCliente}`, this.state)
-                .then(response => alert("Modificações salvas com sucesso."))
+            await axios.put(`http://192.168.0.10:6001/api/cliente/update/${this.state.cliente.id}`, this.state)
+                .then(response => alert("Modificações salvas com sucesso. Logue novamente para atualizar seu app"))
         }catch{
             alert("Não foi possível salvar o cliente")
         }
@@ -92,7 +104,7 @@ export default class EditProfileClient extends Component {
 
     saveUser = async () => {
         try{
-            await axios.put(`http://192.168.0.10:6001/api/usuario/update/:${this.state.idUsuario}`, this.state)
+            await axios.put(`http://192.168.0.10:6001/api/usuario/update/${this.state.cliente.idUsuario}`, this.state)
                 .then(response => this.saveClient())
         }catch{
             alert("Não foi possível salvar o usuário")
@@ -108,18 +120,29 @@ export default class EditProfileClient extends Component {
         }
     }
 
+    populateBlankCamps = () =>{
+        this.setState(
+            {
+                idCliente: this.state.cliente.id,
+                name: this.state.cliente.nome,
+                login: this.state.usuario.user.login,
+                email: this.state.usuario.user.email,
+                cpf: this.state.cliente.cpf,
+                street: this.state.cliente.endereco,
+                neighborhood: this.state.cliente.bairro,
+                cep: this.state.cliente.cep,
+                complement: this.state.cliente.complemento
+            })
+        this.state.usuario.idUsuario = this.state.cliente.idUsuario
+    }
+
     displayDataStorage = async () => {
         try {
             let user = await AsyncStorage.getItem('userToken')
             if(user != null){
-                this.setState({ login: await AsyncStorage.getItem('userLogin') })
-                this.setState({ email: await AsyncStorage.getItem('userEmail') })
-                this.setState({ name: await AsyncStorage.getItem('clientName') })
-                this.setState({ cpf: await AsyncStorage.getItem('clientCpf') })
-                this.setState({ neighborhood: await AsyncStorage.getItem('clientNeighborhood') })
-                this.setState({ street: await AsyncStorage.getItem('clientStreet') })
-                this.setState({ complement: await AsyncStorage.getItem('clientComplement') })
-                this.setState({ cep: await AsyncStorage.getItem('clientCep') })
+                this.state.cliente = JSON.parse(await AsyncStorage.getItem('client'))
+                this.state.usuario = JSON.parse(await AsyncStorage.getItem('user'))
+                this.populateBlankCamps()
                 this.stateDB = this.state;
             }else{
                 this.props.navigation.navigate('Home')
@@ -216,7 +239,7 @@ export default class EditProfileClient extends Component {
                             placeholder='user_login'
                             placeholderTextColor='#586069'
                             value= {this.state.login} 
-                            onChangeText={name => this.setState({ login })}/>
+                            onChangeText={login => this.setState({ login })}/>
                     </View> 
                     
                     <View style={styles.editContainer}>
@@ -230,7 +253,12 @@ export default class EditProfileClient extends Component {
                     </View>
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>CPF</Text>
-                        <Text style={[styles.input, {paddingLeft: 8, paddingTop: 5}]}>{this.state.cpf}</Text>
+                        <TextInput
+                            style={[styles.input]}
+                            placeholder='user_cpf'
+                            placeholderTextColor='#586069'
+                            value= {this.state.cpf} 
+                            onChangeText={cpf => this.setState({ cpf })}/>
                     </View>
 
                     <View style={styles.editContainer}>

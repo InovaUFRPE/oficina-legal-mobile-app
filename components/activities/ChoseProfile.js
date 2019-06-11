@@ -27,7 +27,7 @@ export default class ChoseProfile extends Component {
                         
                         <TouchableOpacity 
                             style={styles.button}
-                            onPress={() => this.props.navigation.navigate('DrawerNavigatorClient')}>
+                            onPress={() => this.props.navigation.navigate('Home')}>
                             <Text style={[styles.buttonText, {color: 'white'}]}>Cliente</Text>
                         </TouchableOpacity>
                         

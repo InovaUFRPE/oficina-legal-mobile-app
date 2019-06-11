@@ -11,12 +11,11 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
-    saveDataStorage = (id, login, email, token) => {
+    saveDataStorage = (data) => {
+        const user = JSON.parse(data)
         try{
-            AsyncStorage.setItem('userToken', token)
-            AsyncStorage.setItem('userId', id)
-            AsyncStorage.setItem('userLogin', login)
-            AsyncStorage.setItem('userEmail', email)
+            AsyncStorage.setItem('userToken', user.token)
+            AsyncStorage.setItem('user', JSON.stringify(user))
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -25,13 +24,7 @@ export default class Login extends Component {
 
     saveClientDataStorage = (data) => {
         try{
-            AsyncStorage.setItem('clientId', data.id)
-            AsyncStorage.setItem('clientName', data.nome)
-            AsyncStorage.setItem('clientCpf', data.cpf)
-            AsyncStorage.setItem('clientNeighborhood', data.bairro)
-            AsyncStorage.setItem('clientStreet', data.endereco)
-            AsyncStorage.setItem('clientComplement', data.complemento)
-            AsyncStorage.setItem('clientCep', data.cep)
+            AsyncStorage.setItem('client', JSON.stringify(data))
             this.props.navigation.navigate('DrawerNavigatorClient')
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
@@ -42,7 +35,7 @@ export default class Login extends Component {
     componentDidMountGetClientByUser = async (id) => {
         try{
         await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
-            .then(response => { this.saveClientDataStorage(response.data) })
+            .then(response => {this.saveClientDataStorage(response.data)})
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
@@ -55,11 +48,7 @@ export default class Login extends Component {
                             { login: this.state.username, email:this.state.username, senha: this.state.password })
                 .then(response => { 
                     if(response.status == 200){
-                        this.saveDataStorage( JSON.stringify(response.data.user.id),
-                                            JSON.stringify(response.data.user.login),
-                                            JSON.stringify(response.data.user.email),
-                                            JSON.stringify(response.data.token)
-                                            )};
+                        this.saveDataStorage(JSON.stringify(response.data))};
                         this.componentDidMountGetClientByUser(response.data.user.id)
                 })
 

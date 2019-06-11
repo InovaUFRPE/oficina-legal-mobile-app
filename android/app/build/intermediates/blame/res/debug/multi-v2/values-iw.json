@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/thalesg/RJprojects/UFRPE/processos/modMarinho/oficina-legal-mobile-app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-iw/values-iw.xml",
+            "outputFile": "/home/thalesg/RNprojects/UFRPE/processos/oficina-legal-mobile-app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-iw/values-iw.xml",
             "map": [
                 {
                     "source": "/home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/res/values-iw/values.xml",

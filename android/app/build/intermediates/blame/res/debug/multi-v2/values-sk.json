@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/home/thalesg/RJprojects/UFRPE/processos/modMarinho/oficina-legal-mobile-app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sk/values-sk.xml",
+            "outputFile": "/home/thalesg/RNprojects/UFRPE/processos/oficina-legal-mobile-app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-sk/values-sk.xml",
             "map": [
                 {
                     "source": "/home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/res/values-sk/values-sk.xml",
