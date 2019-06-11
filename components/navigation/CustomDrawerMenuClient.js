@@ -76,7 +76,7 @@ export default class CustomDrawerMenu extends React.Component {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    {this.navLink('EditProfileClient', 'Perfil', "md-contact")}
+                    {this.navLink('EditDataClient', 'Perfil', "md-contact")}
                     {this.navLink('VeicleHistory','Histórico do veículo', "md-car")}
                     {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
                 </View>

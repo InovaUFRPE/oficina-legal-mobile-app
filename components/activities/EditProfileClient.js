@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {ConfirmPassword, validateCPF, validateEmail} from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler} from 'react-native';
+import React, { Component } from 'react';
+import { ConfirmPassword, validateCPF, validateEmail } from '../../busnisses/Validation'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -12,13 +12,13 @@ export default class EditProfileClient extends Component {
         super(props);
         this.displayDataStorage()
     }
-    
-    state =  {
+
+    state = {
         name: '',
         login: '',
         email: '',
         idCliente: 0,
-        password: '' ,
+        password: '',
         confirmPassword: '',
         cep: '',
         street: '',
@@ -38,13 +38,13 @@ export default class EditProfileClient extends Component {
         str2: "\nErro(s)\n"
     }
 
-    Verify(){
-        if (!this.checkBlankCamps()){
+    Verify() {
+        if (!this.checkBlankCamps()) {
             alert(this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
-        else if(this.VerifyErrors()){
+        else if (this.VerifyErrors()) {
             this.state.name = this.state.name.trim()
             this.state.login = this.state.login.trim()
             this.state.password = this.state.password.trim()
@@ -59,34 +59,35 @@ export default class EditProfileClient extends Component {
             this.state.year = this.state.year.trim()
             this.state.renavam = this.state.renavam.trim()
             this.state.Vplate = this.state.Vplate.trim()
-        }else{
+        } else {
             alert(this.errors.str2)
             this.errors.str2 = "\nErro(s)\n"
             return
-        }   
+        }
     }
 
     componentDidMountGetClientByUser = async (id) => {
-        try{
-        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
-            .then(response => { this.saveClientDataStorage(response.data) })
-        }catch(err){
+        try {
+            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario: id })
+                .then(response => { this.saveClientDataStorage(response.data) })
+        } catch (err) {
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
         }
     }
 
     componentDidMountGetUser = async () => {
-         try{
-            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
-                            { login: this.state.username, email:this.state.username, senha: this.state.password })
-                .then(response => { 
-                    if(response.status == 200){
-                        this.saveDataStorage(JSON.stringify(response.data))};
-                        this.componentDidMountGetClientByUser(response.data.user.id)
+        try {
+            await axios.post("http://192.168.0.10:6001/api/usuario/login",
+                { login: this.state.username, email: this.state.username, senha: this.state.password })
+                .then(response => {
+                    if (response.status == 200) {
+                        this.saveDataStorage(JSON.stringify(response.data))
+                    };
+                    this.componentDidMountGetClientByUser(response.data.user.id)
                 })
 
-         }catch(err){
+        } catch (err) {
             alert("Email e/ou senha incorreto(s).")
             return null
         }
@@ -94,33 +95,33 @@ export default class EditProfileClient extends Component {
 
     saveClient = async () => {
         alert(this.state.idCliente)
-        try{
+        try {
             await axios.put(`http://192.168.0.10:6001/api/cliente/update/${this.state.cliente.id}`, this.state)
                 .then(response => alert("Modificações salvas com sucesso. Logue novamente para atualizar seu app"))
-        }catch{
+        } catch{
             alert("Não foi possível salvar o cliente")
         }
     }
 
     saveUser = async () => {
-        try{
+        try {
             await axios.put(`http://192.168.0.10:6001/api/usuario/update/${this.state.cliente.idUsuario}`, this.state)
                 .then(response => this.saveClient())
-        }catch{
+        } catch{
             alert("Não foi possível salvar o usuário")
         }
     }
 
     save = () => {
-        if(this.stateDB != this.state){
-           this.saveUser()
+        if (this.stateDB != this.state) {
+            this.saveUser()
         }
-        else{
+        else {
             alert("O banco de dados já contém as informações atuais")
         }
     }
 
-    populateBlankCamps = () =>{
+    populateBlankCamps = () => {
         this.setState(
             {
                 idCliente: this.state.cliente.id,
@@ -139,50 +140,50 @@ export default class EditProfileClient extends Component {
     displayDataStorage = async () => {
         try {
             let user = await AsyncStorage.getItem('userToken')
-            if(user != null){
+            if (user != null) {
                 this.state.cliente = JSON.parse(await AsyncStorage.getItem('client'))
                 this.state.usuario = JSON.parse(await AsyncStorage.getItem('user'))
                 this.populateBlankCamps()
                 this.stateDB = this.state;
-            }else{
+            } else {
                 this.props.navigation.navigate('Home')
             }
-        }catch(error){
+        } catch (error) {
             alert(error)
         }
     }
 
-    VerifyErrors(){
-        if(!ConfirmPassword(this.state.password, this.state.confirmPassword)){
+    VerifyErrors() {
+        if (!ConfirmPassword(this.state.password, this.state.confirmPassword)) {
             this.errors.str2 += "\n- As senhas não conferem."
         }
-        if(!validateCPF(this.state.cpf)){
+        if (!validateCPF(this.state.cpf)) {
             this.errors.str2 += "\n- Insira um CPF válido."
         }
-        if(!validateEmail(this.state.email)){
+        if (!validateEmail(this.state.email)) {
             this.errors.str2 += "\n- Insira um email válido."
         }
-        if(this.errors.str2 == "\nErro(s)\n")
+        if (this.errors.str2 == "\nErro(s)\n")
             return true
     }
 
-    checkBlankCamps(){
-        if(this.state.name == ""){
+    checkBlankCamps() {
+        if (this.state.name == "") {
             this.errors.str += "\n- Nome"
         }
-        if(this.state.cpf == ""){
+        if (this.state.cpf == "") {
             this.errors.str += "\n- CPF"
         }
-        if(this.state.email == ""){
+        if (this.state.email == "") {
             this.errors.str += "\n- Email"
         }
-        if(this.state.password == ""){
+        if (this.state.password == "") {
             this.errors.str += "\n- Senha"
         }
-        if(this.state.confirmPassword == ""){
+        if (this.state.confirmPassword == "") {
             this.errors.str += "\n- Confirmar senha"
         }
-        if(this.errors.str == "\nCampo(s) em branco:\n"){
+        if (this.errors.str == "\nCampo(s) em branco:\n") {
             return true
         }
     }
@@ -190,47 +191,40 @@ export default class EditProfileClient extends Component {
     onBack = () => {
         this.props.navigation.navigate('HomeClient')
     }
-    
+
     render() {
         return (
-            
-            <ScrollView 
-                style = { styles.container }>
-                    <FontAwesome name="bars" size={30} 
-                    color="white" 
-                    style={styles.menuIcon}
-                    onPress = {() => this.props.navigation.toggleDrawer()}/>
-                    <FontAwesome name='check' size={30}
-                    onPress={() => this.save()}
-                    style={{marginTop: 15, marginLeft: "87%", color: 'black', fontWeight: 1,  }}
-                />
-                
 
-                <View style = { styles.container } style={styles.inputContainer}> 
-                    
+            <ScrollView
+                style={styles.container}>
+                <View style={styles.container} style={styles.inputContainer}>
+                    <FontAwesome name='check' size={30}
+                        onPress={() => this.save()}
+                        style={{ marginTop: 15, marginLeft: "87%", color: 'black', fontWeight: 1, }}
+                    />
                     <Text style={styles.header}>{this.state.name}</Text>
                     <Image
-                    source={require('../../images/profile.jpg')}
-                    style={styles.image}/>
-                    
+                        source={require('../../images/profile.jpg')}
+                        style={styles.image} />
+
                     <TouchableOpacity style={styles.ButtonEdit}
-                            onPress = {() => {}}>
-                        <Text style={{fontSize: 18, color:'#eee1d6', width: 300, textAlign: 'center'}}>Alterar foto de perfil</Text>    
+                        onPress={() => { }}>
+                        <Text style={{ fontSize: 18, color: '#eee1d6', width: 300, textAlign: 'center' }}>Alterar foto de perfil</Text>
                     </TouchableOpacity>
 
-                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
+                    <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
                         <Text style={styles.textCategoria}>Pessoal</Text>
-                    </View> 
-                    
+                    </View>
+
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>Nome</Text>
                         <TextInput
                             style={styles.input}
                             placeholder='user_name'
                             placeholderTextColor='#586069'
-                            value= {this.state.name} 
-                            onChangeText={name => this.setState({ name })}/>
-                    </View> 
+                            value={this.state.name}
+                            onChangeText={name => this.setState({ name })} />
+                    </View>
 
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>Login</Text>
@@ -238,18 +232,18 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_login'
                             placeholderTextColor='#586069'
-                            value= {this.state.login} 
-                            onChangeText={login => this.setState({ login })}/>
-                    </View> 
-                    
+                            value={this.state.login}
+                            onChangeText={login => this.setState({ login })} />
+                    </View>
+
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>E-mail</Text>
                         <TextInput
                             style={[styles.input]}
                             placeholder='user_email'
                             placeholderTextColor='#586069'
-                            value= {this.state.email} 
-                            onChangeText={email => this.setState({ email })}/>
+                            value={this.state.email}
+                            onChangeText={email => this.setState({ email })} />
                     </View>
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>CPF</Text>
@@ -257,8 +251,8 @@ export default class EditProfileClient extends Component {
                             style={[styles.input]}
                             placeholder='user_cpf'
                             placeholderTextColor='#586069'
-                            value= {this.state.cpf} 
-                            onChangeText={cpf => this.setState({ cpf })}/>
+                            value={this.state.cpf}
+                            onChangeText={cpf => this.setState({ cpf })} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -267,13 +261,13 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_password'
                             placeholderTextColor='#586069'
-                            value= {this.state.password} 
-                            onChangeText={password => this.setState({ password })}/>
-                    </View> 
-                    
-                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
+                            value={this.state.password}
+                            onChangeText={password => this.setState({ password })} />
+                    </View>
+
+                    <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
                         <Text style={styles.textCategoria}>Endereço</Text>
-                    </View>  
+                    </View>
 
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>CEP</Text>
@@ -281,8 +275,8 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_cep'
                             placeholderTextColor='#586069'
-                            value= {this.state.cep} 
-                            onChangeText={cep => this.setState({ cep })}/>
+                            value={this.state.cep}
+                            onChangeText={cep => this.setState({ cep })} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -291,8 +285,8 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_street'
                             placeholderTextColor='#586069'
-                            value= {this.state.street} 
-                            onChangeText={street => this.setState({ street })}/>
+                            value={this.state.street}
+                            onChangeText={street => this.setState({ street })} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -301,8 +295,8 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_neighborhood'
                             placeholderTextColor='#586069'
-                            value= {this.state.neighborhood} 
-                            onChangeText={neighborhood => this.setState({ neighborhood })}/>
+                            value={this.state.neighborhood}
+                            onChangeText={neighborhood => this.setState({ neighborhood })} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -311,56 +305,12 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_complement'
                             placeholderTextColor='#586069'
-                            value= {this.state.complement} 
-                            onChangeText={complement => this.setState({ complement })}/>
-                    </View>
-
-                    <View style={[styles.editContainerCat, {paddingTop: 10}]}>
-                        <Text style={styles.textCategoria}>Veículo</Text>
-                    </View>
-
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Modelo</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_vehicle_model'
-                            placeholderTextColor='#586069'
-                            value= {this.state.model} 
-                            onChangeText={model => this.setState({ model })}/>
-                    </View>
-
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Ano</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_vehicle_year'
-                            placeholderTextColor='#586069'
-                            value= {this.state.year} 
-                            onChangeText={year => this.setState({ year })}/>
-                    </View>
-
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Renavam</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_vehicle_renavam'
-                            placeholderTextColor='#586069'
-                            value= {this.state.renavam} 
-                            onChangeText={renavam => this.setState({ renavam })}/>
-                    </View>
-
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Placa</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_vehicle_plate'
-                            placeholderTextColor='#586069'
-                            value= {this.state.Vplate} 
-                            onChangeText={Vplate => this.setState({ Vplate })}/>
+                            value={this.state.complement}
+                            onChangeText={complement => this.setState({ complement })} />
                     </View>
                 </View>
             </ScrollView>
-            
+
         )
     }
 }
@@ -368,7 +318,7 @@ export default class EditProfileClient extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white' ,
+        backgroundColor: 'white',
     },
 
     header: {
@@ -376,30 +326,28 @@ const styles = StyleSheet.create({
         color: '#2250d9',
         marginTop: 20
 
-    },  
+    },
     editContainer: {
         marginBottom: 10,
         justifyContent: 'center',
-        alignItems: 'flex-start',   
+        alignItems: 'flex-start',
         width: '85%',
     },
     editContainerCat: {
         marginBottom: 10,
         justifyContent: 'center',
-        alignItems: 'center',   
+        alignItems: 'center',
         width: '90%',
     },
 
     image: {
         width: 100,
         height: 100,
-        marginTop: 15,
     },
 
     inputContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        paddingTop: 15,
     },
 
     inputDescription: {
@@ -407,8 +355,8 @@ const styles = StyleSheet.create({
         color: '#111e29'
     },
 
-    textCategoria: {   
-        fontSize: 28, 
+    textCategoria: {
+        fontSize: 28,
         color: '#2250d9',
         fontWeight: 'bold',
         alignContent: 'center'
@@ -440,7 +388,7 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 
-    button:{
+    button: {
         marginBottom: 1
     },
 

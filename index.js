@@ -6,9 +6,10 @@ import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import ServiceProgress from './components/activities/ServiceProgressClient'
 import Splash from './components/activities/Splash'
-import Home from './components/activities/HomeClient'
+import Drawer from './components/navigation/DrawerNavigatorClient'
 import Layout from './components/activities/WorkShopLayout'
 import Agendamento from './components/activities/Agendamento'
+import EditCar from './components/activities/EditCarsClient'
+import TabClient from './components/navigation/TabNavigatorCliente'
 
-
-AppRegistry.registerComponent(appName, () => Navigator);
+AppRegistry.registerComponent(appName, () => Drawer);

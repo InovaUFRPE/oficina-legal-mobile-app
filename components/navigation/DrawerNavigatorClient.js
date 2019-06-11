@@ -3,7 +3,7 @@ import {Platform, Dimensions} from 'react-native'
 import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'react-navigation'
 
 import HomeClient from '../activities/HomeClient'
-import EditProfileClient from '../activities/EditProfileClient'
+import EditDataClient from '../activities/EditDataClient'
 import CustomDrawer from './CustomDrawerMenuClient'
 import {StackClient} from '../activities/AccountConfigClient'
 import {SearchWorkShopNavigation} from '../activities/SearchWorkshop'
@@ -11,6 +11,7 @@ import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
 import ServiceProgress from '../activities/ServiceProgressClient'
 import WorkShopLayout from '../activities/WorkShopLayout'
+
 
 export default createDrawerNavigator({
     HomeClient: {
@@ -20,8 +21,8 @@ export default createDrawerNavigator({
         }
     },
 
-    EditProfileClient: {
-        screen: EditProfileClient,
+    EditDataClient: {
+        screen: EditDataClient,
         navigationOptions: ({ navigation }) => ({
             drawerLockMode: "locked-closed",
           })
