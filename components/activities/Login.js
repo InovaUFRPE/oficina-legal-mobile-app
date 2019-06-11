@@ -11,13 +11,13 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
-    saveDataStorage = (userToken, id, login, email) => {
+    saveDataStorage = (id, login, email, token) => {
         try{
-            AsyncStorage.setItem('userToken', userToken)
+            AsyncStorage.setItem('userToken', token)
             AsyncStorage.setItem('userId', id)
             AsyncStorage.setItem('userLogin', login)
             AsyncStorage.setItem('userEmail', email)
-            this.props.navigation.navigate('DrawerNavigatorClient')
+            this.props.navigation.navigate('ChoseProfile')
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -26,16 +26,15 @@ export default class Login extends Component {
 
     componentDidMountGetUser = async () => {
          try{
-            await axios.post("http://192.168.0.10:3306/api/usuario/login", 
-                { login:this.state.username, senha:this.state.password }
-                )
+            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
+                            { login: this.state.username, email:this.state.username, senha: this.state.password })
                 .then(response => { 
                     if(response.status == 200){
-                        this.saveDataStorage(JSON.stringify(response.data.token), 
-                                             JSON.stringify(response.data.user.id),
-                                             JSON.stringify(response.data.user.login),
-                                             JSON.stringify(response.data.user.email)                                             )
-                    }
+                        this.saveDataStorage( JSON.stringify(response.data.user.id),
+                                            JSON.stringify(response.data.user.login),
+                                            JSON.stringify(response.data.user.email),
+                                            JSON.stringify(response.data.token)
+                                            )};
                 })
 
          }catch(err){

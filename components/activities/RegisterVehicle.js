@@ -16,9 +16,14 @@ export default class RegisterVehicle extends Component {
         str: "\nCampo(s) em branco:\n",
     }
 
+    clearAsyncStorage = async() => {
+        AsyncStorage.clear();
+    }
+
     displayDataStorage = async () => {
         try {
             let user = await AsyncStorage.getItem('user')
+            this.clearAsyncStorage()
             if(user != null){
                 userObj = JSON.parse(user)
                 let login = userObj.login
@@ -35,7 +40,7 @@ export default class RegisterVehicle extends Component {
         axios.defaults.headers.common['x-access-token'] = JSON.stringify(jwt)
         try{
             await axios.post("http://192.168.0.10:6001/api/veiculo/add", vehicle)
-                .then(response => this.props.navigation.navigate('DrawerNavigatorClient'))
+                .then(response => this.props.navigation.navigate('Home'))
         }catch(err){
             alert("Não foi possível salvar o veículo")
         }

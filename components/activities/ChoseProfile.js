@@ -8,32 +8,33 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default class ChoseProfile extends Component {
     constructor(props) {
         super(props);
-        this.displayDataStorage()
     }
 
     componentDidMountGetClientByUser = async (id) => {
         try{
-        await axios.post("http://192.168.0.10:3306/api/cliente/idUsuario", { idUsuario:id })
-            .then(response => { alert(JSON.stringify(response))
-                    if(response.status == 201){
-                        this.props.navigation.navigate('DrawerNavigatorClient')
-                }
-            })
-
+        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
+            .then(response => { this.saveClientDataStorage(response.data)})
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
         }
     }
+
+    saveClientDataStorage = (data) => {
+        try{
+            AsyncStorage.setItem('client', JSON.stringify(data))
+            this.props.navigation.navigate('DrawerNavigatorClient')
+        }catch(error){
+            alert('Não foi possível salvar o usuário no armazenamento interno')
+        }
+        
+    }
     
     
     displayDataStorage = async () => {
         try {
-            let user = await AsyncStorage.getItem('userToken')
-            if(user != null){
-                let id = await AsyncStorage.getItem('userId')
-                this.componentDidMountGetClientByUser(JSON.parse(id))
-            }
+            let id = await AsyncStorage.getItem('userId')
+            this.componentDidMountGetClientByUser(JSON.parse(id))
         }catch(error){
             alert(error)
         }
