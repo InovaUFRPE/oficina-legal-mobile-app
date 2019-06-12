@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity, ScrollView, TextInput} from 'react-native'
+import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import Task from '../TaskServicesClient'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
@@ -32,7 +32,11 @@ export default class ServiceProgressClient extends Component {
                             onPress={() => this.props.navigation.goBack()} />
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Progresso do Serviço</Text>
-                    <Text style={styles.headerInformation}>Oficina_name</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <Text style={styles.headerInformation}>Oficina_name</Text>
+                        <Text style={[styles.headerInformation, {marginRight: 20}]}>JKS-2112</Text>
+                    </View>
+
                 </View>
                 <ScrollView style={{ marginTop: 10 }}>
                     <FlatList data={this.state.tasks}

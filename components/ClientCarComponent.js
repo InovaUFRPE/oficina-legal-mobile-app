@@ -1,8 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
 import moment from 'moment'
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Swipeable from 'react-native-swipeable'
+import Icon from 'react-native-vector-icons/Ionicons'
 
 
 const { height, width } = Dimensions.get('window')
@@ -12,11 +11,15 @@ const { height, width } = Dimensions.get('window')
 export default props => {
     return (
         <TouchableOpacity style={styles.container}>
-            <View style={{ width: width / 2 }}>
-                <Text style={styles.text}>Jeep Compass</Text>
-            </View>
-            <View>
-                <Text style={styles.princeText}>ABC-2415</Text>
+            <View style={{ width: width - 75, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                        name='md-car'
+                        size={30}
+                    />
+                    <Text style={styles.text}>{props.model}</Text>
+                </View>
+                <Text style={styles.princeText}>{props.Vplate}</Text>
             </View>
         </TouchableOpacity>
     )
@@ -25,9 +28,9 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 10,
+        marginVertical: 5,
         width: width - 40,
-        height: 120,
+        height: 70,
         borderWidth: 0.5,
         borderRadius: 5,
         flexDirection: 'row',
@@ -41,7 +44,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.34,
         shadowRadius: 6.27,
-
         elevation: 5,
     },
 
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
+        marginLeft: 10,
         fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center'
