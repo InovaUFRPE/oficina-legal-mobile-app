@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, ActivityIndicator, Image } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
-import { SearchBar } from 'react-native-elements'
+import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwersome from 'react-native-vector-icons/FontAwesome'
 import Data from '../users'
@@ -18,6 +18,8 @@ export default class HomeClient extends Component {
         error: null,
         query: "",
         fullData: [],
+
+        isModalVisible: false
     }
 
     componentDidMount() {
@@ -50,9 +52,13 @@ export default class HomeClient extends Component {
         this.setState({ query: formatQuery, data }, () => this.makeRemoteRequest())
     }
 
+    toggleModal = () => {
+        this.setState({ isModalVisible: !this.state.isModalVisible })
+    }
+
     RenderItem = (obj) => {
         const object = obj.item
-        
+
         const name = object.name.first
         const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
         const especialidade = object.especialidade
@@ -132,25 +138,79 @@ export default class HomeClient extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={{ marginLeft: 20, marginVertical: 10, flexDirection: 'row', backgroundColor: '#f1f2f6', borderRadius: 5, justifyContent: 'flex-start', alignItems: 'center', width: width - 100 }}>
-                        <Icon
-                            name="md-search"
-                            size={30}
-                            style={{ padding: 10, color: '#0d47a1', marginLeft: 20 }}
-                        />
-                        <TextInput style={styles.input}
-                            placeholder="Pesquisar"
-                            value={this.state.query}
-                            autoCapitalize='none'
-                            autoCorrect={false}
-                            onChangeText={this.handlerSearch} />
+                    <View style={{ marginLeft: 20, marginVertical: 10, flexDirection: 'row', backgroundColor: '#f1f2f6', borderRadius: 5, justifyContent: 'space-between', alignItems: 'center', width: width - 100 }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                            <Icon
+                                name="md-search"
+                                size={30}
+                                style={{ padding: 10, color: '#0d47a1', marginLeft: 10 }}
+                            />
+                            <TextInput style={styles.input}
+                                placeholder="Pesquisar"
+                                value={this.state.query}
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                onChangeText={this.handlerSearch} />
+                        </View>
+
+                        
+                        { //Condicionador de render do "X" para apagar o campo de pesquisa
+                            this.state.query !== '' 
+                            ?  
+                            <TouchableOpacity onPress={() => this.handlerSearch('')}>
+                                <Icon
+                                    name="md-close"
+                                    size={20}
+                                    style={{ color: '#0d47a1', marginRight: 10 }}
+                                />
+                            </TouchableOpacity> 
+                            :
+                            null
+                        }
+
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity style={{ padding: 20 }}>
+                        <TouchableOpacity style={{ padding: 20 }} onPress={this.toggleModal}>
                             <Text style={{ color: '#0d47a1', fontSize: 15 }}>Filtros</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
+                <Modal
+                    onBackButtonPress={this.toggleModal}
+                    onBackdropPress={this.toggleModal}
+                    animationIn='zoomIn'
+                    animationOut='zoomOut'
+                    isVisible={this.state.isModalVisible}
+                >
+                    <View style={{ backgroundColor: '#fff', justifyContent: 'center', borderRadius: 5, width: width - 40 }}>
+                        <View style={{ marginBottom: 20 }}>
+                            <View style={{ backgroundColor: '#0d47a1', padding: 10, width: '100%' }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#fff' }}>Filtrar Busca</Text>
+                            </View>
+                            <Text style={{ color: '#0d47a1', marginTop: 10, marginLeft: 10 }}>Especialidade</Text>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
+                                <TouchableOpacity
+                                    style={styles.filterButton}
+                                    onPress={() => { this.handlerSearch('mecanica'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    <Text style={styles.filterButtonText}>Mecanica</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.filterButton}
+                                    onPress={() => { this.handlerSearch('eletrica'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    <Text style={styles.filterButtonText}>Eletrica</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.filterButton}
+                                    onPress={() => { this.handlerSearch('funilaria'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    <Text style={styles.filterButtonText}>Funilaria</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+
 
                 <FlatList
                     data={this.state.data}
@@ -185,41 +245,6 @@ const styles = StyleSheet.create({
         paddingLeft: 20
     },
 
-    buttonWorkshop: {
-        width: 300,
-        height: 380,
-        top: 40,
-        backgroundColor: 'white',
-        borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-        borderTopRightRadius: 5,
-        borderBottomRightRadius: 5,
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        alignItems: 'center',
-    },
-
-    workshop: {
-        color: 'black',
-        top: 20,
-        textAlign: 'center',
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    workshop2: {
-        color: 'black',
-        top: 150,
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-    workshop3: {
-        color: 'black',
-        top: 155,
-        fontSize: 20,
-        fontWeight: 'bold'
-    },
-
     logo: {
         width: 50,
         height: 50,
@@ -230,7 +255,19 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignSelf: 'stretch',
         fontSize: 16,
-        paddingVertical: 10
+        paddingVertical: 10,
+        width: '75%'
     },
+
+    filterButton: {
+        padding: 10,
+        borderWidth: 0.5,
+        borderRadius: 5
+    },
+
+    filterButtonText: {
+        fontSize: 15,
+        color: 'black'
+    }
 
 })

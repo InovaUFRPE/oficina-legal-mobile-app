@@ -1,4 +1,5 @@
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation'
+import { fromBottom } from 'react-navigation-transitions';
 
 //Not Loged
 import Login from '../activities/Login'
@@ -33,14 +34,18 @@ const blueHeader = {
 }
 
 const AppStack = createStackNavigator({
-    Home:             { screen: Login, navigationOptions: { header: null }},
-    RegisterUser:     { screen: RegisterUser, navigationOptions: blueHeader },
-    RegisterAdress:   { screen: RegisterAdress, navigationOptions: defaultHeader },
-    RegisterVehicle:  { screen: RegisterVehicle, navigationOptions: blueHeader },
-    ForgotPassword:   { screen: ForgotPassword, navigationOptions: defaultHeader },
+    Home: { screen: Login, navigationOptions: { header: null } },
+    RegisterUser: { screen: RegisterUser, navigationOptions: blueHeader },
+    RegisterAdress: { screen: RegisterAdress, navigationOptions: defaultHeader },
+    RegisterVehicle: { screen: RegisterVehicle, navigationOptions: blueHeader },
+    ForgotPassword: { screen: ForgotPassword, navigationOptions: defaultHeader },
     RegisterMechanic: { screen: RegisterMechanic, navigationOptions: defaultHeader },
     LinkMechanicToWorkshop: { screen: LinkMechanicToWorkshop, navigationOptions: defaultHeader },
-})
+},
+    {
+        initialRouteName: 'Home',
+        transitionConfig: () => fromBottom(),
+    })
 
 const AuthStack = createSwitchNavigator({
     ChoseProfile: ChoseProfile,

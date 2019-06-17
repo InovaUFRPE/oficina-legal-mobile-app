@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f1af0bb5-724d-418c-a6e9-dbea5a8df766" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/ClientCarComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/ClientCarComponent.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/activities/EditCarsClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/activities/EditCarsClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/activities/EditDataClient.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/activities/EditDataClient.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/carIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/carIcon.png" afterDir="false" />
-    </list>
+    <list default="true" id="f1af0bb5-724d-418c-a6e9-dbea5a8df766" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,8 +23,8 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="Scope" />
+      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

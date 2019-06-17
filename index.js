@@ -12,4 +12,4 @@ import Agendamento from './components/activities/Agendamento'
 import EditCar from './components/activities/EditCarsClient'
 import TabClient from './components/navigation/TabNavigatorCliente'
 
-AppRegistry.registerComponent(appName, () => Drawer);
+AppRegistry.registerComponent(appName, () => Navigator);

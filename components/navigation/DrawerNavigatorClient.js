@@ -1,6 +1,7 @@
 import React from 'react'
 import {Platform, Dimensions} from 'react-native'
 import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'react-navigation'
+import { fromBottom } from 'react-navigation-transitions';
 
 import HomeClient from '../activities/HomeClient'
 import EditDataClient from '../activities/EditDataClient'
@@ -72,6 +73,10 @@ export default createDrawerNavigator({
     return(<CustomDrawer navigation={navigation}/>)
 },  drawerOpenRoute: 'DrawerOpen', 
     drawerCloseRoute: 'DrawerClose', 
-    drawerToggleRoute: 'DrawerToggle'})
+    drawerToggleRoute: 'DrawerToggle'},
+    {
+      initialRouteName: 'Home',
+      transitionConfig: () => fromBottom(),
+    })
 
 
