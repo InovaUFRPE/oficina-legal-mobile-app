@@ -41,7 +41,7 @@ export default class HomeClient extends Component {
             })
     }
 
-    
+
     handlerSearch = (text) => {
         const formatQuery = text
         const data = _.filter(this.state.fullData, user => {
@@ -51,17 +51,29 @@ export default class HomeClient extends Component {
     }
 
     RenderItem = (obj) => {
-        const name = obj.item.name.first
+        const object = obj.item
+        
+        const name = object.name.first
         const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
-        const especialidade = obj.item.especialidade
+        const especialidade = object.especialidade
         const formatedEspecialidade = especialidade.charAt(0).toUpperCase() + especialidade.slice(1)
-        const logo = obj.item.logo
-    
-        return (
-            <TouchableOpacity onPress={() => { this.props.navigation.navigate('WorkShopLayout') }} style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
-                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5}}>
+        const likes = object.likes
+        const logo = object.logo
+        const distance = object.distance
 
-                    <Image source={{uri: logo}}
+        return (
+            <TouchableOpacity
+                onPress={() => {
+                    this.props.navigation.navigate('WorkShopLayout', {
+                        name: formatedName,
+                        distance: distance,
+                        likes: likes
+                    })
+                }}
+                style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
+                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5 }}>
+
+                    <Image source={{ uri: logo }}
                         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
@@ -74,14 +86,14 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
 
                             />
-                            <Text style={{ marginLeft: 3 }}>{obj.item.likes}</Text>
+                            <Text style={{ marginLeft: 3 }}>{likes}</Text>
 
                             <Icon
                                 name="md-navigate"
                                 size={15}
                                 style={{ marginTop: 2, marginLeft: 10 }}
                             />
-                            <Text style={{ marginLeft: 3 }}>1.8 KM</Text>
+                            <Text style={{ marginLeft: 3 }}>{distance} KM</Text>
                         </View>
                     </View>
                     <View style={{ marginTop: 10, marginLeft: 10, flexDirection: 'row' }}>
@@ -103,7 +115,7 @@ export default class HomeClient extends Component {
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center' }}>
                     <FontAwersome
                         name="bars"
                         size={30}

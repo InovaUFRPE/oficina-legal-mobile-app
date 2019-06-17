@@ -27,7 +27,7 @@ export default class EditCarsClient extends Component {
         cars: [{
             id: Math.random(),
             model: 'Compass',
-            Vplate: 'AKG-5913'
+            Vplate: 'ATK-2316'
         },
         {
             id: Math.random(),
@@ -37,12 +37,12 @@ export default class EditCarsClient extends Component {
         {
             id: Math.random(),
             model: 'S10',
-            Vplate: 'AKG-5913'
+            Vplate: 'KJH-1354'
         },
         {
             id: Math.random(),
             model: 'Compass',
-            Vplate: 'AKG-5913'
+            Vplate: 'PEN-1975'
         }],
 
         //Atributos do novo veiculo criado
@@ -96,7 +96,7 @@ export default class EditCarsClient extends Component {
                 <View style={{ alignItems: 'center' }}>
                     <FlatList data={this.state.cars}
                         keyExtractor={item => `${item.id}`}
-                        renderItem={({ item }) => <ClientCarComponent {...item} />} />
+                        renderItem={({ item }) => <ClientCarComponent {...item}/>} />
                 </View>
 
 
@@ -106,8 +106,8 @@ export default class EditCarsClient extends Component {
                     animationIn='zoomIn'
                     animationOut='zoomOut'
                     isVisible={this.state.isModalVisible}>
-                    <View style={{ flex: 1, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginBottom: 20 }}>Cadastrar Veículo</Text>
+                    <View style={{backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginVertical: 20,  }}>Cadastrar Veículo</Text>
                         <Input
                             inputContainerStyle={styles.inputContainer}
                             label='Modelo'
@@ -130,6 +130,7 @@ export default class EditCarsClient extends Component {
                         <Input
                             inputContainerStyle={styles.inputContainer}
                             label='Renavam'
+                            keyboardType='number-pad'
                             value={this.state.renavam}
                             onChangeText={renavam => this.setState({ renavam })}
                         />
@@ -145,7 +146,7 @@ export default class EditCarsClient extends Component {
                             title="Registrar  "
                             iconRight
                             onPress={this.registerVeicle}
-                            containerStyle={{ width: width / 2, marginTop: 40 }} />
+                            containerStyle={{ width: width / 2, marginTop: 20, marginBottom: 20, backgroundColor: 'blue'}} />
                     </View>
 
                 </Modal>

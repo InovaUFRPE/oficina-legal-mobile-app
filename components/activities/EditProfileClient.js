@@ -195,26 +195,17 @@ export default class EditProfileClient extends Component {
     render() {
         return (
 
-            <ScrollView
-                style={styles.container}>
-                <View style={styles.container} style={styles.inputContainer}>
-                    <FontAwesome name='check' size={30}
-                        onPress={() => this.save()}
-                        style={{ marginTop: 15, marginLeft: "87%", color: 'black', fontWeight: 1, }}
-                    />
-                    <Text style={styles.header}>{this.state.name}</Text>
-                    <Image
-                        source={require('../../images/profile.jpg')}
-                        style={styles.image} />
+            <ScrollView style={{ backgroundColor: '#fff' }}>
+                <View style={styles.inputContainer}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 100, marginVertical: 20}}>
+                        <Image
+                            source={{ uri: 'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png' }}
+                            style={{ width: 100, height: 100, borderRadius: 50 }}
+                        />
 
-                    <TouchableOpacity style={styles.ButtonEdit}
-                        onPress={() => { }}>
-                        <Text style={{ fontSize: 18, color: '#eee1d6', width: 300, textAlign: 'center' }}>Alterar foto de perfil</Text>
-                    </TouchableOpacity>
-
-                    <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
-                        <Text style={styles.textCategoria}>Pessoal</Text>
+                        <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>{this.state.name}</Text>
                     </View>
+
 
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>Nome</Text>
@@ -319,6 +310,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'white',
+        marginTop: 10
     },
 
     header: {
@@ -346,8 +338,10 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
+        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 20
     },
 
     inputDescription: {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome5'
+import { StyleSheet, View, Text, Image, Dimensions, ScrollView } from 'react-native'
+import Icon from 'react-native-vector-icons/Ionicons'
 import TabNavigatorCliente from '../navigation/TabNavigatorCliente';
 
+const { height, width } = Dimensions.get('window')
 
 export default class HomeMechanic extends Component {
     render() {
@@ -10,18 +11,21 @@ export default class HomeMechanic extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
-                    <Icon name="bars" size={30}
-                        color="#ffffff"
-                        style={styles.menuIcon}
-                        onPress={() => this.props.navigation.toggleDrawer()} />
-                    <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#ffffff', padding: 15 }}>Edição de Dados</Text>
-                    <Image
-                        source={require('../../images/LogoBranca.png')}
-                        style={styles.logo}
-                    />
+                    <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Icon name="md-arrow-back" size={30}
+                            color="#ffffff"
+                            style={styles.menuIcon}
+                            onPress={() => this.props.navigation.goBack()} />
+                        <Text style={{ color: '#fff', fontSize: 25, fontWeight: 'bold' }}>Edição de Dados</Text>
+                        <Image
+                            source={require('../../images/LogoBranca.png')}
+                            style={styles.logo}
+                        />
+                    </View>
+
                 </View>
-                <View style={{ flex: 1,width: '100%', backgroundColor: '#F5F5F5'}}>
-                    <TabNavigatorCliente/>
+                <View style={{ flex: 1, width: '100%', backgroundColor: '#F5F5F5' }}>
+                    <TabNavigatorCliente />
                 </View>
             </View>
 
@@ -37,11 +41,8 @@ const styles = StyleSheet.create({
     },
 
     headerContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        height: 70,
         backgroundColor: '#2250d9'
     },
 
@@ -64,7 +65,13 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
-        marginRight: 5
+        marginRight: 10
+    },
+
+    userName: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#fff'
     },
     item: {
         justifyContent: 'space-between',

@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
-import moment from 'moment'
 import Icon from 'react-native-vector-icons/Ionicons'
 
 
@@ -40,11 +39,12 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 5,
+            height: 1,
         },
-        shadowOpacity: 0.34,
-        shadowRadius: 6.27,
-        elevation: 5,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        
+        elevation: 3,
     },
 
     informationContainer: {

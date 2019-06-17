@@ -9,12 +9,17 @@ import Especialitys from '../TasksOnHome'
 const { width, height } = Dimensions.get("window")
 
 export default class WorkShopLayout extends Component {
-    state={
+    state = {
         workShopname: '',
         distance: '',
         Especialitys: []
     }
     render() {
+        const { navigation } = this.props;
+        const name = navigation.getParam('name', 'oficina_name');
+        const distance = navigation.getParam('distance', 'distance');
+        const likes = navigation.getParam('likes', 'likes');
+
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -30,16 +35,20 @@ export default class WorkShopLayout extends Component {
                 </View>
                 <View style={styles.bodyContainer}>
                     <View style={styles.workShopContainer}>
-                        <Text style={styles.workShopName}>Oficina do Manoel - Ipsep</Text>
+                        <Text style={styles.workShopName}>Oficina {name}</Text>
                         <View style={styles.workShopInformation}>
                             <Icon name="md-navigate" size={20} />
-                            <Text style={{ fontSize: 16, marginLeft: 5 }}>1.8 KM</Text>
+                            <Text style={{ fontSize: 16, marginLeft: 5 }}>{distance} KM</Text>
+                            <Icon name="md-heart" size={20} style={{ marginLeft: 10 }} />
+                            <Text style={{ fontSize: 16, marginLeft: 5 }}>{likes}</Text>
                         </View>
 
                         <View style={{ alignItems: 'center', marginTop: 16 }}>
                             <TouchableOpacity
                                 style={styles.buttonAgendamento}
-                                onPress={() => this.props.navigation.navigate('Agendamento')}>
+                                onPress={() => this.props.navigation.navigate('Agendamento', {
+                                    name: name
+                                })}>
                                 <Text style={styles.buttonText}>Fazer Agendamento</Text>
                             </TouchableOpacity>
                         </View>
@@ -47,10 +56,10 @@ export default class WorkShopLayout extends Component {
 
                     <View style={styles.EspecialitysContainer}>
                         <Text style={{ paddingHorizontal: 20, marginBottom: 20, fontSize: 24, }}>Essas são nossas especialidades</Text>
-                        <ScrollView style={{backgroundColor: "#F5F5F5"}} horizontal showsHorizontalScrollIndicator={false}>
-                            <Especialitys imageUri={require('../../images/Services/Funilaria.jpg')} name='Funilaria'/>
-                            <Especialitys imageUri={require('../../images/Services/Eletrica.jpg')} name='Elétrica'/>
-                            <Especialitys imageUri={require('../../images/Services/Mecanica.jpg')} name='Mecânica'/>
+                        <ScrollView style={{ backgroundColor: "#F5F5F5" }} horizontal showsHorizontalScrollIndicator={false}>
+                            <Especialitys imageUri={require('../../images/Services/Funilaria.jpg')} name='Funilaria' />
+                            <Especialitys imageUri={require('../../images/Services/Eletrica.jpg')} name='Elétrica' />
+                            <Especialitys imageUri={require('../../images/Services/Mecanica.jpg')} name='Mecânica' />
                         </ScrollView>
 
                     </View>

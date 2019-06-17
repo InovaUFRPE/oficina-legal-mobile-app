@@ -32,7 +32,11 @@ export default class Agendamento extends Component {
     };
 
     render() {
+
+        const { navigation } = this.props;
+        const name = navigation.getParam('name', 'oficina_name');
         let datePicker = null
+
         if (Platform.OS === 'ios') {
             datePicker = <DatePickerIOS mode='time' date={this.state.date} minimumDate={this.state.date}
                 onDateChange={date => this.setState({ date })} />
@@ -42,6 +46,7 @@ export default class Agendamento extends Component {
                     <Text style={{ fontSize: 20, paddingRight: 20}}>{this.state.agendamentoLabel}</Text>
                     <DateTimePicker
                         mode='datetime'
+                        
                         isVisible={this.state.isDateTimePickerVisible}
                         onConfirm={this.handleDatePicked}
                         onCancel={this.hideDateTimePicker}
@@ -73,7 +78,7 @@ export default class Agendamento extends Component {
                 <ScrollView style={{ width: '100%' }}>
 
                     <View style={{ justifyContent: 'flex-start', marginTop: 10 }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>Oficina Automotiva</Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>Oficina {name}</Text>
                         <Text style={{ fontSize: 15, marginLeft: 30 }}>Rua Rio da Dores, Recife, Penambuco</Text>
                         <Text style={{ fontSize: 15, marginLeft: 30 }}>3339-2210</Text>
                         <Icon
