@@ -11,52 +11,33 @@ export default class Login extends Component {
         errorMSG: ''
     };
 
-    saveDataStorage = (data) => {
-        const user = JSON.parse(data)
+    saveDataStorage = (token, id) => {
         try{
-            AsyncStorage.setItem('userToken', user.token)
-            AsyncStorage.setItem('user', JSON.stringify(user))
+            AsyncStorage.setItem('userToken', token)
+            AsyncStorage.setItem('user', JSON.stringify(id))
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
         
     }
 
-    saveClientDataStorage = (data) => {
+    GetUserByLogin = async () => {
         try{
-            AsyncStorage.setItem('client', JSON.stringify(data))
-            this.props.navigation.navigate('DrawerNavigatorClient')
+            await axios.post("http://192.168.0.10:4000/api/usuario/login", 
+            { login: this.state.username, email:this.state.username, senha: this.state.password })
+            .then(response => { 
+                if(response.status == 200){
+                    this.saveDataStorage(response.data.token, response.data.user.id)
+                }else {
+                    alert("Problemas na autenticação do usuário")
+                } 
+            })
         }catch(error){
-            alert('Não foi possível salvar o usuário no armazenamento interno')
+            return null;
         }
         
-    }
-
-    componentDidMountGetClientByUser = async (id) => {
-        try{
-        await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario:id })
-            .then(response => {this.saveClientDataStorage(response.data)})
-        }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente.")
-            return null
         }
-    }
-
-    componentDidMountGetUser = async () => {
-         try{
-            await axios.post("http://192.168.0.10:6001/api/usuario/login", 
-                            { login: this.state.username, email:this.state.username, senha: this.state.password })
-                .then(response => { 
-                    if(response.status == 200){
-                        this.saveDataStorage(JSON.stringify(response.data))};
-                        this.componentDidMountGetClientByUser(response.data.user.id)
-                })
-
-         }catch(err){
-            alert("Email e/ou senha incorreto(s).")
-            return null
-        }
-    }
+    
     
     blankCamps() {
         let blank = "\nCampo(s) em branco:\n", getToken 
@@ -77,7 +58,10 @@ export default class Login extends Component {
         console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         console.log(this.state.password + " ESTAGIO 2 ")
-        this.componentDidMountGetUser()
+        if(this.GetUserByLogin() !== null){
+            this.props.navigation.navigate('DrawerNavigatorClient')
+        }
+
     }
 
     render() {

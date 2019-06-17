@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
@@ -23,7 +22,6 @@ export default class RegisterVehicle extends Component {
     displayDataStorage = async () => {
         try {
             let user = await AsyncStorage.getItem('user')
-            this.clearAsyncStorage()
             if(user != null){
                 userObj = JSON.parse(user)
                 let login = userObj.login
@@ -39,7 +37,7 @@ export default class RegisterVehicle extends Component {
     componentDidMountPostVehicle = async (jwt, vehicle) => {
         axios.defaults.headers.common['x-access-token'] = JSON.stringify(jwt)
         try{
-            await axios.post("http://192.168.0.10:6001/api/veiculo/add", vehicle)
+            await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
                 .then(response => this.props.navigation.navigate('Home'))
         }catch(err){
             alert("Não foi possível salvar o veículo")
@@ -48,7 +46,7 @@ export default class RegisterVehicle extends Component {
 
     componentDidMountGetClientId = async (idUsuario, jwt) => {
         try{
-            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", idUsuario)
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", idUsuario)
                 .then(response => this.createVehicleRequisition(response.data.id, jwt))
              
         }catch(err){
@@ -58,7 +56,7 @@ export default class RegisterVehicle extends Component {
 
     componentDidMountGetJwt = async (loginEsenha) => {
         try{
-            const user = await axios.post("http://192.168.0.10:6001/api/usuario/login", loginEsenha)
+            const user = await axios.post("http://192.168.0.10:4000/api/usuario/login", loginEsenha)
             const jwt = user.data.token
             const userId = {idUsuario: user.data.user.id}
             this.componentDidMountGetClientId(userId, jwt)

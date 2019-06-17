@@ -16,9 +16,9 @@ export default props => {
                         name='md-car'
                         size={30}
                     />
-                    <Text style={styles.text}>{props.model}</Text>
+                    <Text style={styles.text}>{props.modelo}</Text>
                 </View>
-                <Text style={styles.princeText}>{props.Vplate}</Text>
+                <Text style={styles.princeText}>{props.placa}</Text>
             </View>
         </TouchableOpacity>
     )

@@ -22,28 +22,14 @@ const actions = [
 ]
 
 export default class EditCarsClient extends Component {
+    constructor(props){
+        super(props);
+        this.getClient();
+    }
     state = {
         //Onde os objetos carro do cliente devem ser armazenados
-        cars: [{
-            id: Math.random(),
-            model: 'Compass',
-            Vplate: 'ATK-2316'
-        },
-        {
-            id: Math.random(),
-            model: 'Gol',
-            Vplate: 'AKG-5913'
-        },
-        {
-            id: Math.random(),
-            model: 'S10',
-            Vplate: 'KJH-1354'
-        },
-        {
-            id: Math.random(),
-            model: 'Compass',
-            Vplate: 'PEN-1975'
-        }],
+
+        cars: [{}],
 
         //Atributos do novo veiculo criado
         model: '',
@@ -54,24 +40,27 @@ export default class EditCarsClient extends Component {
         isModalVisible: false
     }
 
-    registerVeicle = () => {
+    registerVehicle = async (idCliente) => {
         //Resgatando os dados inseridos pelo usuario
 
-        model = this.state.model
-        year = this.state.year
-        renavam = this.state.renavam
-        Vplate = this.state.Vplate
+        const vehicle = {
+            modelo: this.state.model,
+            ano: this.state.year,
+            renavam: this.state.renavam,
+            placa: this.state.Vplate,
+            Cliente: { id: idCliente }
+        }
 
-        /*Função para salvar no banco aqui
-        
-        
-        */
+        /*Função para salvar no banco aqui */
 
-        //Resetando os atributos
-        this.setState({ model: '' })
-        this.setState({ year: '' })
-        this.setState({ renavam: '' })
-        this.setState({ Vplate: '' })
+        try{
+            await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
+                .then(response => this.setState({ model: '', year: '', renavam: '', Vplate: '' })
+                .then(this.getVeiculos(idCliente)))
+                
+        }catch(err){
+            alert("Não foi possível salvar o veículo")
+        }
 
         console.log(this.state.model, this.state.year, this.state.renavam, this.state.Vplate)
 
@@ -87,19 +76,33 @@ export default class EditCarsClient extends Component {
         this.setState({ isModalVisible: !this.state.isModalVisible })
     }
 
+    getClient = async () => {
+        const id = await AsyncStorage.getItem('user')
+        try{
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+                .then(response => this.getVeiculos(response.data.id))
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+
+    getVeiculos = async (id) => {
+        await axios.get(`http://192.168.0.10:4000/api/cliente/${id}/veiculos`)
+            .then(response =>this.setState({ cars: response.data }))
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
                     Aqui estão seus veículos cadastrados
-                </Text>
+                </Text> 
                 <View style={{ alignItems: 'center' }}>
                     <FlatList data={this.state.cars}
                         keyExtractor={item => `${item.id}`}
                         renderItem={({ item }) => <ClientCarComponent {...item}/>} />
                 </View>
-
-
                 <Modal
                     onBackButtonPress={this.toggleModal}
                     onBackdropPress={this.toggleModal}
@@ -147,6 +150,7 @@ export default class EditCarsClient extends Component {
                             iconRight
                             onPress={this.registerVeicle}
                             containerStyle={{ width: width / 2, marginTop: 20, marginBottom: 20, backgroundColor: 'blue'}} />
+
                     </View>
 
                 </Modal>

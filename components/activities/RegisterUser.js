@@ -83,7 +83,7 @@ export default class RegisterUser extends Component {
 
     componentDidMountGetClient = async () => {
         try {
-            await axios.post("http://192.168.0.10:6001/api/usuario/cpf", { cpf: this.state.cpf })
+            await axios.post("http://192.168.0.10:4000/api/usuario/cpf", { cpf: this.state.cpf })
                 .then(response => {
                     if (response.status == 201) {
                         alert("Já existe um cliente cadastrado com esse cpf.")
@@ -99,7 +99,7 @@ export default class RegisterUser extends Component {
 
     componentDidMountPostClient = async () => {
         try {
-            await axios.post("http://192.168.0.10:6001/api/cliente/register", this.createClientRequisition())
+            await axios.post("http://192.168.0.10:4000/api/cliente/register", this.createClientRequisition())
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }

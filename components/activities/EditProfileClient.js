@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ConfirmPassword, validateCPF, validateEmail } from '../../busnisses/Validation'
+import { ConfirmarSenha, validateCPF, validateEmail } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import axios from 'axios';
@@ -14,22 +14,27 @@ export default class EditProfileClient extends Component {
     }
 
     state = {
-        name: '',
-        login: '',
-        email: '',
+        nome: '',
         idCliente: 0,
-        password: '',
-        confirmPassword: '',
+        senha: '',
+        confirmarSenha: '',
         cep: '',
-        street: '',
-        complement: '',
-        neighborhood: '',
-        model: '',
-        year: '',
+        endereco: '',
+        complemento: '',
+        bairro: '',
+        modelo: '',
+        ano: '',
         renavam: '',
         Vplate: '',
         cliente: {},
-        usuario: {}
+        usuario:{
+            login: '',
+            email: '',
+            senha: ''
+        },
+        login: '',
+        email: '',
+        
     }
     stateDB = {}
 
@@ -45,18 +50,18 @@ export default class EditProfileClient extends Component {
             return
         }
         else if (this.VerifyErrors()) {
-            this.state.name = this.state.name.trim()
+            this.state.nome = this.state.nome.trim()
             this.state.login = this.state.login.trim()
-            this.state.password = this.state.password.trim()
-            this.state.confirmPassword = this.state.confirmPassword.trim()
+            this.state.senha = this.state.senha.trim()
+            this.state.confirmarSenha = this.state.confirmarSenha.trim()
             this.state.cpf = this.state.cpf.trim()
             this.state.email = this.state.email.trim()
             this.state.cep = this.state.cep.trim()
-            this.state.street = this.state.street.trim()
-            this.state.complement = this.state.complement.trim()
-            this.state.neighborhood = this.state.neighborhood.trim()
-            this.state.model = this.state.model.trim()
-            this.state.year = this.state.year.trim()
+            this.state.endereco = this.state.endereco.trim()
+            this.state.complemento = this.state.complemento.trim()
+            this.state.bairro = this.state.bairro.trim()
+            this.state.modelo = this.state.modelo.trim()
+            this.state.ano = this.state.ano.trim()
             this.state.renavam = this.state.renavam.trim()
             this.state.Vplate = this.state.Vplate.trim()
         } else {
@@ -66,55 +71,18 @@ export default class EditProfileClient extends Component {
         }
     }
 
-    componentDidMountGetClientByUser = async (id) => {
-        try {
-            await axios.post("http://192.168.0.10:6001/api/cliente/usuario", { idUsuario: id })
-                .then(response => { this.saveClientDataStorage(response.data) })
-        } catch (err) {
-            alert("Usuário cadastrado não possui conta como cliente.")
-            return null
-        }
-    }
-
-    componentDidMountGetUser = async () => {
-        try {
-            await axios.post("http://192.168.0.10:6001/api/usuario/login",
-                { login: this.state.username, email: this.state.username, senha: this.state.password })
-                .then(response => {
-                    if (response.status == 200) {
-                        this.saveDataStorage(JSON.stringify(response.data))
-                    };
-                    this.componentDidMountGetClientByUser(response.data.user.id)
-                })
-
-        } catch (err) {
-            alert("Email e/ou senha incorreto(s).")
-            return null
-        }
-    }
-
     saveClient = async () => {
-        alert(this.state.idCliente)
         try {
-            await axios.put(`http://192.168.0.10:6001/api/cliente/update/${this.state.cliente.id}`, this.state)
-                .then(response => alert("Modificações salvas com sucesso. Logue novamente para atualizar seu app"))
+            await axios.put(`http://192.168.0.10:4000/api/cliente/update/${this.state.cliente.id}`, this.state)
+                .then(response => alert(JSON.stringify(response.data)))
         } catch{
             alert("Não foi possível salvar o cliente")
         }
     }
 
-    saveUser = async () => {
-        try {
-            await axios.put(`http://192.168.0.10:6001/api/usuario/update/${this.state.cliente.idUsuario}`, this.state)
-                .then(response => this.saveClient())
-        } catch{
-            alert("Não foi possível salvar o usuário")
-        }
-    }
-
     save = () => {
         if (this.stateDB != this.state) {
-            this.saveUser()
+            this.saveClient()
         }
         else {
             alert("O banco de dados já contém as informações atuais")
@@ -122,31 +90,53 @@ export default class EditProfileClient extends Component {
     }
 
     populateBlankCamps = () => {
+        this.state.usuario.login = this.state.login,
+        this.state.usuario.email = this.state.email
         this.setState(
             {
-                idCliente: this.state.cliente.id,
-                name: this.state.cliente.nome,
-                login: this.state.usuario.user.login,
-                email: this.state.usuario.user.email,
+                nome: this.state.cliente.nome,
                 cpf: this.state.cliente.cpf,
-                street: this.state.cliente.endereco,
-                neighborhood: this.state.cliente.bairro,
+                endereco: this.state.cliente.endereco,
+                bairro: this.state.cliente.bairro,
                 cep: this.state.cliente.cep,
-                complement: this.state.cliente.complemento
+                complemento: this.state.cliente.complemento,
+                cliente: {}
             })
-        this.state.usuario.idUsuario = this.state.cliente.idUsuario
+    }
+
+    getUser= async () => {
+        const id = await AsyncStorage.getItem('user')
+        this.state.usuario.idUsuario = id;
+        try{
+            await axios.post("http://192.168.0.10:4000/api/usuario/usuario", { idUsuario:id })
+                .then(response => this.setState({login: response.data.user.login, email: response.data.user.email}))
+            this.getClient()
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+
+    getClient = async () => {
+        const id = await AsyncStorage.getItem('user')
+        try{
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+                .then(response => this.setState({ cliente: response.data}))
+            this.populateBlankCamps()
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
     }
 
     displayDataStorage = async () => {
         try {
-            let user = await AsyncStorage.getItem('userToken')
+            let user = await AsyncStorage.getItem('userToken');
             if (user != null) {
-                this.state.cliente = JSON.parse(await AsyncStorage.getItem('client'))
-                this.state.usuario = JSON.parse(await AsyncStorage.getItem('user'))
-                this.populateBlankCamps()
+                this.getUser();
                 this.stateDB = this.state;
             } else {
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Home');
             }
         } catch (error) {
             alert(error)
@@ -154,7 +144,7 @@ export default class EditProfileClient extends Component {
     }
 
     VerifyErrors() {
-        if (!ConfirmPassword(this.state.password, this.state.confirmPassword)) {
+        if (!ConfirmarSenha(this.state.senha, this.state.confirmarSenha)) {
             this.errors.str2 += "\n- As senhas não conferem."
         }
         if (!validateCPF(this.state.cpf)) {
@@ -168,20 +158,17 @@ export default class EditProfileClient extends Component {
     }
 
     checkBlankCamps() {
-        if (this.state.name == "") {
-            this.errors.str += "\n- Nome"
-        }
         if (this.state.cpf == "") {
             this.errors.str += "\n- CPF"
         }
         if (this.state.email == "") {
             this.errors.str += "\n- Email"
         }
-        if (this.state.password == "") {
+        if (this.state.senha == "") {
             this.errors.str += "\n- Senha"
         }
-        if (this.state.confirmPassword == "") {
-            this.errors.str += "\n- Confirmar senha"
+        if (this.state.confirmarSenha == "") {
+            this.errors.str += "\n- ConfirmarSr senha"
         }
         if (this.errors.str == "\nCampo(s) em branco:\n") {
             return true
@@ -204,27 +191,16 @@ export default class EditProfileClient extends Component {
                         />
 
                         <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>{this.state.name}</Text>
+
                     </View>
-
-
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Nome</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_name'
-                            placeholderTextColor='#586069'
-                            value={this.state.name}
-                            onChangeText={name => this.setState({ name })} />
-                    </View>
-
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>Login</Text>
                         <TextInput
                             style={styles.input}
                             placeholder='user_login'
                             placeholderTextColor='#586069'
-                            value={this.state.login}
-                            onChangeText={login => this.setState({ login })} />
+                            value={this.state.usuario.login}
+                            onChangeText={login => this.state.usuario.login} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -233,8 +209,8 @@ export default class EditProfileClient extends Component {
                             style={[styles.input]}
                             placeholder='user_email'
                             placeholderTextColor='#586069'
-                            value={this.state.email}
-                            onChangeText={email => this.setState({ email })} />
+                            value={this.state.usuario.email}
+                            onChangeText={email => this.state.usuario.email} />
                     </View>
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>CPF</Text>
@@ -250,10 +226,10 @@ export default class EditProfileClient extends Component {
                         <Text style={styles.inputDescription}>Senha</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='user_password'
+                            placeholder='user_senha'
                             placeholderTextColor='#586069'
-                            value={this.state.password}
-                            onChangeText={password => this.setState({ password })} />
+                            value={this.state.usuario.senha}
+                            onChangeText={senha => this.state.usuario.senha} />
                     </View>
 
                     <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
@@ -276,8 +252,8 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_street'
                             placeholderTextColor='#586069'
-                            value={this.state.street}
-                            onChangeText={street => this.setState({ street })} />
+                            value={this.state.endereco}
+                            onChangeText={endereco => this.setState({ endereco })} />
                     </View>
 
                     <View style={styles.editContainer}>
@@ -286,18 +262,18 @@ export default class EditProfileClient extends Component {
                             style={styles.input}
                             placeholder='user_neighborhood'
                             placeholderTextColor='#586069'
-                            value={this.state.neighborhood}
-                            onChangeText={neighborhood => this.setState({ neighborhood })} />
+                            value={this.state.bairro}
+                            onChangeText={bairro => this.setState({ bairro })} />
                     </View>
 
                     <View style={styles.editContainer}>
                         <Text style={styles.inputDescription}>Complemento</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='user_complement'
+                            placeholder='user_complemento'
                             placeholderTextColor='#586069'
-                            value={this.state.complement}
-                            onChangeText={complement => this.setState({ complement })} />
+                            value={this.state.complemento}
+                            onChangeText={complemento => this.setState({ complemento })} />
                     </View>
                 </View>
             </ScrollView>
