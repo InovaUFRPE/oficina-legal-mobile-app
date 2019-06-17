@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native'
+import { FloatingAction } from "react-native-floating-action"
 import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwersome from 'react-native-vector-icons/FontAwesome'
-import Data from '../users'
+
 import _ from 'lodash'
 
 const { width, height } = Dimensions.get('window')
+
+const actions = [
+    {
+        text: "Meus Agendamento",
+        icon: require('../../images/calendarIcon.png'),
+        name: 'bt_addcar',
+        position: 1
+    }
+]
 
 export default class HomeClient extends Component {
 
@@ -19,11 +29,21 @@ export default class HomeClient extends Component {
         query: "",
         fullData: [],
 
-        isModalVisible: false
+        isFilterModalVisible: false,
+
+        agendamentoMarcado: false,
+        isAgendamentoModalVisible: false
     }
 
     componentDidMount() {
         this.makeRemoteRequest();
+        /* Colocar a função de checagem se o usuario tem algum agendamento marcado
+
+            isAgendamentoMarcado retornar True
+            ? this.setState({agendamentoMarcado: true})
+            : null
+        
+        */
     }
 
     makeRemoteRequest = () => {
@@ -53,7 +73,32 @@ export default class HomeClient extends Component {
     }
 
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible })
+        this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
+    }
+
+    toggleModalAgendamento = () => {
+        this.setState({ isAgendamentoModalVisible: !this.state.isAgendamentoModalVisible })
+        console.log('Chamou a função Toggle')
+    }
+
+
+
+    floatingButtonPress = () => {
+        if (this.state.agendamentoMarcado) {
+            Alert.alert(
+                'Oficina Do Manoel',
+                'Endereço: Rua da Aurora \nData: 05/02/20\nHora: 14:00',
+                [
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ],
+                { cancelable: false },
+            );
+        } else {
+            Snackbar.show({
+                title: 'Você ainda não tem nenhum agendamento marcado',
+                duration: Snackbar.LENGTH_LONG,
+            });
+        }
     }
 
     RenderItem = (obj) => {
@@ -77,6 +122,8 @@ export default class HomeClient extends Component {
                     })
                 }}
                 style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
+
+
                 <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5 }}>
 
                     <Image source={{ uri: logo }}
@@ -121,6 +168,7 @@ export default class HomeClient extends Component {
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
+
                 <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center' }}>
                     <FontAwersome
                         name="bars"
@@ -153,19 +201,19 @@ export default class HomeClient extends Component {
                                 onChangeText={this.handlerSearch} />
                         </View>
 
-                        
+
                         { //Condicionador de render do "X" para apagar o campo de pesquisa
-                            this.state.query !== '' 
-                            ?  
-                            <TouchableOpacity onPress={() => this.handlerSearch('')}>
-                                <Icon
-                                    name="md-close"
-                                    size={20}
-                                    style={{ color: '#0d47a1', marginRight: 10 }}
-                                />
-                            </TouchableOpacity> 
-                            :
-                            null
+                            this.state.query !== ''
+                                ?
+                                <TouchableOpacity onPress={() => this.handlerSearch('')}>
+                                    <Icon
+                                        name="md-close"
+                                        size={20}
+                                        style={{ color: '#0d47a1', marginRight: 10 }}
+                                    />
+                                </TouchableOpacity>
+                                :
+                                null
                         }
 
                     </View>
@@ -180,7 +228,7 @@ export default class HomeClient extends Component {
                     onBackdropPress={this.toggleModal}
                     animationIn='zoomIn'
                     animationOut='zoomOut'
-                    isVisible={this.state.isModalVisible}
+                    isVisible={this.state.isFilterModalVisible}
                 >
                     <View style={{ backgroundColor: '#fff', justifyContent: 'center', borderRadius: 5, width: width - 40 }}>
                         <View style={{ marginBottom: 20 }}>
@@ -191,19 +239,19 @@ export default class HomeClient extends Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('mecanica'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    onPress={() => { this.handlerSearch('mecanica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
                                     <Text style={styles.filterButtonText}>Mecanica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('eletrica'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    onPress={() => { this.handlerSearch('eletrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
                                     <Text style={styles.filterButtonText}>Eletrica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('funilaria'); this.setState({ isModalVisible: !this.state.isModalVisible }) }}>
+                                    onPress={() => { this.handlerSearch('funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
                                     <Text style={styles.filterButtonText}>Funilaria</Text>
                                 </TouchableOpacity>
                             </View>
@@ -218,6 +266,16 @@ export default class HomeClient extends Component {
                     renderItem={this.RenderItem}
                     ListFooterComponent={this.renderFooter}
                     showsVerticalScrollIndicator={false}
+                />
+
+                <FloatingAction
+                    actions={actions}
+                    position='right'
+                    overlayColor='trasparent'
+                    onPressItem={
+                        this.floatingButtonPress
+                    }
+                    
                 />
             </View>
         )

@@ -11,5 +11,6 @@ import Layout from './components/activities/WorkShopLayout'
 import Agendamento from './components/activities/Agendamento'
 import EditCar from './components/activities/EditCarsClient'
 import TabClient from './components/navigation/TabNavigatorCliente'
+import Home from './components/navigation/DrawerNavigatorClient'
 
-AppRegistry.registerComponent(appName, () => Navigator);
+AppRegistry.registerComponent(appName, () => Home);

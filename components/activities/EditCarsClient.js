@@ -22,14 +22,14 @@ const actions = [
 ]
 
 export default class EditCarsClient extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getClient();
     }
     state = {
         //Onde os objetos carro do cliente devem ser armazenados
 
-        cars: [{}],
+        cars: [],
 
         //Atributos do novo veiculo criado
         model: '',
@@ -53,12 +53,12 @@ export default class EditCarsClient extends Component {
 
         /*Função para salvar no banco aqui */
 
-        try{
+        try {
             await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
                 .then(response => this.setState({ model: '', year: '', renavam: '', Vplate: '' })
-                .then(this.getVeiculos(idCliente)))
-                
-        }catch(err){
+                    .then(this.getVeiculos(idCliente)))
+
+        } catch (err) {
             alert("Não foi possível salvar o veículo")
         }
 
@@ -69,7 +69,7 @@ export default class EditCarsClient extends Component {
         Snackbar.show({
             title: 'Veículo Cadastrado',
             duration: Snackbar.LENGTH_LONG,
-          });
+        });
     }
 
     toggleModal = () => {
@@ -78,10 +78,10 @@ export default class EditCarsClient extends Component {
 
     getClient = async () => {
         const id = await AsyncStorage.getItem('user')
-        try{
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+        try {
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario: id })
                 .then(response => this.getVeiculos(response.data.id))
-        }catch(err){
+        } catch (err) {
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
         }
@@ -89,28 +89,39 @@ export default class EditCarsClient extends Component {
 
     getVeiculos = async (id) => {
         await axios.get(`http://192.168.0.10:4000/api/cliente/${id}/veiculos`)
-            .then(response =>this.setState({ cars: response.data }))
+            .then(response => this.setState({ cars: response.data }))
     }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
-                    Aqui estão seus veículos cadastrados
-                </Text> 
-                <View style={{ alignItems: 'center' }}>
-                    <FlatList data={this.state.cars}
-                        keyExtractor={item => `${item.id}`}
-                        renderItem={({ item }) => <ClientCarComponent {...item}/>} />
-                </View>
+                
+                {
+                    //Condicionante de render dos carros do cliente
+                    this.state.cars.length === 0
+                        ?
+                        <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
+                            Você ainda não tem nenhum carro cadastrado
+                            </Text>
+                        :
+                        <View style={{ alignItems: 'center' }}>
+                            <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
+                                Aqui estão seus veículos cadastrados
+                                </Text>
+                            <FlatList data={this.state.cars}
+                                keyExtractor={item => `${item.id}`}
+                                renderItem={({ item }) => <ClientCarComponent {...item} />} />
+                        </View>
+                }
+
                 <Modal
                     onBackButtonPress={this.toggleModal}
                     onBackdropPress={this.toggleModal}
                     animationIn='zoomIn'
                     animationOut='zoomOut'
                     isVisible={this.state.isModalVisible}>
-                    <View style={{backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginVertical: 20,  }}>Cadastrar Veículo</Text>
+                    <View style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginVertical: 20, }}>Cadastrar Veículo</Text>
                         <Input
                             inputContainerStyle={styles.inputContainer}
                             label='Modelo'
@@ -149,7 +160,7 @@ export default class EditCarsClient extends Component {
                             title="Registrar  "
                             iconRight
                             onPress={this.registerVeicle}
-                            containerStyle={{ width: width / 2, marginTop: 20, marginBottom: 20, backgroundColor: 'blue'}} />
+                            containerStyle={{ width: width / 2, marginTop: 20, marginBottom: 20, backgroundColor: 'blue' }} />
 
                     </View>
 
