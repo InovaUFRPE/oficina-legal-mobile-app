@@ -6,6 +6,7 @@ import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwersome from 'react-native-vector-icons/FontAwesome'
+import Snackbar from 'react-native-snackbar'
 
 import _ from 'lodash'
 
