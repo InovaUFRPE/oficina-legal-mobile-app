@@ -108,7 +108,8 @@ export default class EditCarsClient extends Component {
                             <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
                                 Aqui estão seus veículos cadastrados
                                 </Text>
-                            <FlatList data={this.state.cars}
+                            <FlatList 
+                                data={this.state.cars}
                                 keyExtractor={item => `${item.id}`}
                                 renderItem={({ item }) => <ClientCarComponent {...item} />} />
                         </View>

@@ -1,9 +1,24 @@
 import _ from 'lodash'
 import users from './users'
 
-export const contains = ({name, especialidade}, query) => {
-    const {first, last } = name;
-    if (first.includes(query) || last.includes(query) || especialidade.includes(query)) {
+
+function removeAcento (text)
+{       
+    text = text.toLowerCase();                                                         
+    text = text.replace(new RegExp('[ÁÀÂÃ]','gi'), 'a');
+    text = text.replace(new RegExp('[ÉÈÊ]','gi'), 'e');
+    text = text.replace(new RegExp('[ÍÌÎ]','gi'), 'i');
+    text = text.replace(new RegExp('[ÓÒÔÕ]','gi'), 'o');
+    text = text.replace(new RegExp('[ÚÙÛ]','gi'), 'u');
+    text = text.replace(new RegExp('[Ç]','gi'), 'c');
+    return text;                 
+}
+
+export const contains = ({razaoSocial, especialidade}, query) => {
+    var formatedEspecialidade = removeAcento(especialidade)
+    var formatedQuery = removeAcento(query)
+
+    if (razaoSocial.includes(formatedQuery) || formatedEspecialidade.includes(formatedQuery)) {
         return true;
     }
     return false

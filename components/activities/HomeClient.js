@@ -24,6 +24,7 @@ const actions = [
 export default class HomeClient extends Component {
 
     state = {
+        region: null,
         loading: false,
         data: [],
         error: null,
@@ -33,11 +34,12 @@ export default class HomeClient extends Component {
         isFilterModalVisible: false,
 
         agendamentoMarcado: false,
-        isAgendamentoModalVisible: false
     }
 
     componentDidMount() {
         this.makeRemoteRequest();
+        this.getUserLocation()
+
         /* Colocar a função de checagem se o usuario tem algum agendamento marcado
 
             isAgendamentoMarcado retornar True
@@ -64,6 +66,38 @@ export default class HomeClient extends Component {
             })
     }
 
+    getUserLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+            ({ coords: { latitude, longitude } }) => {
+                this.setState({
+                    region: {
+                        latitude,
+                        longitude,
+                        latitudeDelta: 0.0143,
+                        longitudeDelta: 0.0134,
+                    }
+                })
+            }, //Sucesso
+
+            () => { console.log('Erro') }, //Erro
+            {
+                timeout: 2000,
+                enableHighAccuracy: false,
+                maximumAge: 1000,
+            }
+        )
+    }
+
+    removeAcento = (text) => {
+        text = text.toLowerCase();
+        text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+        text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+        text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+        text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+        text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+        text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
+        return text;
+    }
 
     handlerSearch = (text) => {
         const formatQuery = text
@@ -75,14 +109,8 @@ export default class HomeClient extends Component {
 
     toggleModal = () => {
         this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
+        console.log(this.state.region)
     }
-
-    toggleModalAgendamento = () => {
-        this.setState({ isAgendamentoModalVisible: !this.state.isAgendamentoModalVisible })
-        console.log('Chamou a função Toggle')
-    }
-
-
 
     floatingButtonPress = () => {
         if (this.state.agendamentoMarcado) {
@@ -105,21 +133,24 @@ export default class HomeClient extends Component {
     RenderItem = (obj) => {
         const object = obj.item
 
-        const name = object.name.first
+        const name = object.razaoSocial
         const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
         const especialidade = object.especialidade
         const formatedEspecialidade = especialidade.charAt(0).toUpperCase() + especialidade.slice(1)
-        const likes = object.likes
+        const endereco = object.endereco
+        const cidade = object.cidade
+        const bairro = object.bairro
         const logo = object.logo
-        const distance = object.distance
+
+        const shopLat = object.latitude
+        const shopLon = object.longitude
 
         return (
             <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate('WorkShopLayout', {
                         name: formatedName,
-                        distance: distance,
-                        likes: likes
+                        distance: 'Enviar Distancia'
                     })
                 }}
                 style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
@@ -127,30 +158,32 @@ export default class HomeClient extends Component {
 
                 <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5 }}>
 
-                    <Image source={{ uri: logo }}
+                    <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
                         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
-                    <View style={{ marginTop: 10, marginLeft: 10 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Oficina {formatedName}</Text>
+                    <View style={{ marginTop: 10, marginLeft: 20 }}>
+                        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
-                                name="md-thumbs-up"
+                                name="md-home"
                                 size={13}
                                 style={{ marginTop: 3 }}
 
                             />
-                            <Text style={{ marginLeft: 3 }}>{likes}</Text>
-
+                            <Text style={{ marginLeft: 3 }}>{endereco}, {bairro}, {cidade}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
                             <Icon
-                                name="md-navigate"
-                                size={15}
-                                style={{ marginTop: 2, marginLeft: 10 }}
+                                name="md-locate"
+                                size={13}
+                                style={{ marginTop: 3 }}
+
                             />
-                            <Text style={{ marginLeft: 3 }}>{distance} KM</Text>
+                            <Text style={{ marginLeft: 3 }}>DISTANCIA KM</Text>
                         </View>
                     </View>
-                    <View style={{ marginTop: 10, marginLeft: 10, flexDirection: 'row' }}>
+                    <View style={{ marginTop: 10, marginLeft: 20, flexDirection: 'row' }}>
                         <Icon
                             name="md-star"
                             size={20}
@@ -240,19 +273,19 @@ export default class HomeClient extends Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('mecanica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
-                                    <Text style={styles.filterButtonText}>Mecanica</Text>
+                                    onPress={() => { this.handlerSearch('Mecânica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    <Text style={styles.filterButtonText}>Mecânica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('eletrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
-                                    <Text style={styles.filterButtonText}>Eletrica</Text>
+                                    onPress={() => { this.handlerSearch('Elétrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    <Text style={styles.filterButtonText}>Elétrica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    onPress={() => { this.handlerSearch('Funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
                                     <Text style={styles.filterButtonText}>Funilaria</Text>
                                 </TouchableOpacity>
                             </View>
@@ -276,7 +309,7 @@ export default class HomeClient extends Component {
                     onPressItem={
                         this.floatingButtonPress
                     }
-                    
+
                 />
             </View>
         )

@@ -8,17 +8,19 @@ import Especialitys from '../TasksOnHome'
 
 const { width, height } = Dimensions.get("window")
 
+
 export default class WorkShopLayout extends Component {
     state = {
         workShopname: '',
         distance: '',
         Especialitys: []
     }
+
+
     render() {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'oficina_name');
         const distance = navigation.getParam('distance', 'distance');
-        const likes = navigation.getParam('likes', 'likes');
 
         return (
             <View style={styles.container}>
@@ -37,10 +39,8 @@ export default class WorkShopLayout extends Component {
                     <View style={styles.workShopContainer}>
                         <Text style={styles.workShopName}>Oficina {name}</Text>
                         <View style={styles.workShopInformation}>
-                            <Icon name="md-navigate" size={20} />
+                            <Icon name="md-locate" size={20} />
                             <Text style={{ fontSize: 16, marginLeft: 5 }}>{distance} KM</Text>
-                            <Icon name="md-heart" size={20} style={{ marginLeft: 10 }} />
-                            <Text style={{ fontSize: 16, marginLeft: 5 }}>{likes}</Text>
                         </View>
 
                         <View style={{ alignItems: 'center', marginTop: 16 }}>
