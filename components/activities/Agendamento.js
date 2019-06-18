@@ -5,14 +5,17 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import imageOficina from '../../images/Oficina.jpg'
 import DateTimePicker from 'react-native-modal-datetime-picker'
-
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = { desc: '', date: null, workShopInformation: [{ name: '', adress: '', phoneNumber: '' }], pickerSection: '', agendamentoLabel: 'Escolha o melhor horário para você' }
 
 export default class Agendamento extends Component {
     state = {
         ...initialState,
-        isDateTimePickerVisible: false
+        isDateTimePickerVisible: false,
+        carId: '',
+        carProblem: '',
     }
 
     showDateTimePicker = () => {
@@ -31,10 +34,41 @@ export default class Agendamento extends Component {
         this.hideDateTimePicker();
     };
 
+    componentDidMount = async () => {
+        const id = await AsyncStorage.getItem('user')
+        try {
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario: id })
+                .then(response => this.getVeiculos(response.data.id))
+        } catch (err) {
+            alert("Usuário cadastrado não possui conta como cliente.")
+            return null
+        }
+    }
+
+    getVeiculos = async (id) => {
+        await axios.get(`http://192.168.0.10:4000/api/cliente/${id}/veiculos`)
+            .then(response => this.setState({ pickerSection: response.data }))
+    }
+
+    createScheduleRequisition = () => {
+        const schedule = {
+            idOficina: navigation.getParam('id', 0),
+            idVeiculo: this.state.carId,
+            data_hora: this.state.date,
+            
+        }
+    }
+
+    schedule = async () =>{
+        this.createScheduleRequisition()
+
+    }
+
     render() {
 
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'oficina_name');
+        const endereco = navigation.getParam('endereco', "endereço")
         let datePicker = null
 
         if (Platform.OS === 'ios') {
@@ -112,6 +146,8 @@ export default class Agendamento extends Component {
                             placeholder="Problema do veiculo"
                             autoCorrect={false}
                             multiline={true}
+                            value={this.state.carProblem}
+                            onChangeText={problem => this.setState({ carProblem: problem })}
                         />
                     </View>
 
@@ -127,9 +163,9 @@ export default class Agendamento extends Component {
                             style={styles.input}
                             onValueChange={(itemValue, itemIndex) => this.setState({ pickerSection: itemValue })}
                         >
-                            <Picker.Item label='CARRO A' value='carroA' />
-                            <Picker.Item label='CARRO B' value='carroB' />
-                            <Picker.Item label='CARRO C' value='carroC' />
+
+                            <Picker.Item label='SIENA' value='10' onPress={() => this.setState({carId: 10 })}/>
+                            <Picker.Item label='FOX' value='11' onPress={() => this.setState({carId: 11 })}/>
                         </Picker>
                     </View>
 
@@ -137,7 +173,7 @@ export default class Agendamento extends Component {
 
                 </ScrollView>
                 <View style={{ alignItems: 'center', padding: 10 }}>
-                    <TouchableOpacity style={styles.buttonAgendar}>
+                    <TouchableOpacity style={styles.buttonAgendar} onPress={() => this.schedule()}>
                         <Text style={styles.textButton}>Agendar</Text>
                     </TouchableOpacity>
                 </View>

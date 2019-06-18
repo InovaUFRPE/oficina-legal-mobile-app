@@ -22,6 +22,7 @@ export default class WorkShopLayout extends Component {
         const name = navigation.getParam('name', 'oficina_name');
         const distance = navigation.getParam('distance', 'distance');
         const address = navigation.getParam('address', 'endereço')
+        const idWorkshop = navigation.getParam('id', 0)
 
         return (
             <View style={styles.container}>
@@ -52,7 +53,9 @@ export default class WorkShopLayout extends Component {
                             <TouchableOpacity
                                 style={styles.buttonAgendamento}
                                 onPress={() => this.props.navigation.navigate('Agendamento', {
-                                    name: name
+                                    name: name,
+                                    endereco: address,
+                                    id: idWorkshop
                                 })}>
                                 <Text style={styles.buttonText}>Fazer Agendamento</Text>
                             </TouchableOpacity>

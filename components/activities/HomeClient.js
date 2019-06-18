@@ -154,7 +154,7 @@ export default class HomeClient extends Component {
         const endereco = object.endereco.charAt(0).toUpperCase() + name.slice(1);
         const cidade = object.cidade.charAt(0).toUpperCase() + name.slice(1);
         const bairro = object.bairro.charAt(0).toUpperCase() + name.slice(1);
-
+        const id = object.id
         const shopLat = object.latitude
         const shopLon = object.longitude
         return (
@@ -163,7 +163,8 @@ export default class HomeClient extends Component {
                     this.props.navigation.navigate('WorkShopLayout', {
                         name: formatedName,
                         distance: (this.CalcRadiusDistance(shopLat, shopLon)*-1),
-                        address: endereco + ", " + bairro + ", "+ cidade
+                        address: endereco + ", " + bairro + ", "+ cidade,
+                        idWorkshop: id
                         /* distance: distance, */
                     })
                 }}

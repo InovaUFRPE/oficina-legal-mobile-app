@@ -13,4 +13,4 @@ import EditCar from './components/activities/EditCarsClient'
 import TabClient from './components/navigation/TabNavigatorCliente'
 import Home from './components/navigation/DrawerNavigatorMechanic'
 
-AppRegistry.registerComponent(appName, () => Home);
+AppRegistry.registerComponent(appName, () => Navigator);

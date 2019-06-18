@@ -8,9 +8,18 @@ import {
     Alert
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class CustomDrawerMenu extends React.Component {
+    constructor(props){
+        super(props);
+        this.getUserName()
+    }
+    state = {
+        username: 'Username'
+    }
     logOut(){
         Alert.alert(
             'Mensagem',
@@ -21,10 +30,28 @@ export default class CustomDrawerMenu extends React.Component {
                 onPress: () => console.log('Cancel Pressed'),
                 style: 'cancel',
               },
-              {text: 'Sim', onPress: () => this.props.navigation.navigate('AppStack')},
+              {text: 'Sim', onPress: () => {
+                this.props.navigation.navigate('AppStack');
+                this.cleanData()}
+              }
             ],
             {cancelable: false},
           );
+    }
+
+    cleanData = () => {
+        AsyncStorage.clear()
+    }
+
+    getUserName = async () => {
+        const id = await AsyncStorage.getItem('user')
+        try{
+            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+                .then(response =>  this.setState({ username: response.data.nome}) )
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente." + err)
+            return null
+        } 
     }
 
     navLink(nav, text, iconName){

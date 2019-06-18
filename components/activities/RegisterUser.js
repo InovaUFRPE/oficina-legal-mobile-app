@@ -31,7 +31,6 @@ export default class RegisterUser extends Component {
     saveDataStorage = (user) => {
         try {
             AsyncStorage.setItem('user', JSON.stringify(user))
-                .then(this.props.navigation.navigate('RegisterVehicle'))
         } catch (error) {
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -42,7 +41,7 @@ export default class RegisterUser extends Component {
             login: this.state.login.trim(),
             email: this.state.email.trim(),
             senha: this.state.password.trim(),
-            ativo: tipo
+            ativo: true // Mudar para a variavel 'tipo'
         }
         return user
     }
@@ -81,9 +80,11 @@ export default class RegisterUser extends Component {
             if(client){
                 this.PostClient()
                 this.saveDataStorage(this.createClientRequisition())
+                this.props.navigation.navigate('RegisterVehicle')
             }else if(mechanic){
                 this.PostMechanic()
                 this.saveDataStorage(this.createClientRequisition())
+                this.props.navigation.navigate('LoginMechanic')
             }
         }
     }
@@ -104,7 +105,7 @@ export default class RegisterUser extends Component {
         }
     }
 
-    Verify() {
+    Verify(Mechanic, Client) {
         if (!this.checkBlankCamps(Mechanic, Client)) {
             Alert.alert("Erro", this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
@@ -174,9 +175,9 @@ export default class RegisterUser extends Component {
                             <TextInput placeholder='Nome'
                                 placeholderTextColor="grey"
                                 style={styles.input}
-                                value={this.state.name}
                                 returnKeyType="next"
                                 ref={(input) => this.nameInput = input}
+                                value={this.state.name}
                                 onChangeText={name => this.setState({ name })}
                                 onSubmitEditing={() => this.cpfInput.focus()} />
 
@@ -323,7 +324,7 @@ export default class RegisterUser extends Component {
                                 placeholderTextColor="grey"
                                 secureTextEntry={true}
                                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
-                                onSubmitEditing={() => this.cepInput.focus()}
+                                onSubmitEditing={() => this.HyperlinkInput.focus()}
                                 ref={(input) => this.confirmPasswordInput = input} />
                             <TextInput placeholder='Link de seu curriculo'
                                 placeholderTextColor="grey"
@@ -331,8 +332,7 @@ export default class RegisterUser extends Component {
                                 value={this.state.link}
                                 returnKeyType="next"
                                 onChangeText={link => this.setState({ link })}
-                                ref={(input) => this.HyperlinkInput = input}
-                                onSubmitEditing={() => this.descriptionInput.focus()} />
+                                ref={(input) => this.HyperlinkInput = input} />
                             <TouchableOpacity onPress={() => this.Verify(true, false)}
                                 style={styles.buttonRegister}>
                                 <Text style={styles.buttonRegisterText}>Seguir</Text>

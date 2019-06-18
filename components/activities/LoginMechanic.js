@@ -59,7 +59,7 @@ export default class LoginMechanic extends Component {
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         console.log(this.state.password + " ESTAGIO 2 ")
         if(this.GetUserByLogin() !== null){
-            this.props.navigation.navigate('DrawerNavigatorClient')
+            this.props.navigation.navigate('DrawerNavigatorMechanic')
         }
 
     }
