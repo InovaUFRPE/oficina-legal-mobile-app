@@ -33,7 +33,7 @@ export default class ChoseProfile extends Component {
                         
                         <TouchableOpacity 
                             style={styles.button}
-                            onPress={() => this.props.navigation.navigate('DrawerNavigatorMechanic')}>
+                            onPress={() => this.props.navigation.navigate('LoginMechanic')}>
                             <Text style={[styles.buttonText, {color:'white'}]}>Mecanico</Text>
                         </TouchableOpacity>
                     

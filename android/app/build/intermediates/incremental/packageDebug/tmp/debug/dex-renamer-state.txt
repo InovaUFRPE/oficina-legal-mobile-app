@@ -1,4 +1,4 @@
-#Sat Jun 15 12:52:39 BRT 2019
-base.0=/home/thalesg/RNprojects/UFRPE/processos/oficina-legal-mobile-app/android/app/build/intermediates/transforms/dexMerger/debug/0
+#Mon Jun 17 22:14:18 BRT 2019
+base.0=/home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/build/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 path.0=classes.dex

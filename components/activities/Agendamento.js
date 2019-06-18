@@ -78,8 +78,8 @@ export default class Agendamento extends Component {
                 <ScrollView style={{ width: '100%' }}>
 
                     <View style={{ justifyContent: 'flex-start', marginTop: 10 }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>Oficina {name}</Text>
-                        <Text style={{ fontSize: 15, marginLeft: 30 }}>Rua Rio da Dores, Recife, Penambuco</Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginLeft: 10 }}>{name}</Text>
+                        <Text style={{ fontSize: 15, marginLeft: 30 }}>{endereco}</Text>
                         <Text style={{ fontSize: 15, marginLeft: 30 }}>3339-2210</Text>
                         <Icon
                             name='md-navigate'

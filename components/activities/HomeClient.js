@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native'
-import { FloatingAction } from "react-native-floating-action"
 import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwersome from 'react-native-vector-icons/FontAwesome'
+import Data from '../users'
+import _ from 'lodash'
+import axios from 'axios';
+import { FloatingAction } from "react-native-floating-action"
 import Snackbar from 'react-native-snackbar'
 
-import _ from 'lodash'
-
 const { width, height } = Dimensions.get('window')
-
 const actions = [
     {
         text: "Meus Agendamento",
@@ -20,7 +20,6 @@ const actions = [
         position: 1
     }
 ]
-
 export default class HomeClient extends Component {
 
     state = {
@@ -32,14 +31,12 @@ export default class HomeClient extends Component {
         fullData: [],
 
         isFilterModalVisible: false,
-
         agendamentoMarcado: false,
     }
 
     componentDidMount() {
         this.makeRemoteRequest();
         this.getUserLocation()
-
         /* Colocar a função de checagem se o usuario tem algum agendamento marcado
 
             isAgendamentoMarcado retornar True
@@ -49,23 +46,22 @@ export default class HomeClient extends Component {
         */
     }
 
-    makeRemoteRequest = () => {
+    makeRemoteRequest = async () => {
         this.setState({ loading: true });
         console.log(this.state.loading)
 
-        getUsers(20, this.state.query)
-            .then(users => {
+        await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
+            .then(users => { 
                 this.setState({
                     loading: false,
-                    data: users,
+                    data: users.data,
                     fullData: users
-                });
+                }); 
             })
             .catch(error => {
                 this.setState({ error, loading: false })
             })
     }
-
     getUserLocation = () => {
         navigator.geolocation.getCurrentPosition(
             ({ coords: { latitude, longitude } }) => {
@@ -88,6 +84,31 @@ export default class HomeClient extends Component {
         )
     }
 
+    CalcRadiusDistance(lat2, lon2) {
+        var RADIUSMILES = 3961,
+            RADIUSKILOMETERS = 6373,
+            latR1 = this.deg2rad(lat1),
+            lonR1 = this.deg2rad(lon1),
+            latR2 = this.deg2rad(lat2),
+            lonR2 = this.deg2rad(lon2),
+            latDifference = latR2 - this.state.region.latitude,
+            lonDifference = lonR2 - this.state.region.longitude,
+            a  = Math.pow(Math.sin(latDifference / 2), 2) + Math.cos(latR1) * Math.cos(latR2) * Math.pow(Math.sin(lonDifference / 2), 2),
+            c  = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
+            dm = c * RADIUSMILES,
+            dk = c * RADIUSKILOMETERS;
+            let mi = this.round(dm);
+            let km = this.round(dk);
+            return km;
+    }
+    CalcRadiusDistance = (deg) => {
+        var rad = deg * Math.PI / 180;
+        return rad;
+    };
+    CalcRadiusDistance = (x) => {
+        return Math.round(x * 10) / 10;
+    };
+
     removeAcento = (text) => {
         text = text.toLowerCase();
         text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
@@ -98,7 +119,6 @@ export default class HomeClient extends Component {
         text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
         return text;
     }
-
     handlerSearch = (text) => {
         const formatQuery = text
         const data = _.filter(this.state.fullData, user => {
@@ -108,10 +128,8 @@ export default class HomeClient extends Component {
     }
 
     toggleModal = () => {
-        this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
-        console.log(this.state.region)
+        this.setState({ isModalVisible: !this.state.isModalVisible })
     }
-
     floatingButtonPress = () => {
         if (this.state.agendamentoMarcado) {
             Alert.alert(
@@ -129,40 +147,34 @@ export default class HomeClient extends Component {
             });
         }
     }
-
     RenderItem = (obj) => {
         const object = obj.item
-
         const name = object.razaoSocial
         const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
-        const especialidade = object.especialidade
-        const formatedEspecialidade = especialidade.charAt(0).toUpperCase() + especialidade.slice(1)
-        const endereco = object.endereco
-        const cidade = object.cidade
-        const bairro = object.bairro
-        const logo = object.logo
+        const endereco = object.endereco.charAt(0).toUpperCase() + name.slice(1);
+        const cidade = object.cidade.charAt(0).toUpperCase() + name.slice(1);
+        const bairro = object.bairro.charAt(0).toUpperCase() + name.slice(1);
 
         const shopLat = object.latitude
         const shopLon = object.longitude
-
         return (
             <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate('WorkShopLayout', {
                         name: formatedName,
-                        distance: 'Enviar Distancia'
+                        distance: (this.CalcRadiusDistance(shopLat, shopLon)*-1),
+                        address: endereco + ", " + bairro + ", "+ cidade
+                        /* distance: distance, */
                     })
                 }}
                 style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
-
-
                 <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5 }}>
 
                     <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
                         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
-                    <View style={{ marginTop: 10, marginLeft: 20 }}>
+                <View style={{ marginTop: 10, marginLeft: 20 }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
@@ -180,17 +192,16 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
 
                             />
-                            <Text style={{ marginLeft: 3 }}>DISTANCIA KM</Text>
+                            <Text style={{ marginLeft: 3 }}>{this.CalcRadiusDistance(shopLat, shopLon)*-1} KM</Text>
                         </View>
                     </View>
-                    <View style={{ marginTop: 10, marginLeft: 20, flexDirection: 'row' }}>
+                    <View style={{ marginTop: 5, marginLeft: 15, flexDirection: 'row' }}>
                         <Icon
                             name="md-star"
                             size={20}
                             color='#0d47a1'
-                            style={{ marginBottom: 4 }}
                         />
-                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>{formatedEspecialidade}</Text>
+                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>Especialidade</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -202,7 +213,6 @@ export default class HomeClient extends Component {
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
-
                 <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center' }}>
                     <FontAwersome
                         name="bars"
@@ -235,19 +245,19 @@ export default class HomeClient extends Component {
                                 onChangeText={this.handlerSearch} />
                         </View>
 
-
+                        
                         { //Condicionador de render do "X" para apagar o campo de pesquisa
-                            this.state.query !== ''
-                                ?
-                                <TouchableOpacity onPress={() => this.handlerSearch('')}>
-                                    <Icon
-                                        name="md-close"
-                                        size={20}
-                                        style={{ color: '#0d47a1', marginRight: 10 }}
-                                    />
-                                </TouchableOpacity>
-                                :
-                                null
+                            this.state.query !== '' 
+                            ?  
+                            <TouchableOpacity onPress={() => this.handlerSearch('')}>
+                                <Icon
+                                    name="md-close"
+                                    size={20}
+                                    style={{ color: '#0d47a1', marginRight: 10 }}
+                                />
+                            </TouchableOpacity> 
+                            :
+                            null
                         }
 
                     </View>
@@ -301,7 +311,6 @@ export default class HomeClient extends Component {
                     ListFooterComponent={this.renderFooter}
                     showsVerticalScrollIndicator={false}
                 />
-
                 <FloatingAction
                     actions={actions}
                     position='right'
@@ -315,8 +324,6 @@ export default class HomeClient extends Component {
         )
     }
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

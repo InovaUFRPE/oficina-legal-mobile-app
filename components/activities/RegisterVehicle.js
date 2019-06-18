@@ -79,12 +79,26 @@ export default class RegisterVehicle extends Component {
         return vehicle
     }
 
+    validateYear(){
+        try{
+            ano = parseInt(this.state.year)
+            if (ano < 1800 || ano > 2018){
+                this.errors.str += "\n- Ano inválido"
+            }else{
+                return
+            }
+        }catch{
+            this.errors.str += "\n- Ano inválido"
+        }
+    }
+
     Verify(){
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
             return
         }
+        this.validateYear()
         this.displayDataStorage()
     }
 
@@ -127,6 +141,7 @@ export default class RegisterVehicle extends Component {
                             style={styles.input}
                             value= {this.state.year} 
                             returnKeyType="next"
+                            maxLength={4}
                             keyboardType='numeric'
                             onChangeText={year => this.setState({ year })}/>
 
@@ -135,12 +150,14 @@ export default class RegisterVehicle extends Component {
                             style={styles.input}
                             value= {this.state.renavam} 
                             returnKeyType="next"
+                            maxLength={11}
                             onChangeText={renavam => this.setState({ renavam })}/> 
 
                         <TextInput placeholder='Placa' 
                             placeholderTextColor="white" style={styles.input}
                             value= {this.state.Vplate} 
                             returnKeyType="next"
+                            maxLength={7}
                             onChangeText={Vplate => this.setState({ Vplate })}/> 
     
                                         

@@ -21,6 +21,7 @@ export default class WorkShopLayout extends Component {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'oficina_name');
         const distance = navigation.getParam('distance', 'distance');
+        const address = navigation.getParam('address', 'endereço')
 
         return (
             <View style={styles.container}>
@@ -40,10 +41,14 @@ export default class WorkShopLayout extends Component {
                         <Text style={styles.workShopName}>Oficina {name}</Text>
                         <View style={styles.workShopInformation}>
                             <Icon name="md-locate" size={20} />
-                            <Text style={{ fontSize: 16, marginLeft: 5 }}>{distance} KM</Text>
+                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }}>{distance} KM</Text>
                         </View>
-
-                        <View style={{ alignItems: 'center', marginTop: 16 }}>
+                        <View style={styles.workShopInformation}>
+                            <Icon name="md-home" size={20} />
+                            <Text style={{ fontSize: 16, marginRight: 20 }} >{address}</Text>
+                        </View>
+                        
+                        <View style={{ alignItems: 'center', marginTop: 10 }}>
                             <TouchableOpacity
                                 style={styles.buttonAgendamento}
                                 onPress={() => this.props.navigation.navigate('Agendamento', {

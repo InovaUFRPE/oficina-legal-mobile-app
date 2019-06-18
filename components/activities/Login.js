@@ -97,7 +97,9 @@ export default class Login extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.signUpLink}
-                    onPress={() => this.props.navigation.navigate('RegisterUser')}>
+                    onPress={() => this.props.navigation.navigate('RegisterUser', {
+                        client: true
+                    })}>
                     <Text style={styles.signUpLinkText}>Criar conta grátis</Text>
                 </TouchableOpacity>
 

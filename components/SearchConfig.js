@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import users from './users'
 
-
 function removeAcento (text)
 {       
     text = text.toLowerCase();                                                         

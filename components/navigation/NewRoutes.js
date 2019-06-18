@@ -3,6 +3,7 @@ import { fromBottom } from 'react-navigation-transitions';
 
 //Not Loged
 import Login from '../activities/Login'
+import LoginMechanic from '../activities/LoginMechanic'
 import RegisterUser from '../activities/RegisterUser'
 import RegisterAdress from '../activities/RegisterAdress'
 import RegisterVehicle from '../activities/RegisterVehicle'
@@ -35,6 +36,7 @@ const blueHeader = {
 
 const AppStack = createStackNavigator({
     Home: { screen: Login, navigationOptions: { header: null } },
+    LoginMechanic: { screen: LoginMechanic, navigationOptions: { header: null } },
     RegisterUser: { screen: RegisterUser, navigationOptions: blueHeader },
     RegisterAdress: { screen: RegisterAdress, navigationOptions: defaultHeader },
     RegisterVehicle: { screen: RegisterVehicle, navigationOptions: blueHeader },
