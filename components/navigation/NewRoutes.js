@@ -37,7 +37,7 @@ const blueHeader = {
 const AppStack = createStackNavigator({
     Home: { screen: Login, navigationOptions: { header: null } },
     LoginMechanic: { screen: LoginMechanic, navigationOptions: { header: null } },
-    RegisterUser: { screen: RegisterUser, navigationOptions: blueHeader },
+    RegisterUser: { screen: RegisterUser, navigationOptions: { headerTintColor: '#2250d9', title: 'Registro'} },
     RegisterAdress: { screen: RegisterAdress, navigationOptions: defaultHeader },
     RegisterVehicle: { screen: RegisterVehicle, navigationOptions: blueHeader },
     ForgotPassword: { screen: ForgotPassword, navigationOptions: defaultHeader },

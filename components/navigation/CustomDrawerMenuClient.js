@@ -84,12 +84,12 @@ export default class CustomDrawerMenu extends React.Component {
 
                 <View style={styles.buttonsContainer}>
                     {this.navLink('EditDataClient', 'Perfil', "md-contact")}
-                    {this.navLink('VeicleHistory','Histórico do veículo', "md-car")}
+                    {/*{this.navLink('VeicleHistory','Histórico do veículo', "md-car")}*/}
                     {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
                 </View>
 
                 <View style={styles.configButtomContainer}>
-                    {this.navLink('StackClient', 'Configurações', "md-code-working")}
+                    {/*{this.navLink('StackClient', 'Configurações', "md-code-working")}*/}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.logOut()}>
                         <Icon                       
                             name="md-log-out"
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
 
     configButtomContainer: {
-        height: 110,
+        height: 75,
         borderTopWidth: 1,
     }
 })

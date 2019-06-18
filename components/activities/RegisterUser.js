@@ -160,8 +160,8 @@ export default class RegisterUser extends Component {
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
                 style={styles.container}>
                 {Client ?
-                    <View paddingTop={50}>
-                        <ScrollView>
+                    <View paddingTop={20}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             <TextInput placeholder='Login'
                                 tintColor={"black"}
                                 placeholderTextColor="grey"
@@ -264,8 +264,8 @@ export default class RegisterUser extends Component {
                     }
 
                     {Mechanic ?
-                    <View paddingTop={50}>
-                        <ScrollView>
+                    <View paddingTop={20}>
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             <TextInput placeholder='Login'
                                 tintColor={"black"}
                                 placeholderTextColor="grey"

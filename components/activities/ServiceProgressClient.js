@@ -17,34 +17,63 @@ export default class ServiceProgressClient extends Component {
             { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
             { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
             { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
-        ]
+        ],
+
+        isOsMaking: false
+    }
+
+    componentDidMount() {
+        /* Colocar a função de verificação se há alguma OS sendo realiziada
+
+            functio(isOsMaking) retornar True
+            ? this.setState({isOsMaking: true})
+            : null
+        
+        */
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableOpacity>
-                        <Icon name="arrow-left"
-                            size={20}
-                            color="#fff"
-                            style={{ paddingBottom: 50, paddingLeft: 15 }}
-                            onPress={() => this.props.navigation.goBack()} />
-                    </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Progresso do Serviço</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text style={styles.headerInformation}>Oficina_name</Text>
-                        <Text style={[styles.headerInformation, {marginRight: 20}]}>JKS-2112</Text>
+            this.state.isOsMaking
+                ?
+                <View style={styles.container}>
+                    <View style={styles.header}>
+                        <TouchableOpacity>
+                            <Icon name="arrow-left"
+                                size={20}
+                                color="#fff"
+                                style={{ paddingBottom: 35, paddingLeft: 15 }}
+                                onPress={() => this.props.navigation.goBack()} />
+                        </TouchableOpacity>
+                        <Text style={styles.headerTitle}>Progresso do Serviço</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={styles.headerInformation}>Oficina_name</Text>
+                            <Text style={[styles.headerInformation, { marginRight: 20 }]}>JKS-2112</Text>
+                        </View>
+
                     </View>
+                    <ScrollView style={{ marginTop: 10 }}>
+                        <FlatList data={this.state.tasks}
+                            keyExtractor={item => `${item.id}`}
+                            renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} />} />
+                    </ScrollView>
 
                 </View>
-                <ScrollView style={{ marginTop: 10 }}>
-                    <FlatList data={this.state.tasks}
-                        keyExtractor={item => `${item.id}`}
-                        renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} />} />
-                </ScrollView>
-
-            </View>
+                : <View>
+                    <View style={styles.header}>
+                        <TouchableOpacity>
+                            <Icon name="arrow-left"
+                                size={20}
+                                color="#fff"
+                                style={{ paddingBottom: 70, paddingLeft: 15 }}
+                                onPress={() => this.props.navigation.goBack()} />
+                        </TouchableOpacity>
+                        <Text style={styles.headerTitle}>Progresso do Serviço</Text>
+                    </View>
+                    <View>
+                        <Text style={{marginTop: 20, marginLeft: 20, fontSize: 25, fontWeight: 'bold'}}>Não há nenhum serviço sendo realizado no momento.</Text>
+                    </View>
+                </View>
         )
     }
 }
@@ -69,6 +98,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 30,
         marginLeft: 20,
+        marginBottom: 20,
         fontWeight: '500'
     },
 

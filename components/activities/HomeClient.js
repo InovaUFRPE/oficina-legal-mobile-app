@@ -142,7 +142,7 @@ export default class HomeClient extends Component {
             );
         } else {
             Snackbar.show({
-                title: 'Você ainda não tem nenhum agendamento marcado',
+                title: 'Você ainda não tem nenhum agendamento marcado.',
                 duration: Snackbar.LENGTH_LONG,
             });
         }
