@@ -3,6 +3,7 @@ import { validateEmail, checkBlankCamps, validBlankCamps} from '../../busnisses/
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import defaultStyles from '../styles/Default'
 
 export default class Login extends Component {
     state = {
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
     button: {
         padding: 20,
         borderRadius: 5,
-        backgroundColor: "#2250d9",
+        backgroundColor: defaultStyles.colors.primaryColor,
         alignSelf: 'stretch',
         margin: 15,
         marginHorizontal: 20,

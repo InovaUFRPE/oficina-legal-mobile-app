@@ -1,4 +1,4 @@
-#Tue Jun 18 00:34:05 GFT 2019
+#Wed Jun 19 00:09:02 GFT 2019
 base.0=C\:\\Users\\Denver\\Desktop\\Processos\\oficina-legal-mobile-app\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.0=classes.dex
 renamed.0=classes.dex

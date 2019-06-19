@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import TabNavigatorCliente from '../navigation/TabNavigatorCliente';
+import defaultStyles from '../styles/Default'
 
 const { height, width } = Dimensions.get('window')
 
@@ -16,7 +17,7 @@ export default class HomeMechanic extends Component {
                             color="#ffffff"
                             style={styles.menuIcon}
                             onPress={() => this.props.navigation.goBack()} />
-                        <Text style={{ color: '#fff', fontSize: 25, fontWeight: 'bold' }}>Edição de Dados</Text>
+                        <Text style={{ color: '#fff', fontSize: 25, fontWeight: 'bold', padding: 15 }}>Edição de Dados</Text>
                         <Image
                             source={require('../../images/LogoBranca.png')}
                             style={styles.logo}
@@ -43,11 +44,11 @@ const styles = StyleSheet.create({
     headerContainer: {
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#2250d9'
+        backgroundColor: defaultStyles.colors.primaryColor
     },
 
     menuIcon: {
-        padding: 19,
+        padding: 15,
     },
 
     touchableOpacityStyle: {

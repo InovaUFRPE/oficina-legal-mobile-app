@@ -10,6 +10,7 @@ import _ from 'lodash'
 import axios from 'axios';
 import { FloatingAction } from "react-native-floating-action"
 import Snackbar from 'react-native-snackbar'
+import defaultStyles from '../styles/Default'
 
 const { width, height } = Dimensions.get('window')
 const actions = [
@@ -51,12 +52,12 @@ export default class HomeClient extends Component {
         console.log(this.state.loading)
 
         await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
-            .then(users => { 
+            .then(users => {
                 this.setState({
                     loading: false,
                     data: users.data,
                     fullData: users
-                }); 
+                });
             })
             .catch(error => {
                 this.setState({ error, loading: false })
@@ -93,13 +94,13 @@ export default class HomeClient extends Component {
             lonR2 = this.deg2rad(lon2),
             latDifference = latR2 - this.state.region.latitude,
             lonDifference = lonR2 - this.state.region.longitude,
-            a  = Math.pow(Math.sin(latDifference / 2), 2) + Math.cos(latR1) * Math.cos(latR2) * Math.pow(Math.sin(lonDifference / 2), 2),
-            c  = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
+            a = Math.pow(Math.sin(latDifference / 2), 2) + Math.cos(latR1) * Math.cos(latR2) * Math.pow(Math.sin(lonDifference / 2), 2),
+            c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
             dm = c * RADIUSMILES,
             dk = c * RADIUSKILOMETERS;
-            let mi = this.round(dm);
-            let km = this.round(dk);
-            return km;
+        let mi = this.round(dm);
+        let km = this.round(dk);
+        return km;
     }
     CalcRadiusDistance = (deg) => {
         var rad = deg * Math.PI / 180;
@@ -119,6 +120,7 @@ export default class HomeClient extends Component {
         text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
         return text;
     }
+
     handlerSearch = (text) => {
         const formatQuery = text
         const data = _.filter(this.state.fullData, user => {
@@ -128,7 +130,7 @@ export default class HomeClient extends Component {
     }
 
     toggleModal = () => {
-        this.setState({ isModalVisible: !this.state.isModalVisible })
+        this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
     }
     floatingButtonPress = () => {
         if (this.state.agendamentoMarcado) {
@@ -162,8 +164,8 @@ export default class HomeClient extends Component {
                 onPress={() => {
                     this.props.navigation.navigate('WorkShopLayout', {
                         name: formatedName,
-                        distance: (this.CalcRadiusDistance(shopLat, shopLon)*-1),
-                        address: endereco + ", " + bairro + ", "+ cidade,
+                        distance: (this.CalcRadiusDistance(shopLat, shopLon) * -1),
+                        address: endereco + ", " + bairro + ", " + cidade,
                         idWorkshop: id
                         /* distance: distance, */
                     })
@@ -175,7 +177,7 @@ export default class HomeClient extends Component {
                         style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
-                <View style={{ marginTop: 10, marginLeft: 20 }}>
+                    <View style={{ marginTop: 10, marginLeft: 20 }}>
                         <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
@@ -193,7 +195,7 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
 
                             />
-                            <Text style={{ marginLeft: 3 }}>{this.CalcRadiusDistance(shopLat, shopLon)*-1} KM</Text>
+                            <Text style={{ marginLeft: 3 }}>{this.CalcRadiusDistance(shopLat, shopLon) * -1} KM</Text>
                         </View>
                     </View>
                     <View style={{ marginTop: 5, marginLeft: 15, flexDirection: 'row' }}>
@@ -214,7 +216,7 @@ export default class HomeClient extends Component {
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: width, backgroundColor: '#0d47a1', justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', width: width, backgroundColor: defaultStyles.colors.primaryColor, justifyContent: 'space-between', alignItems: 'center' }}>
                     <FontAwersome
                         name="bars"
                         size={30}
@@ -222,7 +224,7 @@ export default class HomeClient extends Component {
                         onPress={() => this.props.navigation.toggleDrawer()}
                     />
                     <View>
-                        <Text style={{ padding: 15, fontSize: 25, color: '#fff', fontWeight: 'bold' }}>Oficina legal</Text>
+                        <Text style={{ padding: 15, fontSize: 25, color: '#fff', fontWeight: 'bold', fontFamily: defaultStyles.fontFamily}}>Oficina Legal</Text>
                     </View>
 
                     <Image
@@ -246,19 +248,19 @@ export default class HomeClient extends Component {
                                 onChangeText={this.handlerSearch} />
                         </View>
 
-                        
+
                         { //Condicionador de render do "X" para apagar o campo de pesquisa
-                            this.state.query !== '' 
-                            ?  
-                            <TouchableOpacity onPress={() => this.handlerSearch('')}>
-                                <Icon
-                                    name="md-close"
-                                    size={20}
-                                    style={{ color: '#0d47a1', marginRight: 10 }}
-                                />
-                            </TouchableOpacity> 
-                            :
-                            null
+                            this.state.query !== ''
+                                ?
+                                <TouchableOpacity onPress={() => this.handlerSearch('')}>
+                                    <Icon
+                                        name="md-close"
+                                        size={20}
+                                        style={{ color: '#0d47a1', marginRight: 10 }}
+                                    />
+                                </TouchableOpacity>
+                                :
+                                null
                         }
 
                     </View>
@@ -268,6 +270,7 @@ export default class HomeClient extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+
                 <Modal
                     onBackButtonPress={this.toggleModal}
                     onBackdropPress={this.toggleModal}
@@ -348,7 +351,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
-        marginRight: 5
+        marginRight: 10
     },
 
     input: {
