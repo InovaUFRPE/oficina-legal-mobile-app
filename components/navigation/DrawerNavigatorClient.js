@@ -1,6 +1,6 @@
 import React from 'react'
 import {Platform, Dimensions} from 'react-native'
-import {createDrawerNavigator, DrawerItems, SafeAreaView, ScrollView} from 'react-navigation'
+import {createDrawerNavigator, DrawerItems, SafeAreaView, createStackNavigator} from 'react-navigation'
 import { fromBottom } from 'react-navigation-transitions';
 
 import HomeClient from '../activities/HomeClient'
@@ -12,6 +12,8 @@ import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
 import ServiceProgress from '../activities/ServiceProgressClient'
 import WorkShopLayout from '../activities/WorkShopLayout'
+
+
 
 
 export default createDrawerNavigator({

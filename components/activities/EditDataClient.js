@@ -13,11 +13,13 @@ export default class HomeMechanic extends Component {
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{flexDirection:'row'}}>
                         <Icon name="md-arrow-back" size={30}
                             color="#ffffff"
                             style={styles.menuIcon}
                             onPress={() => this.props.navigation.goBack()} />
-                        <Text style={{ color: '#fff', fontSize: 25, fontWeight: 'bold', padding: 15 }}>Edição de Dados</Text>
+                        <Text style={{ color: '#fff', fontSize: 30, fontFamily: defaultStyles.fontFamily, padding: 15 }}>Edição de Dados</Text>
+                        </View>
                         <Image
                             source={require('../../images/LogoBranca.png')}
                             style={styles.logo}

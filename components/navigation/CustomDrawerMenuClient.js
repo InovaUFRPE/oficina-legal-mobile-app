@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import defaultStyle from '../styles/Default'
 
 export default class CustomDrawerMenu extends React.Component {
     constructor(props){
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
 
     userContainer: {
         height: 160,
-        backgroundColor: '#2250d9'
+        backgroundColor: defaultStyle.colors.primaryColor
     },
 
     profile: {

@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView } from
 import { Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Especialitys from '../TasksOnHome'
+import defaultStyle from '../styles/Default'
 
 // onPress={() => this.props.navigation.navigate('Agendamento')}
 
@@ -41,12 +42,12 @@ export default class WorkShopLayout extends Component {
                     <View style={styles.workShopContainer}>
                         <Text style={styles.workShopName}>Oficina {name}</Text>
                         <View style={styles.workShopInformation}>
-                            <Icon name="md-locate" size={20} />
-                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }}>{distance} KM</Text>
+                            <Icon name="md-locate" size={20} color={defaultStyle.colors.primaryColor} />
+                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }}>{distance} Km</Text>
                         </View>
                         <View style={styles.workShopInformation}>
-                            <Icon name="md-home" size={20} />
-                            <Text style={{ fontSize: 16, marginRight: 20 }} >{address}</Text>
+                            <Icon name="md-home" size={20} color={defaultStyle.colors.primaryColor} />
+                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }} >{address}</Text>
                         </View>
                         
                         <View style={{ alignItems: 'center', marginTop: 10 }}>
@@ -102,9 +103,9 @@ const styles = StyleSheet.create({
     workShopName: {
         marginLeft: 20,
         marginTop: 30,
-        fontSize: 23,
-        fontWeight: 'bold'
-
+        fontSize: 30,
+        fontFamily: 'bebas',
+        color: 'black',
     },
 
     workShopInformation: {

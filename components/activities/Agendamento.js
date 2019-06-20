@@ -111,76 +111,79 @@ export default class Agendamento extends Component {
                         onPress={() => { this.props.navigation.goBack() }}
                     />
                     <View style={{ justifyContent: 'center', alignItems: 'flex-start', }}>
-                        <Text style={{ fontSize: 25, color: defaultStyle.colors.textOnPrimary, fontWeight: 'bold', fontFamily: defaultStyle.roboto }}>Agendamento</Text>
+                        <Text style={{ fontSize: 35, fontFamily: 'roboto', color: defaultStyle.colors.textOnPrimary, }}>AGENDAMENTO</Text>
                     </View>
                 </LinearGradient>
+                    <View style={{ width: '100%', height: '70%', backgroundColor: '#fff', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
+                        <View style={{ justifyContent: 'flex-start', marginTop: 10, borderTopRightRadius: 10, width: width, marginLeft: 20 }}>
+                            <Text style={{ fontSize: 28, fontFamily: 'bebas', marginLeft: 10, color: '#0b111f' }}>{name}</Text>
+                            <Text style={{ fontSize: 15, marginLeft: 30 }}>{endereco}}</Text>
+                            <Text style={{ fontSize: 15, marginLeft: 30 }}>Contato</Text>
+                            <Icon
+                                name='md-navigate'
+                                size={15}
+                                color='#1a237e'
+                                style={{ position: 'absolute', marginLeft: 15, marginTop: 35 }}
+                            />
+                            <Icon
+                                name='md-call'
+                                size={15}
+                                color='#1a237e'
+                                style={{ position: 'absolute', marginLeft: 15, marginTop: 58 }}
+                            />
+                        </View>
 
+                        <View style={[styles.infoContainer, { marginTop: 20 }]}>
+                            <Icon
+                                name='md-alarm'
+                                size={30}
+                                color='#0b111f'
+                                style={{ marginLeft: 16 }}
+                            />
+                            {datePicker}
+                        </View>
 
-                <View style={{ justifyContent: 'flex-start', marginTop: 10, borderTopRightRadius: 10, width: width }}>
-                    <Text style={{ fontSize: 25, fontWeight: 'bold', marginLeft: 10, color: '#0b111f' }}>{name}</Text>
-                    <Text style={{ fontSize: 15, marginLeft: 30 }}>{endereco}</Text>
-                    <Text style={{ fontSize: 15, marginLeft: 30 }}>Contato</Text>
-                    <Icon
-                        name='md-navigate'
-                        size={15}
-                        color='#1a237e'
-                        style={{ position: 'absolute', marginLeft: 15, marginTop: 35 }}
-                    />
-                    <Icon
-                        name='md-call'
-                        size={15}
-                        color='#1a237e'
-                        style={{ position: 'absolute', marginLeft: 15, marginTop: 58 }}
-                    />
-                </View>
+                        <View style={styles.infoContainer}>
+                            <Icon
+                                name='md-alert'
+                                color='#0b111f'
+                                size={30}
+                                style={{ marginRight: 15 }}
+                            />
+                            <TextInput
+                                style={[styles.input]}
+                                placeholder="Problema do veiculo"
+                                autoCorrect={false}
+                                maxLength={150}
+                                multiline={true}
+                                returnKeyType='done'
+                                blurOnSubmit={true}
+                                value={this.state.carProblem}
+                                onChangeText={problem => this.setState({ carProblem: problem })}
+                            />
+                        </View>
 
-                <View style={[styles.infoContainer, { height: 70, marginTop: 20 }]}>
-                    <Icon
-                        name='md-alarm'
-                        size={30}
-                        color='#0b111f'
-                        style={{ marginLeft: 25 }}
-                    />
-                    {datePicker}
-                </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: width }}>
+                            <Icon
+                                name='md-car'
+                                color='#0b111f'
+                                size={30}
+                            />
+                            <View style={{ width: '70%', marginRight: 20 }}>
+                                <Dropdown
+                                    label='Seu carro'
+                                    data={this.state.data}
+                                />
+                            </View>
 
-                <View style={styles.infoContainer}>
-                    <Icon
-                        name='md-alert'
-                        color='#0b111f'
-                        size={30}
-                    />
-                    <TextInput
-                        style={[styles.input, { paddingLeft: 10 }]}
-                        placeholder="Problema do veiculo"
-                        autoCorrect={false}
-                        multiline={true}
-                        value={this.state.carProblem}
-                        onChangeText={problem => this.setState({ carProblem: problem })}
-                    />
-                </View>
+                        </View>
 
-                <View style={{flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: width}}>
-                    <Icon
-                        name='md-car'
-                        color='#0b111f'
-                        size={30}
-                        style={{ marginLeft: 7, }}
-                    />
-                    <View style={{width: '70%', marginRight: 20}}>
-                        <Dropdown
-                            label='Seu carro'
-                            data={this.state.data}
-                        />
+                        <View style={{ alignItems: 'center', padding: 10, marginTop: 50}}>
+                            <TouchableOpacity style={styles.buttonAgendar} onPress={() => this.schedule()}>
+                                <Text style={styles.textButton}>Agendar</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-
-                </View>
-
-                <View style={{ alignItems: 'center', padding: 10 }}>
-                    <TouchableOpacity style={styles.buttonAgendar} onPress={() => this.schedule()}>
-                        <Text style={styles.textButton}>Agendar</Text>
-                    </TouchableOpacity>
-                </View>
             </View>
         )
     }
@@ -190,11 +193,12 @@ export default class Agendamento extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#1a237e'
     },
     background: {
         width: "100%",
-        height: height / 3.5,
+        height: "30%",
         //backgroundColor: defaultStyle.colors.primaryColor,
         justifyContent: 'center',
         alignItems: 'center'
@@ -232,7 +236,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center',
         padding: 10,
-        borderBottomWidth: 0.5
     },
 
     infoText: {
@@ -258,13 +261,7 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: "#FFF",
-        fontWeight: "bold",
         fontSize: 15,
         textAlign: "center",
     },
-    image: {
-        width: 120,
-        height: 120,
-    },
-
 })

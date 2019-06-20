@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 export default props => {
 
     let check = null
-    
+
     if (props.isDone !== 'pendente') {
         check = (
             <View style={styles.done}>
@@ -46,8 +46,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        marginBottom: 5,
-        backgroundColor: '#fff'
+        marginVertical: 5,
+        backgroundColor: '#fff',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+
+        elevation: 4,
 
     },
 

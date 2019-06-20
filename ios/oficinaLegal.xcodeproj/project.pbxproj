@@ -64,6 +64,7 @@
 		B33639A94DFF48CE98F868C4 /* libRNSnackbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 863D3B20ED614FBF830C97DF /* libRNSnackbar.a */; };
 		2217AC84DC2E45E49C21D65D /* big_noodle_titling.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FF1BD125EEA4C07A279AC37 /* big_noodle_titling.ttf */; };
 		3DEF787BAFD94B4D8B891FEF /* roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 134111D458A04EB597AD0781 /* roboto.ttf */; };
+		1878D599B5704D92986F4037 /* bebas.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46CEC9FD7922431B8194266B /* bebas.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -402,6 +403,7 @@
 		863D3B20ED614FBF830C97DF /* libRNSnackbar.a */ = {isa = PBXFileReference; name = "libRNSnackbar.a"; path = "libRNSnackbar.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		6FF1BD125EEA4C07A279AC37 /* big_noodle_titling.ttf */ = {isa = PBXFileReference; name = "big_noodle_titling.ttf"; path = "../assets/fonts/big_noodle_titling.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		134111D458A04EB597AD0781 /* roboto.ttf */ = {isa = PBXFileReference; name = "roboto.ttf"; path = "../assets/fonts/roboto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		46CEC9FD7922431B8194266B /* bebas.ttf */ = {isa = PBXFileReference; name = "bebas.ttf"; path = "../assets/fonts/bebas.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -701,6 +703,7 @@
 				E5D73862BC77445F9B6A4DBD /* Zocial.ttf */,
 				6FF1BD125EEA4C07A279AC37 /* big_noodle_titling.ttf */,
 				134111D458A04EB597AD0781 /* roboto.ttf */,
+				46CEC9FD7922431B8194266B /* bebas.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1169,6 +1172,7 @@
 				C079B9A3855742729C357331 /* Zocial.ttf in Resources */,
 				2217AC84DC2E45E49C21D65D /* big_noodle_titling.ttf in Resources */,
 				3DEF787BAFD94B4D8B891FEF /* roboto.ttf in Resources */,
+				1878D599B5704D92986F4037 /* bebas.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

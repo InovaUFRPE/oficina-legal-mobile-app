@@ -26,7 +26,21 @@ export default class HomeClient extends Component {
     state = {
         region: null,
         loading: false,
-        data: [],
+        data: [
+            {id:1 , razaoSocial: 'da hora', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'dahoralins@hotmail.com', likes: 34, especialidade: 'Mecânica', logo: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg', latitude: -8.1177294, longitude: -34.9412915}, 
+            {id:2 , razaoSocial: 'do manoel', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'mateus@hotmail.com', likes: 134, especialidade: 'Elétrica', logo: 'https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2011%2F08%2F25%2F19%2FWDL-Logo-6650_18118_041040027_1552849433.jpg', latitude: 10, longitude: 20}, 
+            {id:3 , razaoSocial: 'bateu concertou', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'joao@hotmail.com', likes: 531, especialidade: 'Elétrica', logo: 'https://ae01.alicdn.com/kf/HTB1QxqpRVXXXXbsXXXXq6xXFXXX4/Servi-o-de-repara-o-de-Servi-o-Oficina-Auto-Logotipo-Do-Carro-Adesivo-de-Parede.jpg_640x640.jpg', latitude: 10, longitude: 20}, 
+            {id:4 , razaoSocial: 'melhor preço', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'raqyuel@hotmail.com', likes: 12, especialidade: 'funilaria', logo: 'http://www.leaodesign.com.br/images/portfolio/criacao-de-logotipos/3-single.png', latitude: 10, longitude: 20}, 
+            {id:5 , razaoSocial: 'da comunidade', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'melhor_preço@hotmail.com', likes: 537, especialidade: 'Mecânica', logo: 'https://storage.googleapis.com/aquitempe-212001.appspot.com/imagens/e23612c9-1700-4dbd-b209-b06154193ff4/oficina%20mecanica%20e%20eletrica%20logo.png', latitude: 10, longitude: 20}, 
+            {id:6 , razaoSocial: 'motos e Carros', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'ana@hotmail.com', likes: 76, especialidade: 'funilaria', logo: 'http://mecsm.com.br/wp-content/uploads/2018/03/logo-mec-mecanica-retina.png', latitude: 10, longitude: 20}, 
+            {id:7 , razaoSocial: 'joao e neto', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'barbosa@hotmail.com', likes: 41, especialidade: 'Elétrica', logo: 'https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2014%2F10%2F05%2F13%2FLogo-e-Papelaria-LV-118391_25301_044356510_289312155.jpg', latitude: 10, longitude: 20}, 
+            {id:8 , razaoSocial: 'moura', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'silva@hotmail.com', likes: 97, especialidade: 'Mecânica', logo: 'http://www.portaldosmecanicos.com.br/wp-content/uploads/2016/07/logo-redes-sociais.png', latitude: 10, longitude: 20}, 
+            {id:9 , razaoSocial: 'casa do mercedes', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'melo@hotmail.com', likes: 64, especialidade: 'Elétrica', logo: 'http://lucenamanutencaoautomotiva.com.br/wp-content/uploads/2018/10/logo-lucena.png', latitude: 10, longitude: 20}, 
+            {id:10 , razaoSocial: 'importados merchan', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'tragoso@hotmail.com', likes: 314, especialidade: 'Mecânica', logo: 'http://oficinamotorpoint.com.br/wp-content/uploads/2016/01/logo-motor-point-lapa.png', latitude: 10, longitude: 20}, 
+            {id:11 , razaoSocial: 'carango', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'popoca@hotmail.com', likes: 6473, especialidade: 'Mecânica', logo: 'http://euroscan.com.br/wp-content/uploads/2017/11/LOGO-SCAS.png', latitude: 10, longitude: 20}, 
+            {id:12 , razaoSocial: 'carango do Marcos', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'ame@hotmail.com', likes: 1234, especialidade: 'funilaria', logo: 'https://a2roficinaauto.pt/wp-content/uploads/2018/05/Logo-small-square-copy.jpg', latitude: 10, longitude: 20}, 
+            {id:13 , razaoSocial: 'shell',endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife', email: 'cosfasdfta@hotmail.com', likes: 564, especialidade: 'Elétrica', logo: 'https://scontent.frec3-1.fna.fbcdn.net/v/t1.0-9/37069252_1899896400068418_7837900116416528384_n.jpg?_nc_cat=110&_nc_ht=scontent.frec3-1.fna&oh=54f4aae7d9708bc75b89757bbee7e81c&oe=5D8980E0', latitude: 10, longitude: 20}, 
+            {id:14 , razaoSocial: 'brasil', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'gasdf@hotmail.com', likes: 76, especialidade: 'funilaria', logo: 'http://www.logotiposdeempresas.com.br/wp-content/uploads/2011/05/logomarca_renotech_oficina_renault.jpg', latitude: 10, longitude: 20}, ],
         error: null,
         query: "",
         fullData: [],
@@ -170,15 +184,15 @@ export default class HomeClient extends Component {
                         /* distance: distance, */
                     })
                 }}
-                style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', marginTop: 10, height: 100, width: width - 40, borderRadius: 5 }}>
-                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5 }}>
+                style={styles.workShopComponent}>
+                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5,  marginLeft: 20 }}>
 
                     <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
-                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
+                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover'}} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 20 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>{formatedName}</Text>
+                        <Text style={{ fontFamily: 'bebas', fontSize: 20 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-home"
@@ -186,7 +200,7 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
 
                             />
-                            <Text style={{ marginLeft: 3 }}>{endereco}, {bairro}, {cidade}</Text>
+                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5}}>{endereco}, {bairro}</Text>
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
@@ -217,14 +231,15 @@ export default class HomeClient extends Component {
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
                 <View style={{ flexDirection: 'row', width: width, backgroundColor: defaultStyles.colors.primaryColor, justifyContent: 'space-between', alignItems: 'center' }}>
-                    <FontAwersome
-                        name="bars"
-                        size={30}
-                        style={{ padding: 15, color: '#fff' }}
-                        onPress={() => this.props.navigation.toggleDrawer()}
-                    />
-                    <View>
-                        <Text style={{ padding: 15, fontSize: 25, color: '#fff', fontWeight: 'bold', fontFamily: defaultStyles.fontFamily}}>Oficina Legal</Text>
+
+                    <View style={{ flexDirection: 'row' }}>
+                        <FontAwersome
+                            name="bars"
+                            size={30}
+                            style={{ padding: 15, color: '#fff' }}
+                            onPress={() => this.props.navigation.toggleDrawer()}
+                        />
+                        <Text style={{ padding: 15, fontSize: 30, color: '#fff', fontFamily: defaultStyles.fontFamily }}>Oficina Legal</Text>
                     </View>
 
                     <Image
@@ -233,7 +248,7 @@ export default class HomeClient extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={{ marginLeft: 20, marginVertical: 10, flexDirection: 'row', backgroundColor: '#f1f2f6', borderRadius: 5, justifyContent: 'space-between', alignItems: 'center', width: width - 100 }}>
+                    <View style={styles.searchContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                             <Icon
                                 name="md-search"
@@ -256,7 +271,7 @@ export default class HomeClient extends Component {
                                     <Icon
                                         name="md-close"
                                         size={20}
-                                        style={{ color: '#0d47a1', marginRight: 10 }}
+                                        style={{ color: '#0d47a1', paddingRight: 15 }}
                                     />
                                 </TouchableOpacity>
                                 :
@@ -312,7 +327,6 @@ export default class HomeClient extends Component {
                     data={this.state.data}
                     keyExtractor={item => `${item.id}`}
                     renderItem={this.RenderItem}
-                    ListFooterComponent={this.renderFooter}
                     showsVerticalScrollIndicator={false}
                 />
                 <FloatingAction
@@ -371,6 +385,46 @@ const styles = StyleSheet.create({
     filterButtonText: {
         fontSize: 15,
         color: 'black'
+    },
+
+    searchContainer: {
+        marginLeft: 20,
+        marginVertical: 10,
+        flexDirection: 'row',
+        backgroundColor: '#f1f2f6',
+        borderRadius: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: width - 100,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 6,
+    },
+
+    workShopComponent: {
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        height: 120,
+        width: width - 20,
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        
+        elevation: 3,
     }
 
 })

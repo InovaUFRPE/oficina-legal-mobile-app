@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     },
 
     signUpLinkText: {
-        color: "#999",
+        color: "#0b111f",
         fontWeight: "bold",
         fontSize: 16,
         textAlign: "center"
