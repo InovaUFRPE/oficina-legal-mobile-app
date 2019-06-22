@@ -26,21 +26,7 @@ export default class HomeClient extends Component {
     state = {
         region: null,
         loading: false,
-        data: [
-            {id:1 , razaoSocial: 'da hora', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'dahoralins@hotmail.com', likes: 34, especialidade: 'Mecânica', logo: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg', latitude: -8.1177294, longitude: -34.9412915}, 
-            {id:2 , razaoSocial: 'do manoel', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'mateus@hotmail.com', likes: 134, especialidade: 'Elétrica', logo: 'https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2011%2F08%2F25%2F19%2FWDL-Logo-6650_18118_041040027_1552849433.jpg', latitude: 10, longitude: 20}, 
-            {id:3 , razaoSocial: 'bateu concertou', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'joao@hotmail.com', likes: 531, especialidade: 'Elétrica', logo: 'https://ae01.alicdn.com/kf/HTB1QxqpRVXXXXbsXXXXq6xXFXXX4/Servi-o-de-repara-o-de-Servi-o-Oficina-Auto-Logotipo-Do-Carro-Adesivo-de-Parede.jpg_640x640.jpg', latitude: 10, longitude: 20}, 
-            {id:4 , razaoSocial: 'melhor preço', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'raqyuel@hotmail.com', likes: 12, especialidade: 'funilaria', logo: 'http://www.leaodesign.com.br/images/portfolio/criacao-de-logotipos/3-single.png', latitude: 10, longitude: 20}, 
-            {id:5 , razaoSocial: 'da comunidade', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'melhor_preço@hotmail.com', likes: 537, especialidade: 'Mecânica', logo: 'https://storage.googleapis.com/aquitempe-212001.appspot.com/imagens/e23612c9-1700-4dbd-b209-b06154193ff4/oficina%20mecanica%20e%20eletrica%20logo.png', latitude: 10, longitude: 20}, 
-            {id:6 , razaoSocial: 'motos e Carros', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'ana@hotmail.com', likes: 76, especialidade: 'funilaria', logo: 'http://mecsm.com.br/wp-content/uploads/2018/03/logo-mec-mecanica-retina.png', latitude: 10, longitude: 20}, 
-            {id:7 , razaoSocial: 'joao e neto', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'barbosa@hotmail.com', likes: 41, especialidade: 'Elétrica', logo: 'https://s3-sa-east-1.amazonaws.com/projetos-artes/fullsize%2F2014%2F10%2F05%2F13%2FLogo-e-Papelaria-LV-118391_25301_044356510_289312155.jpg', latitude: 10, longitude: 20}, 
-            {id:8 , razaoSocial: 'moura', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'silva@hotmail.com', likes: 97, especialidade: 'Mecânica', logo: 'http://www.portaldosmecanicos.com.br/wp-content/uploads/2016/07/logo-redes-sociais.png', latitude: 10, longitude: 20}, 
-            {id:9 , razaoSocial: 'casa do mercedes', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'melo@hotmail.com', likes: 64, especialidade: 'Elétrica', logo: 'http://lucenamanutencaoautomotiva.com.br/wp-content/uploads/2018/10/logo-lucena.png', latitude: 10, longitude: 20}, 
-            {id:10 , razaoSocial: 'importados merchan', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'tragoso@hotmail.com', likes: 314, especialidade: 'Mecânica', logo: 'http://oficinamotorpoint.com.br/wp-content/uploads/2016/01/logo-motor-point-lapa.png', latitude: 10, longitude: 20}, 
-            {id:11 , razaoSocial: 'carango', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'popoca@hotmail.com', likes: 6473, especialidade: 'Mecânica', logo: 'http://euroscan.com.br/wp-content/uploads/2017/11/LOGO-SCAS.png', latitude: 10, longitude: 20}, 
-            {id:12 , razaoSocial: 'carango do Marcos', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'ame@hotmail.com', likes: 1234, especialidade: 'funilaria', logo: 'https://a2roficinaauto.pt/wp-content/uploads/2018/05/Logo-small-square-copy.jpg', latitude: 10, longitude: 20}, 
-            {id:13 , razaoSocial: 'shell',endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife', email: 'cosfasdfta@hotmail.com', likes: 564, especialidade: 'Elétrica', logo: 'https://scontent.frec3-1.fna.fbcdn.net/v/t1.0-9/37069252_1899896400068418_7837900116416528384_n.jpg?_nc_cat=110&_nc_ht=scontent.frec3-1.fna&oh=54f4aae7d9708bc75b89757bbee7e81c&oe=5D8980E0', latitude: 10, longitude: 20}, 
-            {id:14 , razaoSocial: 'brasil', endereco: 'Rua Rio Das Neves', bairro: 'Ibura', cidade: 'Recife',email: 'gasdf@hotmail.com', likes: 76, especialidade: 'funilaria', logo: 'http://www.logotiposdeempresas.com.br/wp-content/uploads/2011/05/logomarca_renotech_oficina_renault.jpg', latitude: 10, longitude: 20}, ],
+        data: [],
         error: null,
         query: "",
         fullData: [],
@@ -63,7 +49,7 @@ export default class HomeClient extends Component {
 
     makeRemoteRequest = async () => {
         this.setState({ loading: true });
-        console.log(this.state.loading)
+        console.log('Loading: ', this.state.loading)
 
         await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
             .then(users => {
@@ -77,6 +63,7 @@ export default class HomeClient extends Component {
                 this.setState({ error, loading: false })
             })
     }
+
     getUserLocation = () => {
         navigator.geolocation.getCurrentPosition(
             ({ coords: { latitude, longitude } }) => {
@@ -137,6 +124,7 @@ export default class HomeClient extends Component {
 
     handlerSearch = (text) => {
         const formatQuery = text
+        console.log(text)
         const data = _.filter(this.state.fullData, user => {
             return contains(user, formatQuery)
         })
@@ -167,17 +155,20 @@ export default class HomeClient extends Component {
         const object = obj.item
         const name = object.razaoSocial
         const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
-        const endereco = object.endereco.charAt(0).toUpperCase() + name.slice(1);
-        const cidade = object.cidade.charAt(0).toUpperCase() + name.slice(1);
-        const bairro = object.bairro.charAt(0).toUpperCase() + name.slice(1);
+        const endereco = object.endereco.toUpperCase()
+        const cidade = object.cidade.toUpperCase()
+        const bairro = object.bairro.toUpperCase()
         const id = object.id
         const shopLat = object.latitude
         const shopLon = object.longitude
+
         return (
             <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate('WorkShopLayout', {
                         name: formatedName,
+                        shopLat: shopLat,
+                        shopLon: shopLon,
                         distance: (this.CalcRadiusDistance(shopLat, shopLon) * -1),
                         address: endereco + ", " + bairro + ", " + cidade,
                         idWorkshop: id
@@ -192,30 +183,33 @@ export default class HomeClient extends Component {
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 20 }}>
-                        <Text style={{ fontFamily: 'bebas', fontSize: 20 }}>{formatedName}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 20, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
+                        
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-home"
                                 size={13}
                                 style={{ marginTop: 3 }}
-
+                                color={defaultStyles.colors.primaryColor}
                             />
-                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5}}>{endereco}, {bairro}</Text>
+                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.5.}}>{endereco}, {bairro}</Text>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-locate"
                                 size={13}
                                 style={{ marginTop: 3 }}
-
+                                color={defaultStyles.colors.primaryColor}
                             />
-                            <Text style={{ marginLeft: 3 }}>{this.CalcRadiusDistance(shopLat, shopLon) * -1} KM</Text>
+                            <Text style={{ marginLeft: 3, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.75 }}>{this.CalcRadiusDistance(shopLat, shopLon) * -1} KM</Text>
                         </View>
                     </View>
-                    <View style={{ marginTop: 5, marginLeft: 15, flexDirection: 'row' }}>
+
+                    <View style={{ marginLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
                         <Icon
                             name="md-star"
-                            size={20}
+                            size={16}
                             color='#0d47a1'
                         />
                         <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>Especialidade</Text>

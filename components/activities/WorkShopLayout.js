@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
-import { Button } from 'react-native-elements'
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, ScrollView, Button } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Especialitys from '../TasksOnHome'
 import defaultStyle from '../styles/Default'
+import { createOpenLink } from 'react-native-open-maps';
 
 // onPress={() => this.props.navigation.navigate('Agendamento')}
 
@@ -14,9 +14,14 @@ export default class WorkShopLayout extends Component {
     state = {
         workShopname: '',
         distance: '',
-        Especialitys: []
+        Especialitys: [],
+        shopLat: '',
+        shopLon: '',
     }
 
+    _goToWorkShop = (shopLat, shopLon) => {
+        createOpenLink({ latitude: shopLat, longitude: shopLon })
+    }
 
     render() {
         const { navigation } = this.props;
@@ -24,6 +29,10 @@ export default class WorkShopLayout extends Component {
         const distance = navigation.getParam('distance', 'distance');
         const address = navigation.getParam('address', 'endereço')
         const idWorkshop = navigation.getParam('id', 0)
+        const shopLat = navigation.getParam('shopLat', 'ErroGetLat').toString()
+        const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
+        const travelType = 'drive'
+        const end = shopLat + ',' + shopLon;
 
         return (
             <View style={styles.container}>
@@ -43,22 +52,27 @@ export default class WorkShopLayout extends Component {
                         <Text style={styles.workShopName}>Oficina {name}</Text>
                         <View style={styles.workShopInformation}>
                             <Icon name="md-locate" size={20} color={defaultStyle.colors.primaryColor} />
-                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }}>{distance} Km</Text>
+                            <Text style={styles.information}>{distance} KM</Text>
                         </View>
                         <View style={styles.workShopInformation}>
                             <Icon name="md-home" size={20} color={defaultStyle.colors.primaryColor} />
-                            <Text style={{ fontSize: 16, marginLeft: 5, paddingRight: 10 }} >{address}</Text>
+                            <Text style={styles.information} >{address}</Text>
                         </View>
-                        
+
                         <View style={{ alignItems: 'center', marginTop: 10 }}>
                             <TouchableOpacity
-                                style={styles.buttonAgendamento}
+                                style={styles.button}
                                 onPress={() => this.props.navigation.navigate('Agendamento', {
                                     name: name,
                                     endereco: address,
                                     id: idWorkshop
                                 })}>
-                                <Text style={styles.buttonText}>Fazer Agendamento</Text>
+                                <Icon
+                                    name='md-calendar'
+                                    size={30}
+                                    color='#fff'
+                                />
+                                <Text style={styles.buttonText}>AGENDAMENTO</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -70,8 +84,24 @@ export default class WorkShopLayout extends Component {
                             <Especialitys imageUri={require('../../images/Services/Eletrica.jpg')} name='Elétrica' />
                             <Especialitys imageUri={require('../../images/Services/Mecanica.jpg')} name='Mecânica' />
                         </ScrollView>
-
                     </View>
+
+                    <View style={{ width: width, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                        <TouchableOpacity
+                            onPress={createOpenLink({ travelType, end })}
+                            title={name}
+                            style={styles.button}>
+                            <Icon
+                                name='ios-navigate'
+                                size={30}
+                                color='#fff'
+                            />
+                            <Text style={styles.buttonText}>IR ATÉ OFICINA</Text>
+                        </TouchableOpacity>
+                    </View>
+
+
+
                 </View>
             </View>
         )
@@ -104,7 +134,8 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 30,
         fontSize: 30,
-        fontFamily: 'bebas',
+        fontFamily: 'Roboto-Medium',
+        letterSpacing: 0.15,
         color: 'black',
     },
 
@@ -113,17 +144,30 @@ const styles = StyleSheet.create({
         marginLeft: 20,
     },
 
-    buttonAgendamento: {
+    information: {
+        fontSize: 16, 
+        marginLeft: 5,
+        paddingRight: 10,
+        fontFamily: 'Roboto-Regular',
+        fontSize: 14,
+        letterSpacing: 0.75
+    },
+
+    button: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
         width: width - 80,
-        padding: 16,
         backgroundColor: '#0d47a1'
     },
     buttonText: {
         color: '#fff',
-        fontSize: 20,
-        fontWeight: '500'
+        fontSize: 14,
+        fontFamily: 'Roboto-Medium',
+        letterSpacing: 1.25,
+        marginLeft: 10,
+        padding: 16
     },
 
     EspecialitysContainer: {

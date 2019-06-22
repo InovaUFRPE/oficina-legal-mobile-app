@@ -16,7 +16,7 @@ function removeAcento (text)
 export const contains = ({razaoSocial, especialidade}, query) => {
     var formatedEspecialidade = removeAcento(especialidade)
     var formatedQuery = removeAcento(query)
-
+    console.log(formatedQuery)
     if (razaoSocial.includes(formatedQuery) || formatedEspecialidade.includes(formatedQuery)) {
         return true;
     }
