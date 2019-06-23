@@ -14,4 +14,4 @@ import TabClient from './components/navigation/TabNavigatorCliente'
 import Home from './components/navigation/DrawerNavigatorClient'
 import Login from './components/activities/Login'
 
-AppRegistry.registerComponent(appName, () => Home);
+AppRegistry.registerComponent(appName, () => Agendamento);

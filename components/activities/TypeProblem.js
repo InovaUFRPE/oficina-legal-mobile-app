@@ -11,19 +11,16 @@ import { FloatingAction } from "react-native-floating-action"
 import defaultStyles from '../styles/Default'
 
 const { width, height } = Dimensions.get('window')
-const actions = [
-    {
-        text: "Agendamentos",
-        icon: require('../../images/calendarIcon.png'),
-        name: 'bt_addcar',
-        position: 1
-    }
-]
+
+
 export default class TypeProblem extends Component {
     state = {
         region: null,
         loading: false,
-        data: [],
+        data: [
+            { id: 1, nomeServico: 'Troca de Óleo', tempoRealizacao: '02:30:00', preco: '40' },
+            { id: 2, nomeServico: 'Troca de Óleo', tempoRealizacao: '02:30:00', preco: '42' },
+        ],
         error: null,
         query: "",
         fullData: [],
@@ -47,7 +44,7 @@ export default class TypeProblem extends Component {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get(`http://192.168.0.10:4000/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
+        await axios.get(`http://192.168.25.184:4000/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
             .then(problems => {
                 this.setState({
                     loading: false,
@@ -83,7 +80,7 @@ export default class TypeProblem extends Component {
     toggleModal = () => {
         this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
     }
-    
+
     RenderItem = (obj) => {
         const object = obj.item
         const name = object.nomeServico
@@ -100,15 +97,15 @@ export default class TypeProblem extends Component {
                     })
                 }}
                 style={styles.workShopComponent}>
-                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5,  marginLeft: 20 }}>
+                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5, marginLeft: 20 }}>
 
                     <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
-                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover'}} />
+                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
                 </View>
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 20 }}>
                         <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 18, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
-                        
+
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-tool"
@@ -322,7 +319,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
-        
+
         elevation: 3,
     }
 

@@ -51,7 +51,7 @@ export default class HomeClient extends Component {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
+        await axios.get("http://192.168.25.184:4000/api/oficina/findAll")
             .then(users => {
                 this.setState({
                     loading: false,
@@ -192,7 +192,7 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
                                 color={defaultStyles.colors.primaryColor}
                             />
-                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.5}}>{endereco}, {bairro}</Text>
+                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14}}>{endereco}, {bairro}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row' }}>

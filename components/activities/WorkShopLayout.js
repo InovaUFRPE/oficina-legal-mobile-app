@@ -26,7 +26,7 @@ export default class WorkShopLayout extends Component {
 
     getEspeciality = async () => {
         try{
-            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${idWorkshop}`)
+            await axios.get(`http://192.168.25.184:4000/api/especializacaooficina/${idWorkshop}`)
                 .then(response => this.setState({Especialitys: response.data}))
 
         }catch(err){
@@ -43,7 +43,7 @@ export default class WorkShopLayout extends Component {
         const name = navigation.getParam('name', 'oficina_name');
         const distance = navigation.getParam('distance', 'distance');
         const address = navigation.getParam('address', 'endereço')
-        const id = navigation.getParam('id', 0)
+        const id = navigation.getParam('idWorkshop', 0)
         const shopLat = navigation.getParam('shopLat', 'ErroGetLat').toString()
         const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
         const travelType = 'drive'
