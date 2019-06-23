@@ -38,6 +38,35 @@ export default class CustomDrawerMenu extends React.Component {
         );
     }
 
+    desactiveAlert = () => {
+        Alert.alert(
+            'Mensagem',
+            'Voce deseja dasativar sua conta?',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: 'Sim', onPress: () => {
+                this.desactive()
+            }},],
+            {cancelable: false},
+        );
+    }
+
+    desactive = async() => {
+        const id = await AsyncStorage.getItem('user')
+        try{
+            await axios.put(`http://192.168.0.10:4000/api/usuario/disable/${id}`)
+                .then(this.props.navigation.navigate('Home'))
+                .then(alert("Usuário Desabilitado"))
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente." + err)
+            return null
+        }
+    }
+
     cleanData = () => {
         AsyncStorage.clear()
     }
@@ -82,20 +111,26 @@ export default class CustomDrawerMenu extends React.Component {
                         </Text>
                     </View>
                 </View>
-
                 <View style={styles.buttonsContainer}>
                     {this.navLink('EditDataClient', 'Perfil', "md-contact")}
                     {/*{this.navLink('VeicleHistory','Histórico do veículo', "md-car")}*/}
                     {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
+                    <TouchableOpacity style={{height: 50}} onPress={() => this.desactiveAlert()}>
+                        <Icon                       
+                            name="fa-sign-out-alt"
+                            size={30}
+                            style={{position: 'absolute',marginTop: 11, marginLeft: 20, color: 'black'}}
+                        />
+                        <Text style={[styles.link, {marginLeft: 60}]}>Desativar conta</Text>
+                    </TouchableOpacity>
                 </View>
-
                 <View style={styles.configButtomContainer}>
                     {/*{this.navLink('StackClient', 'Configurações', "md-code-working")}*/}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.logOut()}>
                         <Icon                       
                             name="md-log-out"
                             size={30}
-                            style={{position: 'absolute',marginTop: 11, marginLeft: 20, color: 'black'}}
+                            style={{position: 'absolute',marginTop: 21, marginLeft: 20, color: 'black'}}
                         />
                         <Text style={[styles.link, {marginLeft: 60}]}>Sair</Text>
                     </TouchableOpacity>

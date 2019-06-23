@@ -15,6 +15,7 @@ export default class LoginMechanic extends Component {
         try{
             AsyncStorage.setItem('userToken', token)
             AsyncStorage.setItem('user', JSON.stringify(id))
+            this.props.navigation.navigate('DrawerNavigatorMechanic')
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -33,7 +34,7 @@ export default class LoginMechanic extends Component {
                 } 
             })
         }catch(error){
-            return null;
+            alert("Usuário inválido")
         }
         
         }
@@ -58,10 +59,7 @@ export default class LoginMechanic extends Component {
         console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         console.log(this.state.password + " ESTAGIO 2 ")
-        if(this.GetUserByLogin() !== null){
-            this.props.navigation.navigate('DrawerNavigatorMechanic')
-        }
-
+        this.GetUserByLogin()
     }
 
     render() {

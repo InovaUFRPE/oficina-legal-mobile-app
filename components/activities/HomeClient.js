@@ -15,7 +15,7 @@ import defaultStyles from '../styles/Default'
 const { width, height } = Dimensions.get('window')
 const actions = [
     {
-        text: "Meus Agendamento",
+        text: "Agendamentos",
         icon: require('../../images/calendarIcon.png'),
         name: 'bt_addcar',
         position: 1
@@ -111,7 +111,7 @@ export default class HomeClient extends Component {
         return Math.round(x * 10) / 10;
     };
 
-    removeAcento = (text) => {
+    removeAcento = () => {
         text = text.toLowerCase();
         text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
         text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
@@ -192,7 +192,7 @@ export default class HomeClient extends Component {
                                 style={{ marginTop: 3 }}
                                 color={defaultStyles.colors.primaryColor}
                             />
-                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.5.}}>{endereco}, {bairro}</Text>
+                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.5}}>{endereco}, {bairro}</Text>
                         </View>
 
                         <View style={{ flexDirection: 'row' }}>

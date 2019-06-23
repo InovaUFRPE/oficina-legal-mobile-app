@@ -21,20 +21,50 @@ export default class Login extends Component {
         }
         
     }
+    
+    active = async() => {
+        const id = await AsyncStorage.getItem('user')
+        try{
+            await axios.put(`http://192.168.0.10:4000/api/usuario/enable/${id}`)
+                .then(alert("Usuário reativado"))
+        }catch(err){
+            alert("Usuário cadastrado não possui conta como cliente." + err)
+            return null
+        }
+    }
+
+    activeAlert = () => {
+        Alert.alert(
+            'Mensagem',
+            'Voce deseja reativar sua conta?',
+            [
+              {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {text: 'Sim', onPress: () => {
+                this.active()
+            }},],
+            {cancelable: false},
+        );
+    }
 
     GetUserByLogin = async () => {
         try{
             await axios.post("http://192.168.0.10:4000/api/usuario/login", 
             { login: this.state.username, email:this.state.username, senha: this.state.password })
-            .then(response => { 
+            .then(response => { alert(response.status)
                 if(response.status == 200){
                     this.saveDataStorage(response.data.token, response.data.user.id)
-                }else {
-                    alert("Problemas na autenticação do usuário")
+                    this.props.navigation.navigate('DrawerNavigatorClient')
+                }
+                if(response.status == 400) {
+                    this.activeAlert()
                 } 
             })
         }catch(error){
-            return null;
+            alert("Usuário inválido")
         }
         
         }
@@ -59,10 +89,7 @@ export default class Login extends Component {
         console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
         console.log(this.state.password + " ESTAGIO 2 ")
-        if(this.GetUserByLogin() !== null){
-            this.props.navigation.navigate('DrawerNavigatorClient')
-        }
-
+        this.GetUserByLogin()
     }
 
     render() {

@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Especialitys from '../TasksOnHome'
 import defaultStyle from '../styles/Default'
 import { createOpenLink } from 'react-native-open-maps';
+import axios from 'axios';
 
 // onPress={() => this.props.navigation.navigate('Agendamento')}
 
@@ -11,12 +12,27 @@ const { width, height } = Dimensions.get("window")
 
 
 export default class WorkShopLayout extends Component {
+    constructor(props){
+        super(props);
+        this.getEspeciality();
+    }
     state = {
         workShopname: '',
         distance: '',
         Especialitys: [],
         shopLat: '',
         shopLon: '',
+        idWorkshop: ''
+    }
+
+    getEspeciality = async () => {
+        try{
+            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${this.state.idWorkshop}`)
+                .then(response => this.setState({Especialitys: response.data}))
+
+        }catch(err){
+
+        }
     }
 
     _goToWorkShop = (shopLat, shopLon) => {
@@ -33,6 +49,7 @@ export default class WorkShopLayout extends Component {
         const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
         const travelType = 'drive'
         const end = shopLat + ',' + shopLon;
+        this.setState({idWorkshop: idWorkshop})
 
         return (
             <View style={styles.container}>
@@ -99,9 +116,17 @@ export default class WorkShopLayout extends Component {
                             <Text style={styles.buttonText}>IR ATÉ OFICINA</Text>
                         </TouchableOpacity>
                     </View>
-
-
-
+                    <View style={{ alignItems: 'center', marginTop: 10 }}>
+                            <TouchableOpacity
+                                style={styles.buttonAgendamento}
+                                onPress={() => this.props.navigation.navigate('Agendamento', {
+                                    name: name,
+                                    endereco: address,
+                                    id: idWorkshop
+                                })}>
+                                <Text style={styles.buttonText}>Avalie esta oficina!</Text>
+                            </TouchableOpacity>
+                        </View>
                 </View>
             </View>
         )

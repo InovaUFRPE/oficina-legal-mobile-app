@@ -31,7 +31,7 @@ export default class CustomDrawerMenu extends React.Component {
                 style: 'cancel',
               },
               {text: 'Sim', onPress: () => {
-                this.props.navigation.navigate('AppStack');
+                this.props.navigation.navigate('LoginMechanic');
                 this.cleanData()}
               }
             ],
@@ -46,10 +46,10 @@ export default class CustomDrawerMenu extends React.Component {
     getUserName = async () => {
         const id = await AsyncStorage.getItem('user')
         try{
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+            await axios.post("http://192.168.0.10:4000/api/mecanico/usuario", { idUsuario:id })
                 .then(response =>  this.setState({ username: response.data.nome}) )
         }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente." + err)
+            alert("Usuário cadastrado não possui conta como mecânico." + err)
             return null
         } 
     }
@@ -79,7 +79,7 @@ export default class CustomDrawerMenu extends React.Component {
                             style={styles.profileImage}
                         />
                         <Text style={styles.usernameText}>
-                            USER_NAME
+                            {this.state.username}
                         </Text>
                     </View>
                 </View>

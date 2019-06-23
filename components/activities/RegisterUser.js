@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { ConfirmPassword, validateCPF, validateEmail, ValidateCEP } from '../../busnisses/Validation'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
-import { CheckBox } from 'react-native-elements';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -41,7 +40,7 @@ export default class RegisterUser extends Component {
             login: this.state.login.trim(),
             email: this.state.email.trim(),
             senha: this.state.password.trim(),
-            ativo: true // Mudar para a variavel 'tipo'
+            ativo: 1 // Mudar para a variavel 'tipo'
         }
         return user
     }
