@@ -12,6 +12,7 @@ import VeicleHistory from '../activities/VeicleHistory'
 import Agendamento from '../activities/Agendamento'
 import ServiceProgress from '../activities/ServiceProgressClient'
 import WorkShopLayout from '../activities/WorkShopLayout'
+import TypeProblem from '../activities/TypeProblem';
 
 
 
@@ -55,6 +56,13 @@ export default createDrawerNavigator({
         navigationOptions: ({ navigation }) => ({
             drawerLockMode: "locked-closed",
           })
+    },
+
+    TypeProblem: {
+        screen: TypeProblem,
+        navigationOptions: ({navigation}) => ({
+            drawerLockMode: "locked-closed",
+        })
     },
 
     Agendamento: {

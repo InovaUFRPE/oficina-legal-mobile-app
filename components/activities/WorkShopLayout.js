@@ -22,12 +22,11 @@ export default class WorkShopLayout extends Component {
         Especialitys: [],
         shopLat: '',
         shopLon: '',
-        idWorkshop: ''
     }
 
     getEspeciality = async () => {
         try{
-            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${this.state.idWorkshop}`)
+            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${idWorkshop}`)
                 .then(response => this.setState({Especialitys: response.data}))
 
         }catch(err){
@@ -44,12 +43,11 @@ export default class WorkShopLayout extends Component {
         const name = navigation.getParam('name', 'oficina_name');
         const distance = navigation.getParam('distance', 'distance');
         const address = navigation.getParam('address', 'endereço')
-        const idWorkshop = navigation.getParam('id', 0)
+        const id = navigation.getParam('id', 0)
         const shopLat = navigation.getParam('shopLat', 'ErroGetLat').toString()
         const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
         const travelType = 'drive'
         const end = shopLat + ',' + shopLon;
-        this.setState({idWorkshop: idWorkshop})
 
         return (
             <View style={styles.container}>
@@ -82,7 +80,7 @@ export default class WorkShopLayout extends Component {
                                 onPress={() => this.props.navigation.navigate('Agendamento', {
                                     name: name,
                                     endereco: address,
-                                    id: idWorkshop
+                                    id: id
                                 })}>
                                 <Icon
                                     name='md-calendar'
