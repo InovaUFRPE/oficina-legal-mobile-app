@@ -21,47 +21,33 @@ export default class RegisterVehicle extends Component {
 
     displayDataStorage = async () => {
         try {
+            let client = await AsyncStorage.getItem('client')
             let user = await AsyncStorage.getItem('user')
-            if(user != null){
-                userObj = JSON.parse(user)
-                let login = userObj.login
-                let email = userObj.login
-                let senha = userObj.senha
-                this.componentDidMountGetJwt({login: login, email:email, senha: senha})
-            } 
+            this.getUserToken(user, client)
         }catch(error){
             alert(error)
         }
     }
 
-    componentDidMountPostVehicle = async (jwt, vehicle) => {
-        axios.defaults.headers.common['x-access-token'] = JSON.stringify(jwt)
+    getUserToken = async (user, client) => {
+        try{
+            await axios.get(`http://192.168.0.10:4000/api/usuario/${user}`)
+                .then(response => this.createVehicleRequisition(client, response.data.token))
+        }catch(err){
+            alert("Não foi possível retornar o usuário")
+        }
+    }
+
+    postVehicle = async (jwt, vehicle) => {
+        axios.defaults.headers.common['x-access-token'] = jwt
         try{
             await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
-                .then(response => this.props.navigation.navigate('Home'))
+                .then(response => {
+                    alert("Cadastro realizado com sucesso.") 
+                    this.props.navigation.navigate("Home")
+                })
         }catch(err){
             alert("Não foi possível salvar o veículo")
-        }
-    }
-
-    componentDidMountGetClientId = async (idUsuario, jwt) => {
-        try{
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", idUsuario)
-                .then(response => this.createVehicleRequisition(response.data.id, jwt))
-             
-        }catch(err){
-            alert("Talvez esse usuário não tenha um cliente")
-        }
-    }
-
-    componentDidMountGetJwt = async (loginEsenha) => {
-        try{
-            const user = await axios.post("http://192.168.0.10:4000/api/usuario/login", loginEsenha)
-            const jwt = user.data.token
-            const userId = {idUsuario: user.data.user.id}
-            this.componentDidMountGetClientId(userId, jwt)
-        }catch(err){
-            alert("Algo deu errado, não foi possível resgatar usuário")
         }
     }
 
@@ -75,7 +61,7 @@ export default class RegisterVehicle extends Component {
                 id: clientId
             }
         }
-        this.componentDidMountPostVehicle(jwt, vehicle)
+        this.postVehicle(jwt, vehicle)
         return vehicle
     }
 

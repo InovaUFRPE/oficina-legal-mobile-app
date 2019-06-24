@@ -62,7 +62,7 @@ export default class CustomDrawerMenu extends React.Component {
                 .then(this.props.navigation.navigate('Home'))
                 .then(alert("Usuário Desabilitado"))
         }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente." + err)
+            alert("Usuário cadastrado não possui conta como cliente2." + err)
             return null
         }
     }
@@ -74,10 +74,10 @@ export default class CustomDrawerMenu extends React.Component {
     getUserName = async () => {
         const id = await AsyncStorage.getItem('user')
         try{
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+            await axios.get(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${id}`)
                 .then(response =>  this.setState({ username: response.data.nome}) )
         }catch(err){
-            alert("Usuário cadastrado não possui conta como cliente." + err)
+            alert("Usuário cadastrado não possui conta como cliente2." + err)
             return null
         } 
     }
@@ -116,11 +116,6 @@ export default class CustomDrawerMenu extends React.Component {
                     {/*{this.navLink('VeicleHistory','Histórico do veículo', "md-car")}*/}
                     {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
                     <TouchableOpacity style={{height: 50}} onPress={() => this.desactiveAlert()}>
-                        <Icon                       
-                            name="fa-sign-out-alt"
-                            size={30}
-                            style={{position: 'absolute',marginTop: 11, marginLeft: 20, color: 'black'}}
-                        />
                         <Text style={[styles.link, {marginLeft: 60}]}>Desativar conta</Text>
                     </TouchableOpacity>
                 </View>

@@ -11,6 +11,7 @@ import axios from 'axios';
 import { FloatingAction } from "react-native-floating-action"
 import Snackbar from 'react-native-snackbar'
 import defaultStyles from '../styles/Default'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const { width, height } = Dimensions.get('window')
 const actions = [
@@ -30,14 +31,15 @@ export default class HomeClient extends Component {
         error: null,
         query: "",
         fullData: [],
-
+        client: 0,
         isFilterModalVisible: false,
         agendamentoMarcado: false,
     }
 
     componentDidMount() {
         this.makeRemoteRequest();
-        this.getUserLocation()
+        this.getUserLocation();
+        this.getClient();
         /* Colocar a função de checagem se o usuario tem algum agendamento marcado
 
             isAgendamentoMarcado retornar True
@@ -47,11 +49,17 @@ export default class HomeClient extends Component {
         */
     }
 
+    getClient = async () => {
+        const idUser = await AsyncStorage.getItem('user')
+        const client = await axios.get(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
+        AsyncStorage.setItem('client', JSON.stringify(client.data.id))
+    }
+
     makeRemoteRequest = async () => {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get("http://192.168.25.184:4000/api/oficina/findAll")
+        await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
             .then(users => {
                 this.setState({
                     loading: false,
@@ -184,7 +192,6 @@ export default class HomeClient extends Component {
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 20 }}>
                         <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 20, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
-                        
                         <View style={{ flexDirection: 'row' }}>
                             <Icon
                                 name="md-home"
@@ -323,7 +330,7 @@ export default class HomeClient extends Component {
                     renderItem={this.RenderItem}
                     showsVerticalScrollIndicator={false}
                 />
-                <FloatingAction
+                {/* <FloatingAction
                     actions={actions}
                     position='right'
                     overlayColor='trasparent'
@@ -331,7 +338,7 @@ export default class HomeClient extends Component {
                         this.floatingButtonPress
                     }
 
-                />
+                /> */}
             </View>
         )
     }

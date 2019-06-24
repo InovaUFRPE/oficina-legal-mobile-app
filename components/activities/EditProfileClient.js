@@ -105,34 +105,41 @@ export default class EditProfileClient extends Component {
     }
 
     getUser= async () => {
-        const id = await AsyncStorage.getItem('user')
+        const user = await AsyncStorage.getItem('user')
+        alert(user)
+        /* user = JSON.parse(user)
+
+        const id = user.id
         this.state.usuario.idUsuario = id;
         try{
-            await axios.post("http://192.168.0.10:4000/api/usuario/usuario", { idUsuario:id })
-                .then(response => this.setState({login: response.data.user.login, email: response.data.user.email}))
-            this.getClient()
+            await axios.get(`http://192.168.0.10:4000/api/usuario/${id}`)
+                .then(response => alert(JSON.stringify(response.data))/* this.setState({login: response.data.user.login, email: response.data.user.email}) )
+            this.getClient() 
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
-        }
+        } */
     }
 
     getClient = async () => {
-        const id = await AsyncStorage.getItem('user')
-        try{
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario:id })
+        const client = await AsyncStorage.getItem('user')
+        alert(client)
+        client = JSON.parse(client)
+        /* try{
+            await axios.post(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${client.id}`)
                 .then(response => this.setState({ cliente: response.data}))
             this.populateBlankCamps()
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente.")
             return null
-        }
+        } */
     }
 
     displayDataStorage = async () => {
         try {
-            let user = await AsyncStorage.getItem('userToken');
-            if (user != null) {
+            let user = await AsyncStorage.getItem('user');
+            user = JSON.parse(user)
+            if (user.token != null) {
                 this.getUser();
                 this.stateDB = this.state;
             } else {

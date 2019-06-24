@@ -27,9 +27,11 @@ export default class RegisterUser extends Component {
         str2: "\nErro(s)\n"
     }
 
-    saveDataStorage = (user) => {
+    saveDataStorage = (client) => {
         try {
-            AsyncStorage.setItem('user', JSON.stringify(user))
+            AsyncStorage.setItem('user', JSON.stringify(client.idUsuario) )
+            AsyncStorage.setItem('client', JSON.stringify(client))
+            this.props.navigation.navigate('RegisterVehicle')
         } catch (error) {
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -78,8 +80,6 @@ export default class RegisterUser extends Component {
         } catch (err) {
             if(client){
                 this.PostClient()
-                this.saveDataStorage(this.createClientRequisition())
-                this.props.navigation.navigate('RegisterVehicle')
             }else if(mechanic){
                 this.PostMechanic()
                 this.saveDataStorage(this.createClientRequisition())
@@ -88,9 +88,24 @@ export default class RegisterUser extends Component {
         }
     }
 
+    getUserIdAndToken = async (client) => {
+        const user = {
+            email: this.state.email.trim(),
+            senha: this.state.password.trim(),   
+            login: this.state.login.trim(),
+        }
+        try{
+            await axios.post("http://192.168.0.10:4000/api/usuario/login", user)
+                .then(response => this.saveDataStorage(response.data.token, response.data.user.id, client))
+        }catch(err){
+            alert("Não foi possível retornar o usuário")
+        }
+    }
+
     PostClient = async () => {
         try {
             await axios.post("http://192.168.0.10:4000/api/cliente/register", this.createClientRequisition())
+                .then(client => this.saveDataStorage(client.data))
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }

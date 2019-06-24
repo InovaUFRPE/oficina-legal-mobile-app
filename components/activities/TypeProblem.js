@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -17,10 +17,7 @@ export default class TypeProblem extends Component {
     state = {
         region: null,
         loading: false,
-        data: [
-            { id: 1, nomeServico: 'Troca de Óleo', tempoRealizacao: '02:30:00', preco: '40' },
-            { id: 2, nomeServico: 'Troca de Óleo', tempoRealizacao: '02:30:00', preco: '42' },
-        ],
+        data: [{}],
         error: null,
         query: "",
         fullData: [],
@@ -44,7 +41,7 @@ export default class TypeProblem extends Component {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get(`http://192.168.25.184:4000/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
+        await axios.get(`http://192.168.0.10:4000/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
             .then(problems => {
                 this.setState({
                     loading: false,
@@ -85,7 +82,7 @@ export default class TypeProblem extends Component {
         const object = obj.item
         const name = object.nomeServico
         const id = object.id
-        const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
+        const formatedName = name/* .charAt(0).toUpperCase() + name.slice(1); */
         const price = object.preco
         const time = object.tempoRealizacao
 
@@ -93,7 +90,10 @@ export default class TypeProblem extends Component {
             <TouchableOpacity
                 onPress={() => {
                     this.props.navigation.navigate('Agendamento', {
-                        idProb: id
+                        idProb: id,
+                        nomeServico: formatedName,
+                        preco: price,
+                        tempoRealizacao: time
                     })
                 }}
                 style={styles.workShopComponent}>
@@ -105,18 +105,9 @@ export default class TypeProblem extends Component {
                 <View style={{ width: '70%', height: 100 }}>
                     <View style={{ marginTop: 10, marginLeft: 20 }}>
                         <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 18, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Icon
-                                name="md-tool"
-                                size={13}
-                                style={{ marginTop: 3 }}
-                                color={defaultStyles.colors.primaryColor}
-                            />
-                        </View>
                     </View>
                     <View style={{ marginTop: 10, marginLeft: 20 }} >
-                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 13, color: 'black', letterSpacing: 0.15 }}>{price}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 13, color: 'black', letterSpacing: 0.15 }}>R$ {price}</Text>
                     </View>
                     <View style={{ marginTop: 10, marginLeft: 20 }} >
                         <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 13, color: 'black', letterSpacing: 0.15 }}>Tempo médio: {time}h</Text>
@@ -128,26 +119,8 @@ export default class TypeProblem extends Component {
 
     render() {
         return (
-
             <View
-                style={{ flex: 1, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: width, backgroundColor: defaultStyles.colors.primaryColor, justifyContent: 'space-between', alignItems: 'center' }}>
-
-                    <View style={{ flexDirection: 'row' }}>
-                        <FontAwersome
-                            name="bars"
-                            size={30}
-                            style={{ padding: 15, color: '#fff' }}
-                            onPress={() => this.props.navigation.toggleDrawer()}
-                        />
-                        <Text style={{ padding: 15, fontSize: 30, color: '#fff', fontFamily: defaultStyles.fontFamily }}>Oficina Legal</Text>
-                    </View>
-
-                    <Image
-                        source={require('../../images/LogoBranca.png')}
-                        style={styles.logo}
-                    />
-                </View>
+                style={{ width: width, backgroundColor: '#fff', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.searchContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
@@ -178,61 +151,13 @@ export default class TypeProblem extends Component {
                                 :
                                 null
                         }
-
                     </View>
                 </View>
-
-                <Modal
-                    onBackButtonPress={this.toggleModal}
-                    onBackdropPress={this.toggleModal}
-                    animationIn='zoomIn'
-                    animationOut='zoomOut'
-                    isVisible={this.state.isFilterModalVisible}
-                >
-                    <View style={{ backgroundColor: '#fff', justifyContent: 'center', borderRadius: 5, width: width - 40 }}>
-                        <View style={{ marginBottom: 20 }}>
-                            <View style={{ backgroundColor: '#0d47a1', padding: 10, width: '100%' }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 25, color: '#fff' }}>Filtrar Busca</Text>
-                            </View>
-                            <Text style={{ color: '#0d47a1', marginTop: 10, marginLeft: 10 }}>Especialidade</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
-                                <TouchableOpacity
-                                    style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Mecânica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
-                                    <Text style={styles.filterButtonText}>Mecânica</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Elétrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
-                                    <Text style={styles.filterButtonText}>Elétrica</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
-                                    <Text style={styles.filterButtonText}>Funilaria</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-
-
                 <FlatList
                     data={this.state.data}
                     keyExtractor={item => `${item.id}`}
                     renderItem={this.RenderItem}
                     showsVerticalScrollIndicator={false}
-                />
-                <FloatingAction
-                    actions={actions}
-                    position='right'
-                    overlayColor='trasparent'
-                    onPressItem={
-                        this.floatingButtonPress
-                    }
-
                 />
             </View>
         )

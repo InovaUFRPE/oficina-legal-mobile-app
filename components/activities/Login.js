@@ -54,7 +54,7 @@ export default class Login extends Component {
         try{
             await axios.post("http://192.168.0.10:4000/api/usuario/login", 
             { login: this.state.username, email:this.state.username, senha: this.state.password })
-            .then(response => { alert(response.status)
+            .then(response => {
                 if(response.status == 200){
                     this.saveDataStorage(response.data.token, response.data.user.id)
                     this.props.navigation.navigate('DrawerNavigatorClient')
@@ -86,9 +86,7 @@ export default class Login extends Component {
     Verify() {
         this.state.username = this.state.username.trim()
         this.state.password = this.state.password.trim()
-        console.log(this.state.password + " ESTAGIO 1 ")
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
-        console.log(this.state.password + " ESTAGIO 2 ")
         this.GetUserByLogin()
     }
 

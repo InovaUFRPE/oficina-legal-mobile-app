@@ -26,7 +26,7 @@ export default class WorkShopLayout extends Component {
 
     getEspeciality = async () => {
         try{
-            await axios.get(`http://192.168.25.184:4000/api/especializacaooficina/${idWorkshop}`)
+            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${idWorkshop}`)
                 .then(response => this.setState({Especialitys: response.data}))
 
         }catch(err){
@@ -120,9 +120,9 @@ export default class WorkShopLayout extends Component {
                                 onPress={() => this.props.navigation.navigate('Agendamento', {
                                     name: name,
                                     endereco: address,
-                                    id: idWorkshop
+                                    id: id
                                 })}>
-                                <Text style={styles.buttonText}>Avalie esta oficina!</Text>
+                                <Text style={styles.buttonText2}>Avalie esta oficina!</Text>
                             </TouchableOpacity>
                         </View>
                 </View>
@@ -186,6 +186,15 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#fff',
+        fontSize: 14,
+        fontFamily: 'Roboto-Medium',
+        letterSpacing: 1.25,
+        marginLeft: 10,
+        padding: 16
+    },
+
+    buttonText2: {
+        color: '#000',
         fontSize: 14,
         fontFamily: 'Roboto-Medium',
         letterSpacing: 1.25,
