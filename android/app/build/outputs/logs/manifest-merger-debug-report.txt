@@ -1,0 +1,324 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+MERGED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+MERGED from [:react-native-snackbar] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-snackbar/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-12:12
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:17:1-38:12
+MERGED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:17:1-29:12
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-gesture-handler] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [:react-native-linear-gradient] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-11:12
+MERGED from [com.facebook.react:react-native:0.59.9] /home/thalesg/.gradle/caches/transforms-1/files-1.1/react-native-0.59.9.aar/0841144246b9ee93801b55a1ea69ffbf/AndroidManifest.xml:2:1-13:12
+MERGED from [com.android.support:design:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/64f54cc2ca15d4e63567af5d9c4754f9/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d1a00882f03493c9d86632ea864c226b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-tasks-16.0.1.aar/74ce2d761792a4350ee1ffb7832f88fb/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/ce4f9db08e0e2022120dcbd0ab966ee5/AndroidManifest.xml:17:1-22:12
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:2:1-13:12
+MERGED from [com.android.support:support-fragment:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/36901cf9cfea8398d48f06fd41d8bdf4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fef5bc2e328fee68030d2b9895a79d14/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/49932b2c2844f6d1e767f83a1a21fead/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/ff008d0d935ad7947b26b4ee66282625/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/74131535345eddbb0b4da96436131168/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/e81595b17135d8d6e8c102fb4e513e89/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-media-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/3f5eb13eabef885ff3d4ce7c1c7e3ace/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:transition:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/a0553c06f83fca2c38bb497fb9a89adf/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/de630d1930ac1123b6e54fcb615a7204/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/58872eac26c071aa1cc00efe784fcf49/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/3049ce4a6ee00c5e675966c8b57cd269/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/46bce2a2a9b63c07be73f743c3884bfa/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/cf80bd6197e681a00972553624fafd68/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/f4f2b0456eb3b4a56a88c92b2ffb1f14/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/132129e17e153453a14018e2e34cd02e/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/484c368e2208aa3657523eb4121a399c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a7fb81b0a4f663cbc3fe006073835aaf/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/6ebc2fe5baf6128f124bc1f54c606a24/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:cardview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c579d1659825dd4f39b452020464093d/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/15eb5539494656a06541042f0e5ae83f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/12144c1f8735d21e0535804dfffceb29/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/36768fe20061ee070961b7df28a7a226/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/97925d260d02cf20f68f18483e7fe2c4/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/908dc58bad055fad385aa3125f81035a/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/ee3d67f5f056a1b3ac369e8e936770e8/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/5eeb5f2fb41fc592992e92afebfb7388/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/314a6cc2c2cb94e7a83647b7ddd22fc8/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/413bc6b89c4ae7c60feab837caf0338b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.facebook.fresco:fresco:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/c252f0110411581ab9d096786db99f19/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/68d465b8402588a809d4993d8a7dec4e/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:drawee:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f2d85c05ecf56527f28bcc04c703ee3c/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/216f07ac06c64003974d9685d5d86837/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/116043d9ddd316531480561e81c9a02d/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.soloader:soloader:0.6.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/669d1ebdd07be2b41046d0dfdb2cefc6/AndroidManifest.xml:2:1-13:12
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/791b5f557045a0e2dec11dd18b46f8eb/AndroidManifest.xml:2:1-9:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:2:1-8:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:2:1-8:12
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:2:1-8:12
+	package
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:2:3-29
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:2:3-29
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+	xmlns:tools
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:1-31:12
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:1:11-69
+uses-permission#android.permission.INTERNET
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:4:5-67
+MERGED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-67
+MERGED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:9:5-67
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:24:5-67
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:5:5-79
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:5:22-76
+application
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:8:5-29:19
+MERGED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:8:5-29:19
+MERGED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:8:5-29:19
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:30:5-36:19
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:30:5-36:19
+MERGED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:22:5-27:19
+MERGED from [com.facebook.react:react-native:0.59.9] /home/thalesg/.gradle/caches/transforms-1/files-1.1/react-native-0.59.9.aar/0841144246b9ee93801b55a1ea69ffbf/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.react:react-native:0.59.9] /home/thalesg/.gradle/caches/transforms-1/files-1.1/react-native-0.59.9.aar/0841144246b9ee93801b55a1ea69ffbf/AndroidManifest.xml:11:5-20
+MERGED from [com.android.support:design:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/64f54cc2ca15d4e63567af5d9c4754f9/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/64f54cc2ca15d4e63567af5d9c4754f9/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-tasks-16.0.1.aar/74ce2d761792a4350ee1ffb7832f88fb/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-tasks-16.0.1.aar/74ce2d761792a4350ee1ffb7832f88fb/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:7:5-11:19
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:7:5-11:19
+MERGED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a7fb81b0a4f663cbc3fe006073835aaf/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a7fb81b0a4f663cbc3fe006073835aaf/AndroidManifest.xml:22:5-23:19
+MERGED from [com.facebook.soloader:soloader:0.6.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/669d1ebdd07be2b41046d0dfdb2cefc6/AndroidManifest.xml:11:5-20
+MERGED from [com.facebook.soloader:soloader:0.6.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/669d1ebdd07be2b41046d0dfdb2cefc6/AndroidManifest.xml:11:5-20
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:22:18-91
+	android:label
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:10:7-39
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:10:7-39
+	tools:ignore
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:7:75-114
+	android:roundIcon
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:12:7-41
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:12:7-41
+	tools:targetApi
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:7:54-74
+	android:icon
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:11:7-36
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:11:7-36
+	android:allowBackup
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:13:7-34
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:13:7-34
+	android:theme
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:14:7-38
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:14:7-38
+	android:usesCleartextTraffic
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:7:18-53
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:9:7-38
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:9:7-38
+meta-data#com.google.android.geo.API_KEY
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:15:7-17:66
+	android:value
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:17:9-64
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:16:9-54
+activity#com.oficinalegal.MainActivity
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:18:7-27:18
+	android:label
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:20:9-41
+	android:windowSoftInputMode
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:22:9-51
+	android:configChanges
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:21:9-79
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:19:9-37
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:23:9-26:25
+action#android.intent.action.MAIN
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:24:13-65
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:24:21-62
+category#android.intent.category.LAUNCHER
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:25:13-73
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:25:23-70
+activity#com.facebook.react.devsupport.DevSettingsActivity
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:28:7-84
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml:28:17-81
+uses-sdk
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-snackbar] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-snackbar/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-snackbar] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-snackbar/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:20:5-44
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:@react-native-community_async-storage] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/@react-native-community/async-storage/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-7:41
+MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-vector-icons] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-vector-icons/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-gesture-handler] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-gesture-handler] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-gesture-handler/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-linear-gradient] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-linear-gradient] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-linear-gradient/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.59.9] /home/thalesg/.gradle/caches/transforms-1/files-1.1/react-native-0.59.9.aar/0841144246b9ee93801b55a1ea69ffbf/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.59.9] /home/thalesg/.gradle/caches/transforms-1/files-1.1/react-native-0.59.9.aar/0841144246b9ee93801b55a1ea69ffbf/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:design:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/64f54cc2ca15d4e63567af5d9c4754f9/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:design:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/64f54cc2ca15d4e63567af5d9c4754f9/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d1a00882f03493c9d86632ea864c226b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d1a00882f03493c9d86632ea864c226b/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-tasks-16.0.1.aar/74ce2d761792a4350ee1ffb7832f88fb/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-tasks-16.0.1.aar/74ce2d761792a4350ee1ffb7832f88fb/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/ce4f9db08e0e2022120dcbd0ab966ee5/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/ce4f9db08e0e2022120dcbd0ab966ee5/AndroidManifest.xml:20:5-44
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:5:5-43
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-fragment:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/36901cf9cfea8398d48f06fd41d8bdf4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/36901cf9cfea8398d48f06fd41d8bdf4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fef5bc2e328fee68030d2b9895a79d14/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/fef5bc2e328fee68030d2b9895a79d14/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/49932b2c2844f6d1e767f83a1a21fead/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/49932b2c2844f6d1e767f83a1a21fead/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/ff008d0d935ad7947b26b4ee66282625/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/ff008d0d935ad7947b26b4ee66282625/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/74131535345eddbb0b4da96436131168/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/74131535345eddbb0b4da96436131168/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/e81595b17135d8d6e8c102fb4e513e89/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/e81595b17135d8d6e8c102fb4e513e89/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/3f5eb13eabef885ff3d4ce7c1c7e3ace/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/3f5eb13eabef885ff3d4ce7c1c7e3ace/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/a0553c06f83fca2c38bb497fb9a89adf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/a0553c06f83fca2c38bb497fb9a89adf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/de630d1930ac1123b6e54fcb615a7204/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/de630d1930ac1123b6e54fcb615a7204/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/58872eac26c071aa1cc00efe784fcf49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/58872eac26c071aa1cc00efe784fcf49/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/3049ce4a6ee00c5e675966c8b57cd269/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/3049ce4a6ee00c5e675966c8b57cd269/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/46bce2a2a9b63c07be73f743c3884bfa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/46bce2a2a9b63c07be73f743c3884bfa/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/cf80bd6197e681a00972553624fafd68/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/cf80bd6197e681a00972553624fafd68/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/f4f2b0456eb3b4a56a88c92b2ffb1f14/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/f4f2b0456eb3b4a56a88c92b2ffb1f14/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/132129e17e153453a14018e2e34cd02e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/132129e17e153453a14018e2e34cd02e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/484c368e2208aa3657523eb4121a399c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/484c368e2208aa3657523eb4121a399c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/57bc31733d53ab6967e8b28647a78b34/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a7fb81b0a4f663cbc3fe006073835aaf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/a7fb81b0a4f663cbc3fe006073835aaf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/6ebc2fe5baf6128f124bc1f54c606a24/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/6ebc2fe5baf6128f124bc1f54c606a24/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c579d1659825dd4f39b452020464093d/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cardview-v7:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/c579d1659825dd4f39b452020464093d/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/15eb5539494656a06541042f0e5ae83f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/15eb5539494656a06541042f0e5ae83f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/12144c1f8735d21e0535804dfffceb29/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/12144c1f8735d21e0535804dfffceb29/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/36768fe20061ee070961b7df28a7a226/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/36768fe20061ee070961b7df28a7a226/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/97925d260d02cf20f68f18483e7fe2c4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/97925d260d02cf20f68f18483e7fe2c4/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/908dc58bad055fad385aa3125f81035a/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/908dc58bad055fad385aa3125f81035a/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/ee3d67f5f056a1b3ac369e8e936770e8/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/ee3d67f5f056a1b3ac369e8e936770e8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/5eeb5f2fb41fc592992e92afebfb7388/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/5eeb5f2fb41fc592992e92afebfb7388/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/314a6cc2c2cb94e7a83647b7ddd22fc8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/314a6cc2c2cb94e7a83647b7ddd22fc8/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/413bc6b89c4ae7c60feab837caf0338b/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /home/thalesg/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/413bc6b89c4ae7c60feab837caf0338b/AndroidManifest.xml:20:5-44
+MERGED from [com.facebook.fresco:fresco:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/c252f0110411581ab9d096786db99f19/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fresco:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fresco-1.10.0.aar/c252f0110411581ab9d096786db99f19/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/68d465b8402588a809d4993d8a7dec4e/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.10.0.aar/68d465b8402588a809d4993d8a7dec4e/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f2d85c05ecf56527f28bcc04c703ee3c/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/drawee-1.10.0.aar/f2d85c05ecf56527f28bcc04c703ee3c/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/216f07ac06c64003974d9685d5d86837/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.10.0.aar/216f07ac06c64003974d9685d5d86837/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/116043d9ddd316531480561e81c9a02d/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.10.0.aar/116043d9ddd316531480561e81c9a02d/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.soloader:soloader:0.6.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/669d1ebdd07be2b41046d0dfdb2cefc6/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.soloader:soloader:0.6.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/soloader-0.6.0.aar/669d1ebdd07be2b41046d0dfdb2cefc6/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/791b5f557045a0e2dec11dd18b46f8eb/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:1.10.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/fbcore-1.10.0.aar/791b5f557045a0e2dec11dd18b46f8eb/AndroidManifest.xml:5:5-7:41
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:5:5-77
+	android:name
+		ADDED from /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/src/debug/AndroidManifest.xml:5:22-75
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-81
+	android:name
+		ADDED from [:react-native-maps] /home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/node_modules/react-native-maps/lib/android/build/intermediates/library_manifest/debug/AndroidManifest.xml:10:22-78
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:23:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:23:22-76
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:28:9-32
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:33:9-35:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:35:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-maps-16.1.0.aar/ecf35dce7054f440583b2ceca1ed5d52/AndroidManifest.xml:34:13-50
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:16.1.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-base-16.1.0.aar/90d235bfb2d83482548fcab1335897d2/AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:23:9-25:69
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:8:9-10:69
+MERGED from [com.google.maps.android:android-maps-utils:0.5] /home/thalesg/.gradle/caches/transforms-1/files-1.1/android-maps-utils-0.5.aar/8cbe9ee6be35c588d7ea1246c95d0103/AndroidManifest.xml:8:9-10:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:16.2.0] /home/thalesg/.gradle/caches/transforms-1/files-1.1/play-services-basement-16.2.0.aar/b153e5aaf304656f3636b5ca38c9863d/AndroidManifest.xml:24:13-58

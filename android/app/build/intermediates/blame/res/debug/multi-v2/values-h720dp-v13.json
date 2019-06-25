@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/thalesg/RNprojects/UFRPE/processos/reserva/oficina-legal-mobile-app/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-h720dp-v13/values-h720dp-v13.xml",
+            "map": [
+                {
+                    "source": "/home/thalesg/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/d1a00882f03493c9d86632ea864c226b/res/values-h720dp-v13/values-h720dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "66",
+                        "endOffsets": "117"
+                    }
+                }
+            ]
+        }
+    ]
+}
