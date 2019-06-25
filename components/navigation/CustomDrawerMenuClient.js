@@ -61,7 +61,7 @@ export default class CustomDrawerMenu extends React.Component {
     desactive = async() => {
         const id = await AsyncStorage.getItem('user')
         try{
-            await axios.put(`http://192.168.0.10:4000/api/usuario/disable/${id}`)
+            await axios.put(`${baseURL}/api/usuario/disable/${id}`)
                 .then(this.props.navigation.navigate('Home'))
                 .then(alert("Usuário Desabilitado"))
         }catch(err){
@@ -77,7 +77,7 @@ export default class CustomDrawerMenu extends React.Component {
     getUserName = async () => {
         const id = await AsyncStorage.getItem('user')
         try{
-            await axios.get(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${id}`)
+            await axios.get(`${baseURL}/api/cliente/findByIdUsuario/${id}`)
                 .then(response =>  this.setState({ username: response.data.nome}) )
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente2." + err)

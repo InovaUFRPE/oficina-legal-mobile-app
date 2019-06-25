@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import TabNavigatorMechanic from '../navigation/TabNavigatorMechanic'
+import Axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 export default class HomeMechanic extends Component {
+    
+    
+
     render() {
 
         return (

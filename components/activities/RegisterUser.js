@@ -29,11 +29,19 @@ export default class RegisterUser extends Component {
         str2: "\nErro(s)\n"
     }
 
-    saveDataStorage = (client) => {
+    saveDataStorage = (client, mechanic) => {
         try {
-            AsyncStorage.setItem('user', JSON.stringify(client.idUsuario) )
-            AsyncStorage.setItem('client', JSON.stringify(client))
-            this.props.navigation.navigate('RegisterVehicle')
+            if(client){
+                AsyncStorage.setItem('user', JSON.stringify(client.idUsuario) )
+                AsyncStorage.setItem('client', JSON.stringify(client))
+                this.props.navigation.navigate('RegisterVehicle')
+            }
+            else{
+                AsyncStorage.setItem('user', JSON.stringify(mechanic.idUsuario))
+                AsyncStorage.setItem('mechanic', JSON.stringify(mechanic))
+                alert("Mecânico cadastrado com sucesso")
+                this.props.navigation.navigate('LoginMechanic')
+            }
         } catch (error) {
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -84,8 +92,6 @@ export default class RegisterUser extends Component {
                 this.PostClient()
             }else if(mechanic){
                 this.PostMechanic()
-                this.saveDataStorage(this.createClientRequisition())
-                this.props.navigation.navigate('LoginMechanic')
             }
         }
     }
@@ -104,18 +110,19 @@ export default class RegisterUser extends Component {
         }
     }
 
-    PostClient = async () => {
+    PostClient = () => {
         try {
-            await axios.post(`${baseURL}/api/cliente/register`, this.createClientRequisition())
-                .then(client => this.saveDataStorage(client.data))
+            axios.post(`${baseURL}/api/cliente/register`, this.createClientRequisition())
+                .then(client => this.saveDataStorage(client.data, false))
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }
     }
 
-    PostMechanic = async () => {
+    PostMechanic = () => {
         try {
-            await axios.post(`${baseURL}/api/mecanico/create`, this.createMechanicRequisition())
+            axios.post(`${baseURL}/api/mecanico/create`, this.createMechanicRequisition())
+                .then(mechanic => this.saveDataStorage(false, mechanic.data))
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }

@@ -58,7 +58,7 @@ export default class EditCarsClient extends Component {
         /*Função para salvar no banco aqui */
 
         try {
-            await axios.post(`http://192.168.0.10:4000/api/veiculo/add`, vehicle)
+            await axios.post(`${baseURL}/api/veiculo/add`, vehicle)
                 .then(response => this.setState({ model: '', year: '', renavam: '', Vplate: '' })
                     .then(this.getVeiculos(idCliente)))
 
@@ -97,7 +97,7 @@ export default class EditCarsClient extends Component {
     postVehicle = (jwt, vehicle) => {
         axios.defaults.headers.common['x-access-token'] = jwt
         try{
-            axios.post(`http://192.168.0.10:4000/api/veiculo/add`, vehicle)
+            axios.post(`${baseURL}/api/veiculo/add`, vehicle)
                 .then(response => { this.getClient() })
                 .then( alert("Cadastro realizado com sucesso.") )
         }catch(err){
@@ -109,7 +109,7 @@ export default class EditCarsClient extends Component {
         const client = await AsyncStorage.getItem('client');
         const id = await AsyncStorage.getItem('user');
         try{
-            axios.get(`http://192.168.0.10:4000/api/usuario/${id}`)
+            axios.get(`${baseURL}/api/usuario/${id}`)
                 .then(response => this.createVehicleRequisition(client, response.data.token))
         }catch(err){
             alert("Não foi possível resgatar o usuário")
@@ -124,7 +124,7 @@ export default class EditCarsClient extends Component {
     getClient = async () => {
         const id = await AsyncStorage.getItem('client')
         try {
-            await axios.get(`http://192.168.0.10:4000/api/cliente/${id}`)
+            await axios.get(`${baseURL}/api/cliente/${id}`)
                 .then(response => this.getVeiculos(response.data.id))
         } catch (err) {
             alert("Usuário cadastrado não possui conta como cliente.")
@@ -133,7 +133,7 @@ export default class EditCarsClient extends Component {
     }
 
     getVeiculos = async (id) => {
-        await axios.get(`http://192.168.0.10:4000/api/cliente/${id}/veiculos`)
+        await axios.get(`${baseURL}/api/cliente/${id}/veiculos`)
             .then(response => this.setState({ cars: response.data }))
     }
 

@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'lodash'
 import axios from 'axios';
 import { getApiUrl } from '../../service/api'
-
+import defaultStyle from '../styles/Default'
 const baseURL = getApiUrl();
 const { width, height } = Dimensions.get('window')
 
@@ -86,35 +86,44 @@ export default class TypeProblem extends Component {
 
         return (
             <TouchableOpacity
-                onPress={() => {
-                    this.props.navigation.navigate('Agendamento', {
-                        idProb: id,
-                        nomeServico: formatedName,
-                        preco: price,
-                        tempoRealizacao: time
-                    })
-                }}
-                style={styles.workShopComponent}>
-                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5, marginLeft: 20 }}>
 
-                    <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
-                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover' }} />
+                onPress={() => {this.props.navigation.navigate('Agendamento', {
+                    idProb: id,
+                    nomeServico: formatedName,
+                    preco: price,
+                    tempoRealizacao: time
+                })}}
+
+
+                style={styles.workShopComponent}>
+                <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center' }}>
+                    <View style={{ backgroundColor: defaultStyle.colors.primaryColor, width: 40, height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
+                        <Icon
+                            name='ios-settings'
+                            size={20}
+                            color='#fff'
+                        />
+                    </View>
+
+                    <View style={{ marginLeft: 10 }}>
+                        <Text>{formatedName}</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                name="md-time"
+                                size={15}
+                            />
+                            <Text style={{ marginLeft: 5 }}>{time}</Text>
+                        </View>
+
+
+                    </View>
                 </View>
-                <View style={{ width: '70%', height: 100 }}>
-                    <View style={{ marginTop: 10, marginLeft: 20 }}>
-                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 18, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
-                    </View>
-                    <View style={{ marginTop: 10, marginLeft: 20 }} >
-                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 13, color: 'black', letterSpacing: 0.15 }}>R$ {price}</Text>
-                    </View>
-                    <View style={{ marginTop: 10, marginLeft: 20 }} >
-                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 13, color: 'black', letterSpacing: 0.15 }}>Tempo médio: {time}h</Text>
-                    </View>
+                <View style={{ marginRight: 15 }}>
+                    <Text style={{ fontSize: 15 }}>R$ {price}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
-
     render() {
         return (
             <View
@@ -176,6 +185,45 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
 
+    workShopComponent: {
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 5,
+        height: 60,
+        width: width - 20,
+        borderRadius: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
+    },
+
+    searchContainer: {
+        marginLeft: 20,
+        marginVertical: 10,
+        flexDirection: 'row',
+        backgroundColor: '#f1f2f6',
+        borderRadius: 5,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: width - 100,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
+    },
+
     menuIcon: {
         position: 'absolute',
         paddingLeft: 20
@@ -206,44 +254,5 @@ const styles = StyleSheet.create({
         color: 'black'
     },
 
-    searchContainer: {
-        marginLeft: 20,
-        marginVertical: 10,
-        flexDirection: 'row',
-        backgroundColor: '#f1f2f6',
-        borderRadius: 5,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: width - 100,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
-        shadowOpacity: 0.27,
-        shadowRadius: 4.65,
-
-        elevation: 6,
-    },
-
-    workShopComponent: {
-        backgroundColor: '#fff',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 10,
-        height: 120,
-        width: width - 20,
-        borderRadius: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-
-        elevation: 3,
-    }
 
 })

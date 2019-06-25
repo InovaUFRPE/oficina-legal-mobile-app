@@ -5,16 +5,43 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import imageCar from '../../images/cars/gol.jpg'
 import Icon from 'react-native-vector-icons/FontAwesome5'
+import { getApiUrl } from '../../service/api'
 
+const baseURL = getApiUrl();
 
 //Visualização das tarefas atribuidas ao mecanico
 
 export default class TaskMechanic extends Component {
     state = {
-        tasks: [
-            { id: Math.random(), initialHour: '06:00', finishHour: '09:25', serviceName: 'Troca de óleo', serviceDescription: 'Aplica dentro do capô do carro', carModel: 'Uno', carPlate: 'KFA-3219', finishDate: '09/08/2019' },
-            { id: Math.random(), initialHour: '06:00', finishHour: '09:25', serviceName: 'Troca de Pneu', serviceDescription: 'Trocar pneu dianteiro esquerdo', carModel: 'Uno', carPlate: 'KFA-3219', finishDate: '09/08/2019' }
-        ]
+        listOs: [{}],
+        listOfOs: [{}],
+        idMechanic: 0,
+    }
+    componentDidMount = async () => {
+        let idUser = await AsyncStorage.getItem("user")
+        await this.getMechanic(idUser)
+        await this.getOs()
+        await this.mountData()
+    }
+
+    getMechanic = async (id) => {
+        const mec = await Axios.get(`${baseURL}/api/mecanico/find/user/${id}`)
+        this.setState({ idMechanic: mec.data.id })
+    }
+
+    getOs = async () => {
+        const os = await Axios.get(`${baseURL}/api/mecanicoOS/findAll/mecanico/${this.state.idMechanic}`)
+        this.setState({listOs: os.data}) 
+    }
+
+    mountData = () => {
+        const os = this.state.listOs
+        const listOfOs = []
+        os.map(async (value, index) => {
+            const serviceOrder = await Axios.get(`${baseURL}/api/os/${value.idOS}`)
+            listOfOs[index] = serviceOrder.data
+            this.setState({ listOfOs: listOfOs })
+        })
     }
 
     deleteTask = id => {
@@ -43,7 +70,7 @@ export default class TaskMechanic extends Component {
             <View style={styles.container}>
                 <View style={styles.tasksContainer}>
                     <ScrollView>
-                        <FlatList data={this.state.tasks}
+                        <FlatList data={this.state.listOfOs}
                             keyExtractor={item => `${item.id}`}
                             renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} onDelete={this.deleteTask}/>} />
                     </ScrollView>

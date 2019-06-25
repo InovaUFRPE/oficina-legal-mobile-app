@@ -3,6 +3,9 @@ import { validateEmail, checkBlankCamps, validBlankCamps} from '../../busnisses/
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 export default class LoginMechanic extends Component {
     state = {
@@ -15,7 +18,7 @@ export default class LoginMechanic extends Component {
         try{
             AsyncStorage.setItem('userToken', token)
             AsyncStorage.setItem('user', JSON.stringify(id))
-            this.props.navigation.navigate('DrawerNavigatorMechanic')
+            this.props.navigation.navigate('HomeMechanic')
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
@@ -24,7 +27,7 @@ export default class LoginMechanic extends Component {
 
     GetUserByLogin = async () => {
         try{
-            await axios.post("http://192.168.0.10:4000/api/usuario/login", 
+            await axios.post(`${baseURL}/api/usuario/login`, 
             { login: this.state.username, email:this.state.username, senha: this.state.password })
             .then(response => { 
                 if(response.status == 200){

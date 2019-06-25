@@ -8,8 +8,11 @@ import {
     Alert
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import axios from 'axios';
+import Axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 
 export default class CustomDrawerMenu extends React.Component {
@@ -44,14 +47,9 @@ export default class CustomDrawerMenu extends React.Component {
     }
 
     getUserName = async () => {
-        const id = await AsyncStorage.getItem('user')
-        try{
-            await axios.post("http://192.168.0.10:4000/api/mecanico/usuario", { idUsuario:id })
-                .then(response =>  this.setState({ username: response.data.nome}) )
-        }catch(err){
-            alert("Usuário cadastrado não possui conta como mecânico." + err)
-            return null
-        } 
+        let id = await AsyncStorage.getItem('user')
+        const mec = await Axios.get(`${baseURL}/api/mecanico/find/user/${id}`)
+        this.setState({ username: mec.data.nome})
     }
 
     navLink(nav, text, iconName){

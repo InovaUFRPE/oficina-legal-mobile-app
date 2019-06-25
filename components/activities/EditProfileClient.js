@@ -68,7 +68,7 @@ export default class EditProfileClient extends Component {
     saveClient = async () => {
         const id = this.state.idCliente;
         try {
-            await axios.put(`http://192.168.0.10:4000/api/cliente/update/${id}`, this.state) 
+            await axios.put(`${baseURL}/api/cliente/update/${id}`, this.state) 
             alert("Modificações realizadas com sucesso.")
             this.displayDataStorage()
         } catch{
@@ -112,7 +112,7 @@ export default class EditProfileClient extends Component {
         id = parseInt(id)
         this.state.usuario.idUsuario = id
         try{
-            axios.get(`http://192.168.0.10:4000/api/usuario/${id}`) 
+            axios.get(`${baseURL}/api/usuario/${id}`) 
                 .then(response => this.setState({login: response.data.user.login, email: response.data.user.email}) )
             await this.getClient()
             this.populateBlankCamps()
@@ -125,7 +125,7 @@ export default class EditProfileClient extends Component {
     getClient = async () => {
         const idUser = await AsyncStorage.getItem('user')
         try{
-            const client = await axios.get(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
+            const client = await axios.get(`${baseURL}/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
             this.setState({cliente: client.data})
         }catch(err){
             alert("Não foi possível resgatar o cliente")
@@ -150,7 +150,7 @@ export default class EditProfileClient extends Component {
 
     GetCpf = async () => {
         try {
-            await axios.post(`http://192.168.0.10:4000/api/usuario/cpf`, { cpf: this.state.cpf })
+            await axios.post(`${baseURL}/api/usuario/cpf`, { cpf: this.state.cpf })
                 .then(response => {
                     if (response.status == 201) {
                         alert("Já existe um cliente cadastrado com esse cpf.")

@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: 20,
     },
-
     information: {
         fontSize: 16, 
         marginLeft: 5,
