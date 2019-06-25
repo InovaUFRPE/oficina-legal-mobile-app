@@ -8,6 +8,7 @@ const { height, width } = Dimensions.get('window')
 //props: serviceName, serviceType, price, date
 
 export default props => {
+    alert(props.placa)
     return (
         <TouchableOpacity style={styles.container}>
             <View style={{ width: width - 75, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -18,7 +19,7 @@ export default props => {
                     />
                     <Text style={styles.text}>{props.modelo}</Text>
                 </View>
-                <Text style={styles.princeText}>{props.placa}</Text>
+                <Text style={styles.princeText}>{(props.placa).substring(0,3).toUpperCase()+"-"+(props.placa).substring(3,6)}</Text>
             </View>
         </TouchableOpacity>
     )

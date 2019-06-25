@@ -81,7 +81,6 @@ export default class EditProfileClient extends Component {
             if(this.state.Password != ''){
                 this.state.senha = this.state.Password;
             }
-            
             this.Verify()
         }
         else {

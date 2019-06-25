@@ -49,7 +49,7 @@ export default class Agendamento extends Component {
         cars.map((value, index) => {
             objectCar = {}
             objectCar.key = value.id
-            objectCar.label = "Carro: "+ value.modelo + ", Placa: " + value.placa
+            objectCar.label = "Carro: "+ value.modelo + ", Placa: " + (value.placa).substring(0,3).toUpperCase()+"-"+(value.placa).substring(3,6)
             listCars[index] = objectCar
         })
         this.setState({ listOfCars: listCars })

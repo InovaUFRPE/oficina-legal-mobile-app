@@ -82,6 +82,15 @@ export default class RegisterVehicle extends Component {
     }
 
     Verify(){
+        if(this.state.Vplate < 7){
+            alert("Placa inválida")
+        }
+        try{
+            parseInt(this.state.Vplate.substr(3, 7))
+        }catch(err){
+            alert("Placa inválida")
+        }
+
         if (!this.checkBlankCamps()){
             alert(this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
