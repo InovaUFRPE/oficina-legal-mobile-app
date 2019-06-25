@@ -9,6 +9,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import defaultStyle from '../styles/Default';
 import LinearGradient from 'react-native-linear-gradient';
 import ModalSelector from 'react-native-modal-selector';
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 const initialState = { desc: '', date: null, workShopInformation: [{ name: '', adress: '', phoneNumber: '' }], pickerSection: '', agendamentoLabel: 'Horário' }
 const { width, height } = Dimensions.get('window')
@@ -36,7 +39,7 @@ export default class Agendamento extends Component {
 
     getVeiculos = async () => {
         const id = await AsyncStorage.getItem('client')
-        const client = await axios.get(`http://192.168.0.10:4000/api/veiculo/${id}/veiculos`)
+        const client = await axios.get(`${baseURL}/api/veiculo/${id}/veiculos`)
         return client.data
     }
 
@@ -90,7 +93,7 @@ export default class Agendamento extends Component {
     
     createAgendamentoRegister = () => {
         const agendamento = this.createAgendamentoObject()
-        axios.post(`http://192.168.0.10:4000/api/agendamento/create`, agendamento)
+        axios.post(`${baseURL}/api/agendamento/create`, agendamento)
             .then(response => this.createOsRegister(agendamento.dataHora))
             .catch(response => JSON.stringify(response))
     }
@@ -122,7 +125,7 @@ export default class Agendamento extends Component {
     
     createOsRegister = (hora) => {
         try{
-            axios.post(`http://192.168.0.10:4000/api/os/create`, this.createOsObject(hora))
+            axios.post(`${baseURL}/api/os/create`, this.createOsObject(hora))
             alert("Agendamento realizado com sucesso.")
             this.props.navigation.navigate("HomeClient")
         }catch(err){

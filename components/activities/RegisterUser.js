@@ -3,7 +3,9 @@ import { ConfirmPassword, validateCPF, validateEmail, ValidateCEP } from '../../
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { getApiUrl } from '../../service/api'
 
+const baseURL = getApiUrl();
 
 export default class RegisterUser extends Component {
     
@@ -69,7 +71,7 @@ export default class RegisterUser extends Component {
 
     GetCpf = async (mechanic, client) => {
         try {
-            await axios.post("http://192.168.0.10:4000/api/usuario/cpf", { cpf: this.state.cpf })
+            await axios.post(`${baseURL}/api/usuario/cpf`, { cpf: this.state.cpf })
                 .then(response => {
                     if (response.status == 201) {
                         alert("Já existe um cliente cadastrado com esse cpf.")
@@ -95,7 +97,7 @@ export default class RegisterUser extends Component {
             login: this.state.login.trim(),
         }
         try{
-            await axios.post("http://192.168.0.10:4000/api/usuario/login", user)
+            await axios.post(`${baseURL}/api/usuario/login`, user)
                 .then(response => this.saveDataStorage(response.data.token, response.data.user.id, client))
         }catch(err){
             alert("Não foi possível retornar o usuário")
@@ -104,7 +106,7 @@ export default class RegisterUser extends Component {
 
     PostClient = async () => {
         try {
-            await axios.post("http://192.168.0.10:4000/api/cliente/register", this.createClientRequisition())
+            await axios.post(`${baseURL}/api/cliente/register`, this.createClientRequisition())
                 .then(client => this.saveDataStorage(client.data))
         } catch (err) {
             alert("Não foi possível salvar o usuário")
@@ -113,7 +115,7 @@ export default class RegisterUser extends Component {
 
     PostMechanic = async () => {
         try {
-            await axios.post("http://192.168.0.10:4000/api/mecanico/create", this.createMechanicRequisition())
+            await axios.post(`${baseURL}/api/mecanico/create`, this.createMechanicRequisition())
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }
@@ -140,6 +142,11 @@ export default class RegisterUser extends Component {
 
     VerifyErrors() {
         if (!ConfirmPassword(this.state.password, this.state.confirmPassword)) { this.errors.str2 += "\n- As senhas não conferem." }
+        /* if(ConfirmPassword(this.state.password, this.state.confirmPassword)){ 
+            if(this.state.password.length < 6){
+                this.errors.str2 += "\n- Sua senha deve ter pelo menos 6 caracteres"
+            }
+        } */
         if (!validateCPF(this.state.cpf.trim())) { this.errors.str2 += "\n- Insira um CPF válido." }
         if (!validateEmail(this.state.email.trim())) { this.errors.str2 += "\n- Insira um email válido." }
         if (this.checkBclient) {

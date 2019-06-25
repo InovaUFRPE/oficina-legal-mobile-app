@@ -13,6 +13,7 @@ import EditCar from './components/activities/EditCarsClient'
 import TabClient from './components/navigation/TabNavigatorCliente'
 import Home from './components/navigation/DrawerNavigatorClient'
 import Login from './components/activities/Login'
+import EditProfileClient from './components/activities/EditProfileClient'
 
 
 AppRegistry.registerComponent(appName, () => Navigator);

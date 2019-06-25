@@ -13,6 +13,10 @@ import Snackbar from 'react-native-snackbar'
 import defaultStyles from '../styles/Default'
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
+
 const { width, height } = Dimensions.get('window')
 const actions = [
     {
@@ -51,7 +55,7 @@ export default class HomeClient extends Component {
 
     getClient = async () => {
         const idUser = await AsyncStorage.getItem('user')
-        const client = await axios.get(`http://192.168.0.10:4000/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
+        const client = await axios.get(`${baseURL}/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
         AsyncStorage.setItem('client', JSON.stringify(client.data.id))
     }
 
@@ -59,7 +63,7 @@ export default class HomeClient extends Component {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get("http://192.168.0.10:4000/api/oficina/findAll")
+        await axios.get(`${baseURL}/api/oficina/findAll`)
             .then(users => {
                 this.setState({
                     loading: false,
@@ -330,7 +334,7 @@ export default class HomeClient extends Component {
                     renderItem={this.RenderItem}
                     showsVerticalScrollIndicator={false}
                 />
-                {/* <FloatingAction
+                <FloatingAction
                     actions={actions}
                     position='right'
                     overlayColor='trasparent'
@@ -338,7 +342,7 @@ export default class HomeClient extends Component {
                         this.floatingButtonPress
                     }
 
-                /> */}
+                />
             </View>
         )
     }

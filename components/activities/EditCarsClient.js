@@ -10,6 +10,10 @@ import { Input, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Snackbar from 'react-native-snackbar'
 
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
+
 const { width, height } = Dimensions.get('window')
 
 const actions = [
@@ -54,7 +58,7 @@ export default class EditCarsClient extends Component {
         /*Função para salvar no banco aqui */
 
         try {
-            await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
+            await axios.post(`${baseURL}/api/veiculo/add`, vehicle)
                 .then(response => this.setState({ model: '', year: '', renavam: '', Vplate: '' })
                     .then(this.getVeiculos(idCliente)))
 
@@ -77,9 +81,9 @@ export default class EditCarsClient extends Component {
     }
 
     getClient = async () => {
-        const id = await AsyncStorage.getItem('user')
+        const id = await AsyncStorage.getItem('client')
         try {
-            await axios.post("http://192.168.0.10:4000/api/cliente/usuario", { idUsuario: id })
+            await axios.get(`${baseURL}/api/cliente/${id}`)
                 .then(response => this.getVeiculos(response.data.id))
         } catch (err) {
             alert("Usuário cadastrado não possui conta como cliente.")
@@ -88,7 +92,7 @@ export default class EditCarsClient extends Component {
     }
 
     getVeiculos = async (id) => {
-        await axios.get(`http://192.168.0.10:4000/api/cliente/${id}/veiculos`)
+        await axios.get(`${baseURL}/api/cliente/${id}/veiculos`)
             .then(response => this.setState({ cars: response.data }))
     }
 
@@ -100,12 +104,12 @@ export default class EditCarsClient extends Component {
                     //Condicionante de render dos carros do cliente
                     this.state.cars.length === 0
                         ?
-                        <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
+                        <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15, textAlign: 'center' }}>
                             Você ainda não tem nenhum carro cadastrado
                             </Text>
                         :
                         <View style={{ alignItems: 'center' }}>
-                            <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15 }}>
+                            <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15, textAlign: 'center' }}>
                                 Aqui estão seus veículos cadastrados
                                 </Text>
                             <FlatList 
@@ -122,7 +126,7 @@ export default class EditCarsClient extends Component {
                     animationOut='zoomOut'
                     isVisible={this.state.isModalVisible}>
                     <View style={{ backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginVertical: 20, }}>Cadastrar Veículo</Text>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', marginVertical: 20, textAlign: 'center' }}>Cadastrar Veículo</Text>
                         <Input
                             inputContainerStyle={styles.inputContainer}
                             label='Modelo'

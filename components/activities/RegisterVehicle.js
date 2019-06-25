@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native
 import { ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 export default class RegisterVehicle extends Component {
     state =  {
@@ -31,7 +34,7 @@ export default class RegisterVehicle extends Component {
 
     getUserToken = async (user, client) => {
         try{
-            await axios.get(`http://192.168.0.10:4000/api/usuario/${user}`)
+            await axios.get(`${baseURL}/api/usuario/${user}`)
                 .then(response => this.createVehicleRequisition(client, response.data.token))
         }catch(err){
             alert("Não foi possível retornar o usuário")
@@ -41,7 +44,7 @@ export default class RegisterVehicle extends Component {
     postVehicle = async (jwt, vehicle) => {
         axios.defaults.headers.common['x-access-token'] = jwt
         try{
-            await axios.post("http://192.168.0.10:4000/api/veiculo/add", vehicle)
+            await axios.post(`${baseURL}/api/veiculo/add`, vehicle)
                 .then(response => {
                     alert("Cadastro realizado com sucesso.") 
                     this.props.navigation.navigate("Home")

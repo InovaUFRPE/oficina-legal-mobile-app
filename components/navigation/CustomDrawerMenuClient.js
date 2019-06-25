@@ -11,6 +11,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import defaultStyle from '../styles/Default'
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 export default class CustomDrawerMenu extends React.Component {
     constructor(props){

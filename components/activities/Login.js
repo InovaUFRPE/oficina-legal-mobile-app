@@ -4,6 +4,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'reac
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import defaultStyles from '../styles/Default'
+import { getApiUrl } from '../../service/api'
+
+const baseURL = getApiUrl();
 
 export default class Login extends Component {
     state = {
@@ -19,13 +22,12 @@ export default class Login extends Component {
         }catch(error){
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
-        
     }
     
     active = async() => {
         const id = await AsyncStorage.getItem('user')
         try{
-            await axios.put(`http://192.168.0.10:4000/api/usuario/enable/${id}`)
+            await axios.put(`${baseURL}/api/usuario/enable/${id}`)
                 .then(alert("Usuário reativado"))
         }catch(err){
             alert("Usuário cadastrado não possui conta como cliente." + err)
@@ -52,7 +54,7 @@ export default class Login extends Component {
 
     GetUserByLogin = async () => {
         try{
-            await axios.post("http://192.168.0.10:4000/api/usuario/login", 
+            await axios.post(`${baseURL}/api/usuario/login`, 
             { login: this.state.username, email:this.state.username, senha: this.state.password })
             .then(response => {
                 if(response.status == 200){

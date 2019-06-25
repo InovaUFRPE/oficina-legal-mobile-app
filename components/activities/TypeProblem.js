@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler';
 import { contains } from '../SearchConfig'
-import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
-import FontAwersome from 'react-native-vector-icons/FontAwesome'
 import _ from 'lodash'
 import axios from 'axios';
-import { FloatingAction } from "react-native-floating-action"
-import defaultStyles from '../styles/Default'
+import { getApiUrl } from '../../service/api'
 
+const baseURL = getApiUrl();
 const { width, height } = Dimensions.get('window')
 
 
@@ -41,7 +39,7 @@ export default class TypeProblem extends Component {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
 
-        await axios.get(`http://192.168.0.10:4000/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
+        await axios.get(`${baseURL}/api/servico/oficina/${this.props.navigation.getParam('oficina', 0)}`)
             .then(problems => {
                 this.setState({
                     loading: false,

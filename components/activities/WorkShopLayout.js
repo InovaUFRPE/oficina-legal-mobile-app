@@ -5,8 +5,9 @@ import Especialitys from '../TasksOnHome'
 import defaultStyle from '../styles/Default'
 import { createOpenLink } from 'react-native-open-maps';
 import axios from 'axios';
+import { getApiUrl } from '../../service/api'
 
-// onPress={() => this.props.navigation.navigate('Agendamento')}
+const baseURL = getApiUrl();
 
 const { width, height } = Dimensions.get("window")
 
@@ -26,7 +27,7 @@ export default class WorkShopLayout extends Component {
 
     getEspeciality = async () => {
         try{
-            await axios.get(`http://192.168.0.10:4000/api/especializacaooficina/${idWorkshop}`)
+            await axios.get(`${baseURL}/api/especializacaooficina/${idWorkshop}`)
                 .then(response => this.setState({Especialitys: response.data}))
 
         }catch(err){
