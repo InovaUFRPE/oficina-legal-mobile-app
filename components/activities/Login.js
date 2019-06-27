@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { validateEmail, checkBlankCamps, validBlankCamps} from '../../busnisses/Validation';
+import { validateEmail, checkBlankCamps, validBlankCamps } from '../../busnisses/Validation';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { connect } from 'react-redux'
+import { login } from '../../store/actions/user'
 import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import defaultStyles from '../styles/Default'
@@ -8,28 +10,33 @@ import { getApiUrl } from '../../service/api'
 
 const baseURL = getApiUrl();
 
-export default class Login extends Component {
+class Login extends Component {
     state = {
-        username: '',
-        password: '',
+        name: 'Temporario',
+        token: null,
+        username: 'Renegado13',
+        password: 'megaliga',
         errorMSG: ''
     };
 
+
+
+
     saveDataStorage = (token, id) => {
-        try{
+        try {
             AsyncStorage.setItem('userToken', token)
             AsyncStorage.setItem('user', JSON.stringify(id))
-        }catch(error){
+        } catch (error) {
             alert('Não foi possível salvar o usuário no armazenamento interno')
         }
     }
-    
-    active = async() => {
+
+    active = async () => {
         const id = await AsyncStorage.getItem('user')
-        try{
+        try {
             await axios.put(`${baseURL}/api/usuario/enable/${id}`)
                 .then(alert("Usuário reativado"))
-        }catch(err){
+        } catch (err) {
             alert("Usuário cadastrado não possui conta como cliente." + err)
             return null
         }
@@ -40,40 +47,48 @@ export default class Login extends Component {
             'Mensagem',
             'Voce deseja reativar sua conta?',
             [
-              {
-                text: 'Cancel',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-              },
-              {text: 'Sim', onPress: () => {
-                this.active()
-            }},],
-            {cancelable: false},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {
+                    text: 'Sim', onPress: () => {
+                        this.active()
+                    }
+                },],
+            { cancelable: false },
         );
     }
 
     GetUserByLogin = async () => {
-        try{
-            await axios.post(`${baseURL}/api/usuario/login`, 
-            { login: this.state.username, email:this.state.username, senha: this.state.password })
-            .then(response => {
-                if(response.status == 200){
-                    this.saveDataStorage(response.data.token, response.data.user.id)
-                    this.props.navigation.navigate('DrawerNavigatorClient')
-                }
-                if(response.status == 400) {
-                    this.activeAlert()
-                } 
-            })
-        }catch(error){
+        try {
+            await axios.post(`${baseURL}/api/usuario/login`,
+                { login: this.state.username, email: this.state.username, senha: this.state.password })
+                .then(response => {
+                    if (response.status == 200) {
+
+                        this.saveDataStorage(response.data.token, response.data.user.id)
+                        this.props.onLogin({ 
+                            token: response.data.token,
+                            id: response.data.user.id,
+                            username: this.state.username
+                        })
+                        this.props.navigation.navigate('DrawerNavigatorClient')
+                    }
+                    if (response.status == 400) {
+                        this.activeAlert()
+                    }
+                })
+        } catch (error) {
             alert("Usuário inválido")
         }
-        
-        }
-    
-    
+
+    }
+
+
     blankCamps() {
-        let blank = "\nCampo(s) em branco:\n", getToken 
+        let blank = "\nCampo(s) em branco:\n", getToken
         blank += checkBlankCamps(this.state.username, "LOGIN")
         blank += checkBlankCamps(this.state.password, "SENHA")
         if (validBlankCamps(blank)) return validBlankCamps(blank)
@@ -93,7 +108,6 @@ export default class Login extends Component {
     }
 
     render() {
-        console.log(this.state.password)
         return (
             <View
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
@@ -193,3 +207,13 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
 })
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: user => dispatch(login(user))
+    }
+}
+
+//export default Login
+
+export default connect(null, mapDispatchToProps)(Login)

@@ -1,0 +1,35 @@
+                    <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
+                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover'}} />
+                </View>
+                <View style={{ width: '70%', height: 100 }}>
+                    <View style={{ marginTop: 10, marginLeft: 20 }}>
+                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 20, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Icon
+                                name="md-home"
+                                size={13}
+                                style={{ marginTop: 3 }}
+                                color={defaultStyles.colors.primaryColor}
+                            />
+                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14}}>{endereco}, {bairro}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row' }}>
+                            <Icon
+                                name="md-locate"
+                                size={13}
+                                style={{ marginTop: 3 }}
+                                color={defaultStyles.colors.primaryColor}
+                            />
+                            <Text style={{ marginLeft: 3, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.75 }}>{this.CalcRadiusDistance(shopLat, shopLon) * -1} KM</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ marginLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
+                        <Icon
+                            name="md-star"
+                            size={16}
+                            color='#0d47a1'
+                        />
+                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>Especialidade</Text>
+                    </View>

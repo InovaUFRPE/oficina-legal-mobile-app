@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { ConfirmarPassword, validateCPF, validateEmail } from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image, ScrollView, Alert } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-community/async-storage';
 import { getApiUrl } from '../../service/api'
 import Icon from 'react-native-vector-icons/Ionicons'
 import defaultStyles from '../styles/Default'
 
+
 const baseURL = getApiUrl();
 
+const mapStateToProps = ({ user }) => {
+    return {
+        user
+    }
+}
 
-export default class EditProfileClient extends Component {
+class EditProfileClient extends Component {
     constructor(props) {
         super(props);
         this.displayDataStorage()
@@ -31,14 +38,14 @@ export default class EditProfileClient extends Component {
         renavam: '',
         Vplate: '',
         cliente: {},
-        usuario:{
+        usuario: {
             login: '',
             email: '',
             Password: ''
         },
         login: '',
         email: '',
-        
+
     }
     stateDB = {}
 
@@ -46,6 +53,7 @@ export default class EditProfileClient extends Component {
         str: "\nCampo(s) em branco:\n",
         str2: "\nErro(s)\n"
     }
+
 
     applyTrim() {
         this.state.nome = this.state.nome.trim()
@@ -61,14 +69,14 @@ export default class EditProfileClient extends Component {
         this.state.modelo = this.state.modelo.trim()
         this.state.ano = this.state.ano.trim()
         this.state.renavam = this.state.renavam.trim()
-        this.state.Vplate = this.state.Vplate.trim()  
+        this.state.Vplate = this.state.Vplate.trim()
     }
 
 
     saveClient = async () => {
         const id = this.state.idCliente;
         try {
-            await axios.put(`${baseURL}/api/cliente/update/${id}`, this.state) 
+            await axios.put(`${baseURL}/api/cliente/update/${id}`, this.state)
             alert("Modificações realizadas com sucesso.")
             this.displayDataStorage()
         } catch{
@@ -78,7 +86,7 @@ export default class EditProfileClient extends Component {
 
     save = () => {
         if (this.stateDB != this.state) {
-            if(this.state.Password != ''){
+            if (this.state.Password != '') {
                 this.state.senha = this.state.Password;
             }
             this.Verify()
@@ -90,53 +98,57 @@ export default class EditProfileClient extends Component {
 
     populateBlankCamps = () => {
         this.state.usuario.login = this.state.login,
-        this.state.usuario.email = this.state.email
+            this.state.usuario.email = this.state.email
         const cpf = this.state.cliente.cpf
         const cep = this.state.cliente.cep
         this.setState(
             {
                 idCliente: this.state.cliente.id,
                 nome: this.state.cliente.nome,
-                cpf: cpf.substring(0,3) + "." + cpf.substring(3,6)+"."+cpf.substring(6,9)+"-"+cpf.substring(9,11),
+                cpf: cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11),
                 endereco: this.state.cliente.endereco,
                 bairro: this.state.cliente.bairro,
-                cep: cep.substring(0,5)+"-"+cep.substring(5,8),
+                cep: cep.substring(0, 5) + "-" + cep.substring(5, 8),
                 complemento: this.state.cliente.complemento,
                 cliente: {}
             })
         this.stateDB = this.state
     }
 
-    getUser= async () => {
-        let id = await AsyncStorage.getItem('user')
-        id = parseInt(id)
+    getUser = async () => {
+        //let id = await AsyncStorage.getItem('user')
+        id = parseInt(this.props.user.id)
         this.state.usuario.idUsuario = id
-        try{
-            axios.get(`${baseURL}/api/usuario/${id}`) 
-                .then(response => this.setState({login: response.data.user.login, email: response.data.user.email}) )
+        try {
+            axios.get(`${baseURL}/api/usuario/${id}`)
+                .then(response => this.setState({ login: response.data.user.login, email: response.data.user.email }))
             await this.getClient()
             this.populateBlankCamps()
-        }catch(err){
+        } catch (err) {
             alert("Não foi possível resgatar o usuário.")
             return null
         }
     }
 
     getClient = async () => {
-        const idUser = await AsyncStorage.getItem('user')
-        try{
+        //const idUser = await AsyncStorage.getItem('user')
+        idUser = this.props.user.id
+        try {
             const client = await axios.get(`${baseURL}/api/cliente/findByIdUsuario/${parseInt(idUser)}`)
-            this.setState({cliente: client.data})
-        }catch(err){
+            this.setState({ cliente: client.data })
+
+        } catch (err) {
             alert("Não foi possível resgatar o cliente")
         }
     }
 
     displayDataStorage = async () => {
         try {
-            let user = await AsyncStorage.getItem('user');
-            let userToken = await AsyncStorage.getItem('userToken')
-            user = parseInt(user)
+            //let user = await AsyncStorage.getItem('user');
+            //let userToken = await AsyncStorage.getItem('userToken')
+            userId = parseInt(this.props.user.id)
+            let userToken = this.props.user.token
+
             if (userToken != null) {
                 this.getUser();
                 this.stateDB = this.state;
@@ -144,7 +156,7 @@ export default class EditProfileClient extends Component {
                 this.props.navigation.navigate('Home');
             }
         } catch (error) {
-            alert(error)
+            alert('Function (displayDataStorage)', error)
         }
     }
 
@@ -166,8 +178,8 @@ export default class EditProfileClient extends Component {
 
     Verify(Mechanic, Client) {
         if (!this.checkBlankCamps(Mechanic, Client)) {
-            Alert.alert("Erro", this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
+            alert("Insira sua senha para confirmar as alterações", this.errors.str)
             return
         }
         else if (this.VerifyErrors()) {
@@ -182,7 +194,7 @@ export default class EditProfileClient extends Component {
     }
 
     VerifyErrors() {
-        if(this.state.Password != '' && this.state.confirmarPassword != ''){
+        if (this.state.Password != '' && this.state.confirmarPassword != '') {
             if (!ConfirmarPassword(this.state.Password, this.state.confirmarPassword)) {
                 this.errors.str2 += "\n- As Senhas não conferem."
             }
@@ -234,14 +246,14 @@ export default class EditProfileClient extends Component {
 
             <ScrollView style={{ backgroundColor: '#fff' }}>
                 <View style={styles.inputContainer}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 100, marginVertical: 20}}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 100, marginVertical: 20 }}>
                         <Image
                             source={{ uri: 'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png' }}
                             style={{ width: 100, height: 100, borderRadius: 50 }}
                         />
 
-                        <Text style={{fontSize: 20, fontWeight: 'bold', marginTop: 10}}>{this.state.nome}</Text>
-                        <Icon 
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{this.state.nome}</Text>
+                        <Icon
                             name="md-sync"
                             size={30}
                             style={{ marginTop: 3, paddingBottom: 10 }}
@@ -295,7 +307,7 @@ export default class EditProfileClient extends Component {
                             placeholder="user_password"
                             placeholderTextColor='#586069'
                             value={this.state.confirmarPassword}
-                            onChangeText={(password) => this.setState({ confirmarPassword })} />
+                            onChangeText={(confirmarPassword) => this.setState({ confirmarPassword })} />
                     </View>
 
                     <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
@@ -435,3 +447,7 @@ const styles = StyleSheet.create({
 
     }
 })
+
+
+
+export default connect(mapStateToProps)(EditProfileClient)

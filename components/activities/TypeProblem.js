@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, Dimensions,TouchableOpacity, TextInput, ScrollView, Image, FlatList} from 'react-native'
 import { contains } from '../SearchConfig'
 import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'lodash'
@@ -51,17 +50,7 @@ export default class TypeProblem extends Component {
                 this.setState({ error, loading: false })
             })
     }
-
-    removeAcento = () => {
-        text = text.toLowerCase();
-        text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
-        text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
-        text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
-        text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
-        text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
-        text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
-        return text;
-    }
+ 
 
     handlerSearch = (text) => {
         const formatQuery = text
@@ -86,14 +75,14 @@ export default class TypeProblem extends Component {
 
         return (
             <TouchableOpacity
-
-                onPress={() => {this.props.navigation.navigate('Agendamento', {
-                    idProb: id,
-                    nomeServico: formatedName,
-                    preco: price,
-                    tempoRealizacao: time
-                })}}
-
+                onPress={() => {
+                    this.props.navigation.navigate('Agendamento', {
+                        idProb: id,
+                        nomeServico: formatedName,
+                        preco: price,
+                        tempoRealizacao: time
+                    })
+                }}
 
                 style={styles.workShopComponent}>
                 <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center' }}>
@@ -105,21 +94,20 @@ export default class TypeProblem extends Component {
                         />
                     </View>
 
-                    <View style={{ marginLeft: 10 }}>
-                        <Text>{formatedName}</Text>
+                    <View style={{ marginLeft: 10 , width: '70%'}}>
+                        <Text style={{ color: 'black', fontSize: 16 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon
                                 name="md-time"
                                 size={15}
+                                color={defaultStyle.colors.primaryColor}
                             />
                             <Text style={{ marginLeft: 5 }}>{time}</Text>
                         </View>
-
-
                     </View>
                 </View>
-                <View style={{ marginRight: 15 }}>
-                    <Text style={{ fontSize: 15 }}>R$ {price}</Text>
+                <View style={{width: '20%' }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Robot-Light', letterSpacing: 1, color: 'black' }}>R$ {price}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -127,45 +115,64 @@ export default class TypeProblem extends Component {
     render() {
         return (
             <View
-                style={{ width: width, backgroundColor: '#fff', alignItems: 'center', borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
-                <View style={{ flexDirection: 'row' }}>
-                    <View style={styles.searchContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Icon
-                                name="md-search"
-                                size={30}
-                                style={{ padding: 10, color: '#0d47a1', marginLeft: 10 }}
-                            />
-                            <TextInput style={styles.input}
-                                placeholder="Pesquisar"
-                                value={this.state.query}
-                                autoCapitalize='none'
-                                autoCorrect={false}
-                                onChangeText={this.handlerSearch} />
-                        </View>
-
-
-                        { //Condicionador de render do "X" para apagar o campo de pesquisa
-                            this.state.query !== ''
-                                ?
-                                <TouchableOpacity onPress={() => this.handlerSearch('')}>
-                                    <Icon
-                                        name="md-close"
-                                        size={20}
-                                        style={{ color: '#0d47a1', paddingRight: 15 }}
-                                    />
-                                </TouchableOpacity>
-                                :
-                                null
-                        }
-                    </View>
+                style={styles.container}>
+                <View style={{ width: '100%', height: '20%', backgroundColor: defaultStyle.colors.primaryColor, justifyContent: 'center', alignItems: 'center' }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            this.props.navigation.navigate('Agendamento')
+                        }}
+                        style={{ padding: 15, position: 'absolute', top: 0, left: 0 }}>
+                        <Icon
+                            name='md-arrow-back'
+                            size={30}
+                            color='#fff'
+                        />
+                    </TouchableOpacity>
+                    <Text style={{ fontFamily: 'Roboto-Light', color: '#fff', fontSize: 25, letterSpacing: 2 }}>SERVIÇOS DA OFICINA</Text>
                 </View>
-                <FlatList
-                    data={this.state.data}
-                    keyExtractor={item => `${item.id}`}
-                    renderItem={this.RenderItem}
-                    showsVerticalScrollIndicator={false}
-                />
+                <View style={styles.servicesContainer}>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.searchContainer}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                                <Icon
+                                    name="md-search"
+                                    size={30}
+                                    style={{ padding: 10, color: '#0d47a1', marginLeft: 10 }}
+                                />
+                                <TextInput style={styles.input}
+                                    placeholder="Pesquisar"
+                                    value={this.state.query}
+                                    autoCapitalize='none'
+                                    autoCorrect={false}
+                                    onChangeText={this.handlerSearch} />
+                            </View>
+
+
+                            { //Condicionador de render do "X" para apagar o campo de pesquisa
+                                this.state.query !== ''
+                                    ?
+                                    <TouchableOpacity onPress={() => this.handlerSearch('')}>
+                                        <Icon
+                                            name="md-close"
+                                            size={20}
+                                            style={{ color: '#0d47a1', paddingRight: 15 }}
+                                        />
+                                    </TouchableOpacity>
+                                    :
+                                    null
+                            }
+                        </View>
+                    </View>
+
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={item => `${item.id}`}
+                        renderItem={this.RenderItem}
+                        showsVerticalScrollIndicator={false}
+                        style={{marginBottom: 30}}
+                    />
+                </View>
+
             </View>
         )
     }
@@ -174,6 +181,9 @@ export default class TypeProblem extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: defaultStyle.colors.primaryColor,
+        alignItems: 'center',
+
     },
 
     headerContainer: {
@@ -189,9 +199,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
+        marginVertical: 5,
         justifyContent: 'space-between',
-        marginTop: 5,
-        height: 60,
+        height: 80,
         width: width - 20,
         borderRadius: 5,
         shadowColor: "#000",
@@ -199,10 +209,10 @@ const styles = StyleSheet.create({
             width: 0,
             height: 1,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
 
-        elevation: 3,
+        elevation: 2,
     },
 
     searchContainer: {
@@ -224,35 +234,14 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
 
-    menuIcon: {
-        position: 'absolute',
-        paddingLeft: 20
-    },
-
-    logo: {
-        width: 50,
-        height: 50,
-        marginRight: 10
-    },
-
-    input: {
-        borderRadius: 5,
-        alignSelf: 'stretch',
-        fontSize: 16,
-        paddingVertical: 10,
-        width: '75%'
-    },
-
-    filterButton: {
-        padding: 10,
-        borderWidth: 0.5,
-        borderRadius: 5
-    },
-
-    filterButtonText: {
-        fontSize: 15,
-        color: 'black'
-    },
+    servicesContainer: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        width: '100%',
+        height: '100%',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
+    }
 
 
 })

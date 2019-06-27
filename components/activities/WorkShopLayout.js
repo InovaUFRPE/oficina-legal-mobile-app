@@ -25,31 +25,31 @@ export default class WorkShopLayout extends Component {
         shopLon: '',
     }
 
+    componentDidMount() {
+        this.getEspeciality()
+    }
+
     getEspeciality = async () => {
         try{
             await axios.get(`${baseURL}/api/especializacaooficina/${idWorkshop}`)
                 .then(response => this.setState({Especialitys: response.data}))
-
         }catch(err){
-
+            console.log('Erro na função getEspeciality ./WorkShopLayout ')
         }
-    }
-
-    _goToWorkShop = (shopLat, shopLon) => {
-        createOpenLink({ latitude: shopLat, longitude: shopLon })
     }
 
     render() {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'oficina_name');
-        const distance = navigation.getParam('distance', 'distance');
+        const distance = navigation.getParam('distance', 'distance');   
         const address = navigation.getParam('address', 'endereço')
         const id = navigation.getParam('idWorkshop', 0)
         const shopLat = navigation.getParam('shopLat', 'ErroGetLat').toString()
         const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
         const travelType = 'drive'
         const end = shopLat + ',' + shopLon;
-
+        console.log(distance)
+        console.log(this.state)
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -57,7 +57,7 @@ export default class WorkShopLayout extends Component {
                         name="md-arrow-back"
                         size={30}
                         style={{ padding: 16, color: '#fff' }}
-                        onPress={() => this.props.navigation.goBack()} />
+                        onPress={() => this.props.navigation.navigate('HomeClient')} />
                     <Icon
                         name="md-heart"
                         size={30}
@@ -81,7 +81,8 @@ export default class WorkShopLayout extends Component {
                                 onPress={() => this.props.navigation.navigate('Agendamento', {
                                     name: name,
                                     endereco: address,
-                                    id: id
+                                    id: id,
+                                    idProb: 0
                                 })}>
                                 <Icon
                                     name='md-calendar'

@@ -4,16 +4,14 @@ import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
 import Icon from 'react-native-vector-icons/Ionicons'
-import FontAwersome from 'react-native-vector-icons/FontAwesome'
-import Data from '../users'
 import _ from 'lodash'
 import axios from 'axios';
 import { FloatingAction } from "react-native-floating-action"
 import Snackbar from 'react-native-snackbar'
 import defaultStyles from '../styles/Default'
 import AsyncStorage from '@react-native-community/async-storage';
-
 import { getApiUrl } from '../../service/api'
+
 
 const baseURL = getApiUrl();
 
@@ -29,7 +27,12 @@ const actions = [
 export default class HomeClient extends Component {
 
     state = {
-        region: null,
+        region: {
+            latitude: 0,
+            longitude: 0,
+            latitudeDelta: 0.0143,
+            longitudeDelta: 0.0134,
+        },
         loading: false,
         data: [],
         error: null,
@@ -59,6 +62,21 @@ export default class HomeClient extends Component {
         AsyncStorage.setItem('client', JSON.stringify(client.data.id))
     }
 
+    getDistanceFromLatLonInKm(shopLat, shopLong) {
+        "use strict";
+        var deg2rad = function (deg) { return deg * (Math.PI / 180); },
+            R = 6371,
+            dLat = deg2rad(shopLat - this.state.region.latitude),
+            dLng = deg2rad(shopLong - this.state.region.longitude),
+            a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(deg2rad(this.state.region.latitude))
+                * Math.cos(deg2rad(this.state.region.latitude))
+                * Math.sin(dLng / 2) * Math.sin(dLng / 2),
+            c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return ((R * c / 1000).toFixed(1));
+    }
+
+
     makeRemoteRequest = async () => {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
@@ -72,6 +90,7 @@ export default class HomeClient extends Component {
                 });
             })
             .catch(error => {
+                console.log('Erro Em makeRemoteRequest ./HomeClient')
                 this.setState({ error, loading: false })
             })
     }
@@ -97,31 +116,6 @@ export default class HomeClient extends Component {
             }
         )
     }
-
-    CalcRadiusDistance(lat2, lon2) {
-        var RADIUSMILES = 3961,
-            RADIUSKILOMETERS = 6373,
-            latR1 = this.deg2rad(lat1),
-            lonR1 = this.deg2rad(lon1),
-            latR2 = this.deg2rad(lat2),
-            lonR2 = this.deg2rad(lon2),
-            latDifference = latR2 - this.state.region.latitude,
-            lonDifference = lonR2 - this.state.region.longitude,
-            a = Math.pow(Math.sin(latDifference / 2), 2) + Math.cos(latR1) * Math.cos(latR2) * Math.pow(Math.sin(lonDifference / 2), 2),
-            c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
-            dm = c * RADIUSMILES,
-            dk = c * RADIUSKILOMETERS;
-        let mi = this.round(dm);
-        let km = this.round(dk);
-        return km;
-    }
-    CalcRadiusDistance = (deg) => {
-        var rad = deg * Math.PI / 180;
-        return rad;
-    };
-    CalcRadiusDistance = (x) => {
-        return Math.round(x * 10) / 10;
-    };
 
     removeAcento = () => {
         text = text.toLowerCase();
@@ -166,13 +160,14 @@ export default class HomeClient extends Component {
     RenderItem = (obj) => {
         const object = obj.item
         const name = object.razaoSocial
-        const formatedName = name.charAt(0).toUpperCase() + name.slice(1);
+        const formatedName = name.toUpperCase()
         const endereco = object.endereco.toUpperCase()
         const cidade = object.cidade.toUpperCase()
         const bairro = object.bairro.toUpperCase()
         const id = object.id
         const shopLat = object.latitude
         const shopLon = object.longitude
+        const distance = (this.getDistanceFromLatLonInKm(shopLat, shopLon))
 
         return (
             <TouchableOpacity
@@ -181,49 +176,44 @@ export default class HomeClient extends Component {
                         name: formatedName,
                         shopLat: shopLat,
                         shopLon: shopLon,
-                        distance: (this.CalcRadiusDistance(shopLat, shopLon) * -1),
+                        distance: distance,
                         address: endereco + ", " + bairro + ", " + cidade,
                         idWorkshop: id
-                        /* distance: distance, */
-                    })
+                    },
+                    )
                 }}
                 style={styles.workShopComponent}>
-                <View style={{ width: '30%', height: 100, borderWidth: 0.2, borderRadius: 5,  marginLeft: 20 }}>
-
-                    <Image source={{ uri: 'https://i.pinimg.com/originals/54/27/90/542790397e99c703291753baa0700d57.jpg' }}
-                        style={{ flex: 1, width: null, height: null, resizeMode: 'cover'}} />
-                </View>
-                <View style={{ width: '70%', height: 100 }}>
-                    <View style={{ marginTop: 10, marginLeft: 20 }}>
-                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 20, color: 'black', letterSpacing: 0.15 }}>{formatedName}</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Icon
-                                name="md-home"
-                                size={13}
-                                style={{ marginTop: 3 }}
-                                color={defaultStyles.colors.primaryColor}
-                            />
-                            <Text style={{ marginLeft: 4, textAlign: 'justify', paddingRight: 5, fontFamily: 'Roboto-Regular', fontSize: 14}}>{endereco}, {bairro}</Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <Icon
-                                name="md-locate"
-                                size={13}
-                                style={{ marginTop: 3 }}
-                                color={defaultStyles.colors.primaryColor}
-                            />
-                            <Text style={{ marginLeft: 3, fontFamily: 'Roboto-Regular', fontSize: 14, letterSpacing: 0.75 }}>{this.CalcRadiusDistance(shopLat, shopLon) * -1} KM</Text>
-                        </View>
+                <View style={{ width: '100%', height: 130, }}>
+                    <View style={{ marginTop: 10, marginLeft: 15, height: '85%', marginRight: 10 }}>
+                        <Text style={{ fontFamily: 'Roboto-Light', letterSpacing: 1.5 }}>OFICINA</Text>
+                        <Text style={{ fontFamily: 'Roboto-Regular', color: 'black', fontSize: 22, letterSpacing: 1 }}>
+                            {formatedName}
+                        </Text>
+                        <Text>
+                            {endereco}, {bairro}
+                        </Text>
+                        <Text>
+                            {cidade}
+                        </Text>
                     </View>
 
-                    <View style={{ marginLeft: 20, flexDirection: 'row', alignItems: 'center' }}>
+                    <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row', padding: 10, justifyContent: 'center', alignItems: 'center' }}>
                         <Icon
-                            name="md-star"
-                            size={16}
-                            color='#0d47a1'
+                            name='md-thumbs-up'
+                            size={15}
+                            color={defaultStyles.colors.primaryColor}
                         />
-                        <Text style={{ marginLeft: 5, fontWeight: 'bold' }}>Especialidade</Text>
+                        <Text style={{ marginHorizontal: 5, fontFamily: 'Roboto-Light', letterSpacing: 1, color: 'black' }}>
+                            1.513
+                        </Text>
+                        <Icon
+                            name='ios-navigate'
+                            size={15}
+                            color={defaultStyles.colors.primaryColor}
+                        />
+                        <Text style={{ marginHorizontal: 5, fontFamily: 'Roboto-Light', letterSpacing: 1, color: 'black' }}>
+                            {distance} KM
+                        </Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -235,20 +225,24 @@ export default class HomeClient extends Component {
 
             <View
                 style={{ flex: 1, alignItems: 'center' }}>
-                <View style={{ flexDirection: 'row', width: width, backgroundColor: defaultStyles.colors.primaryColor, justifyContent: 'space-between', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', width: width, backgroundColor: 'lighblue', justifyContent: 'space-between', alignItems: 'center' }}>
 
                     <View style={{ flexDirection: 'row' }}>
-                        <FontAwersome
-                            name="bars"
-                            size={30}
-                            style={{ padding: 15, color: '#fff' }}
-                            onPress={() => this.props.navigation.toggleDrawer()}
-                        />
-                        <Text style={{ padding: 15, fontSize: 30, color: '#fff', fontFamily: defaultStyles.fontFamily }}>Oficina Legal</Text>
+                        <TouchableOpacity
+                            style={{ padding: 15, }}
+                            onPress={() => this.props.navigation.toggleDrawer()}>
+                            <Icon
+                                name="md-menu"
+                                size={30}
+                                style={{ color: defaultStyles.colors.primaryColor }}
+                            />
+                        </TouchableOpacity>
+
+                        <Text style={{ padding: 15, fontSize: 22, color: defaultStyles.colors.primaryColor, fontFamily: 'Roboto-Medium', letterSpacing: 2 }}>Oficina Legal</Text>
                     </View>
 
                     <Image
-                        source={require('../../images/LogoBranca.png')}
+                        source={require('../../images/LogoAzulR.png')}
                         style={styles.logo}
                     />
                 </View>
@@ -370,7 +364,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 50,
         height: 50,
-        marginRight: 10
+        marginRight: 10,
     },
 
     input: {
@@ -413,23 +407,23 @@ const styles = StyleSheet.create({
     },
 
     workShopComponent: {
-        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-        height: 120,
-        width: width - 20,
-        borderRadius: 5,
+        height: 130,
+        width: width - 30,
+        borderRadius: 10,
+        marginHorizontal: 5,
+        backgroundColor: '#fff',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 2,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
-        
-        elevation: 3,
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        elevation: 4,
     }
 
 })
