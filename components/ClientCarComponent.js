@@ -28,6 +28,7 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#fff',
         marginVertical: 5,
         width: width - 40,
         height: 70,

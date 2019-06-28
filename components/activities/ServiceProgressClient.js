@@ -21,7 +21,7 @@ export default class ServiceProgressClient extends Component {
             { id: Math.random(), serviceName: "Jante Dianteira", date: "03/26/19", isDone: "pendente" },
         ],
 
-        isOS_Making: true
+        isOS_Making: false
     }
 
     componentDidMount() {

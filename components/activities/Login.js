@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { validateEmail, checkBlankCamps, validBlankCamps } from '../../busnisses/Validation';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux'
 import { login } from '../../store/actions/user'
 import axios from 'axios';
@@ -14,9 +14,10 @@ class Login extends Component {
     state = {
         name: 'Temporario',
         token: null,
-        username: 'Renegado13',
-        password: 'megaliga',
-        errorMSG: ''
+        username: '',
+        password: '',
+        errorMSG: '',
+        loading: false
     };
 
 
@@ -67,13 +68,13 @@ class Login extends Component {
                 { login: this.state.username, email: this.state.username, senha: this.state.password })
                 .then(response => {
                     if (response.status == 200) {
-
                         this.saveDataStorage(response.data.token, response.data.user.id)
-                        this.props.onLogin({ 
+                        this.props.onLogin({
                             token: response.data.token,
                             id: response.data.user.id,
                             username: this.state.username
                         })
+                        this.setState({ loading: false })
                         this.props.navigation.navigate('DrawerNavigatorClient')
                     }
                     if (response.status == 400) {
@@ -101,6 +102,7 @@ class Login extends Component {
     }
 
     Verify() {
+        this.setState({ loading: true })
         this.state.username = this.state.username.trim()
         this.state.password = this.state.password.trim()
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
@@ -116,39 +118,47 @@ class Login extends Component {
                     source={require('../../images/LogoAzulR.png')}
                     style={styles.logo}
                 />
+                {
+                    this.state.loading === true
+                        ?
+                        <View style={{ width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="large" color={defaultStyles.colors.primaryColor} />
+                        </View>
+                        :
+                        <View style={{width: '100%'}}>
+                            <TextInput style={styles.input}
+                                placeholder="Digite seu email ou login."
+                                keyboardType='email-address'
+                                value={this.state.username}
+                                autoCapitalize='none'
+                                autoCorrect={false}
+                                onChangeText={(username) => this.setState({ username })} />
 
-                <TextInput style={styles.input}
-                    placeholder="Digite seu email ou login."
-                    keyboardType='email-address'
-                    value={this.state.username}
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    onChangeText={(username) => this.setState({ username })} />
+                            <TextInput style={styles.input}
+                                secureTextEntry={true}
+                                placeholder="Digite sua senha."
+                                value={this.state.password}
+                                onChangeText={(password) => this.setState({ password })} />
 
+                            <TouchableOpacity style={styles.button}
+                                onPress={() => this.Verify()}>
+                                <Text style={styles.buttonText}>Entrar</Text>
+                            </TouchableOpacity>
 
+                            <TouchableOpacity style={styles.signUpLink}
+                                onPress={() => this.props.navigation.navigate('RegisterUser', {
+                                    client: true
+                                })}>
+                                <Text style={styles.signUpLinkText}>Criar conta grátis</Text>
+                            </TouchableOpacity>
 
-                <TextInput style={styles.input}
-                    secureTextEntry={true}
-                    placeholder="Digite sua senha."
-                    value={this.state.password}
-                    onChangeText={(password) => this.setState({ password })} />
+                            <TouchableOpacity style={styles.signUpLink}
+                                onPress={() => this.props.navigation.navigate('ForgotPassword')}>
+                                <Text style={[styles.signUpLinkText, { fontWeight: 'normal', marginTop: 0 }]}>Esqueceu a senha?</Text>
+                            </TouchableOpacity>
+                        </View>
+                }
 
-                <TouchableOpacity style={styles.button}
-                    onPress={() => this.Verify()}>
-                    <Text style={styles.buttonText}>Entrar</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.signUpLink}
-                    onPress={() => this.props.navigation.navigate('RegisterUser', {
-                        client: true
-                    })}>
-                    <Text style={styles.signUpLinkText}>Criar conta grátis</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.signUpLink}
-                    onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-                    <Text style={[styles.signUpLinkText, { fontWeight: 'normal', marginTop: 0 }]}>Esqueceu a senha?</Text>
-                </TouchableOpacity>
             </View>
 
         )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert } from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert, ActivityIndicator} from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
@@ -111,7 +111,7 @@ export default class HomeClient extends Component {
             () => { console.log('Erro') }, //Erro
             {
                 timeout: 2000,
-                enableHighAccuracy: false,
+                enableHighAccuracy: true,
                 maximumAge: 1000,
             }
         )
@@ -321,13 +321,20 @@ export default class HomeClient extends Component {
                     </View>
                 </Modal>
 
+                {this.state.loading === true
+                    ?
+                    <View style={{ width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size="small" color={defaultStyles.colors.primaryColor} />
+                    </View>
+                    :
+                    <FlatList
+                        data={this.state.data}
+                        keyExtractor={item => `${item.id}`}
+                        renderItem={this.RenderItem}
+                        showsVerticalScrollIndicator={false}
+                    />
+                }
 
-                <FlatList
-                    data={this.state.data}
-                    keyExtractor={item => `${item.id}`}
-                    renderItem={this.RenderItem}
-                    showsVerticalScrollIndicator={false}
-                />
                 <FloatingAction
                     actions={actions}
                     position='right'

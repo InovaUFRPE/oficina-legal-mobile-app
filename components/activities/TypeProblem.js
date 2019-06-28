@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Dimensions,TouchableOpacity, TextInput, ScrollView, Image, FlatList} from 'react-native'
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, FlatList } from 'react-native'
 import { contains } from '../SearchConfig'
 import Icon from 'react-native-vector-icons/Ionicons'
 import _ from 'lodash'
@@ -18,6 +18,7 @@ export default class TypeProblem extends Component {
         error: null,
         query: "",
         fullData: [],
+        date: this.props.navigation.getParam('date', ''),
 
         isFilterModalVisible: false,
         agendamentoMarcado: false,
@@ -25,13 +26,6 @@ export default class TypeProblem extends Component {
 
     componentDidMount() {
         this.makeRemoteRequest();
-        /* Colocar a função de checagem se o usuario tem algum agendamento marcado
-
-            isAgendamentoMarcado retornar True
-            ? this.setState({agendamentoMarcado: true})
-            : null
-        
-        */
     }
 
     makeRemoteRequest = async () => {
@@ -50,7 +44,7 @@ export default class TypeProblem extends Component {
                 this.setState({ error, loading: false })
             })
     }
- 
+
 
     handlerSearch = (text) => {
         const formatQuery = text
@@ -80,12 +74,13 @@ export default class TypeProblem extends Component {
                         idProb: id,
                         nomeServico: formatedName,
                         preco: price,
-                        tempoRealizacao: time
+                        tempoRealizacao: time,
+                        date: this.state.date
                     })
                 }}
 
                 style={styles.workShopComponent}>
-                <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center', width: '75%' }}>
                     <View style={{ backgroundColor: defaultStyle.colors.primaryColor, width: 40, height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
                         <Icon
                             name='ios-settings'
@@ -94,7 +89,7 @@ export default class TypeProblem extends Component {
                         />
                     </View>
 
-                    <View style={{ marginLeft: 10 , width: '70%'}}>
+                    <View style={{ marginLeft: 10, width: '70%' }}>
                         <Text style={{ color: 'black', fontSize: 16 }}>{formatedName}</Text>
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon
@@ -106,7 +101,7 @@ export default class TypeProblem extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{width: '20%' }}>
+                <View style={{ width: '20%'}}>
                     <Text style={{ fontSize: 16, fontFamily: 'Robot-Light', letterSpacing: 1, color: 'black' }}>R$ {price}</Text>
                 </View>
             </TouchableOpacity>
@@ -163,14 +158,21 @@ export default class TypeProblem extends Component {
                             }
                         </View>
                     </View>
+                    {this.state.loading === true
+                        ?
+                        <View style={{ width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size="small" color={defaultStyle.colors.primaryColor} />
+                        </View>
 
-                    <FlatList
-                        data={this.state.data}
-                        keyExtractor={item => `${item.id}`}
-                        renderItem={this.RenderItem}
-                        showsVerticalScrollIndicator={false}
-                        style={{marginBottom: 30}}
-                    />
+                        :
+                        <FlatList
+                            data={this.state.data}
+                            keyExtractor={item => `${item.id}`}
+                            renderItem={this.RenderItem}
+                            showsVerticalScrollIndicator={false}
+                            style={{ marginBottom: 30 }}
+                        />
+                    }
                 </View>
 
             </View>
@@ -200,7 +202,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         height: 80,
         width: width - 20,
         borderRadius: 5,

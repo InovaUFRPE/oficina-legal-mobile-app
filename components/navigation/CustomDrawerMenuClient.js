@@ -86,7 +86,7 @@ class CustomDrawerMenuClient extends React.Component {
         console.log(this.props.id)
         console.log(this.props.username)
         console.log(this.props.token)
-        
+
         const id = this.props.id
         try {
             await axios.get(`${baseURL}/api/cliente/findByIdUsuario/${id}`)
@@ -130,19 +130,28 @@ class CustomDrawerMenuClient extends React.Component {
                     {this.navLink('EditDataClient', 'Perfil', "md-contact")}
                     {/*{this.navLink('VeicleHistory','Histórico do veículo', "md-car")}*/}
                     {this.navLink('ServiceProgress', 'Progresso do serviço', "md-build")}
-                    <TouchableOpacity style={{ height: 50 }} onPress={() => this.desactiveAlert()}>
-                        <Text style={[styles.link, { marginLeft: 60 }]}>Desativar conta</Text>
-                    </TouchableOpacity>
+
                 </View>
                 <View style={styles.configButtomContainer}>
-                    {/*{this.navLink('StackClient', 'Configurações', "md-code-working")}*/}
-                    <TouchableOpacity style={{ height: 50 }} onPress={() => this.logOut()}>
+                    <TouchableOpacity
+                        style={{ height: 50, width: '100%', flexDirection: 'row', marginLeft: 20, alignItems: 'center' }}
+                        onPress={() => this.desactiveAlert()}>
+                        <Icon
+                            name="ios-code-download"
+                            size={30}
+                            style={{ color: 'black' }}
+                        />
+                        <Text style={{ marginLeft: 20, fontSize: 20 }}>Desativar Conta</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{ height: 50, width: '100%', flexDirection: 'row', marginLeft: 20, alignItems: 'center' }}
+                        onPress={() => this.logOut()}>
                         <Icon
                             name="md-log-out"
                             size={30}
-                            style={{ position: 'absolute', marginTop: 21, marginLeft: 20, color: 'black' }}
+                            style={{ color: 'black' }}
                         />
-                        <Text style={[styles.link, { marginLeft: 60 }]}>Sair</Text>
+                        <Text style={{ marginLeft: 20, fontSize: 20 }}>Sair</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -199,6 +208,7 @@ const styles = StyleSheet.create({
     configButtomContainer: {
         height: 75,
         borderTopWidth: 1,
+        marginBottom: 20,
     }
 })
 

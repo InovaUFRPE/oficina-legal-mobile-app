@@ -82,7 +82,10 @@ export default class WorkShopLayout extends Component {
                                     name: name,
                                     endereco: address,
                                     id: id,
-                                    idProb: 0
+                                    idProb: 0,
+                                    date: '',
+                                    tempoRealizacao: null,
+                                    nomeServico: 'SERVIÇOS DA OFICINA'
                                 })}>
                                 <Icon
                                     name='md-calendar'

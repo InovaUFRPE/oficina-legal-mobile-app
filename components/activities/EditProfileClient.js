@@ -45,6 +45,7 @@ class EditProfileClient extends Component {
         },
         login: '',
         email: '',
+        loading: false
 
     }
     stateDB = {}
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 20
+        marginTop: 50
     },
 
     inputDescription: {
