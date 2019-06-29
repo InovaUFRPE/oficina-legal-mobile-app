@@ -6,6 +6,7 @@ import defaultStyle from '../styles/Default'
 import { createOpenLink } from 'react-native-open-maps';
 import axios from 'axios';
 import { getApiUrl } from '../../service/api'
+import Colors from '../styles/Default'
 
 const baseURL = getApiUrl();
 
@@ -13,7 +14,7 @@ const { width, height } = Dimensions.get("window")
 
 
 export default class WorkShopLayout extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.getEspeciality();
     }
@@ -30,10 +31,10 @@ export default class WorkShopLayout extends Component {
     }
 
     getEspeciality = async () => {
-        try{
+        try {
             await axios.get(`${baseURL}/api/especializacaooficina/${idWorkshop}`)
-                .then(response => this.setState({Especialitys: response.data}))
-        }catch(err){
+                .then(response => this.setState({ Especialitys: response.data }))
+        } catch (err) {
             console.log('Erro na função getEspeciality ./WorkShopLayout ')
         }
     }
@@ -41,7 +42,7 @@ export default class WorkShopLayout extends Component {
     render() {
         const { navigation } = this.props;
         const name = navigation.getParam('name', 'oficina_name');
-        const distance = navigation.getParam('distance', 'distance');   
+        const distance = navigation.getParam('distance', 'distance');
         const address = navigation.getParam('address', 'endereço')
         const id = navigation.getParam('idWorkshop', 0)
         const shopLat = navigation.getParam('shopLat', 'ErroGetLat').toString()
@@ -54,82 +55,99 @@ export default class WorkShopLayout extends Component {
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
                     <Icon
-                        name="md-arrow-back"
-                        size={30}
-                        style={{ padding: 16, color: '#fff' }}
-                        onPress={() => this.props.navigation.navigate('HomeClient')} />
-                    <Icon
-                        name="md-heart"
-                        size={30}
-                        style={{ padding: 16, color: '#fff' }} />
+                        name='ios-settings'
+                        size={25}
+                        color='#fff'
+                    />
+                    <Text style={styles.headerTitle}>
+                        {name}
+                </Text>
                 </View>
-                <View style={styles.bodyContainer}>
-                    <View style={styles.workShopContainer}>
-                        <Text style={styles.workShopName}>Oficina {name}</Text>
-                        <View style={styles.workShopInformation}>
-                            <Icon name="md-locate" size={20} color={defaultStyle.colors.primaryColor} />
-                            <Text style={styles.information}>{distance} KM</Text>
-                        </View>
-                        <View style={styles.workShopInformation}>
-                            <Icon name="md-home" size={20} color={defaultStyle.colors.primaryColor} />
-                            <Text style={styles.information} >{address}</Text>
-                        </View>
-
-                        <View style={{ alignItems: 'center', marginTop: 10 }}>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => this.props.navigation.navigate('Agendamento', {
-                                    name: name,
-                                    endereco: address,
-                                    id: id,
-                                    idProb: 0,
-                                    date: '',
-                                    tempoRealizacao: null,
-                                    nomeServico: 'SERVIÇOS DA OFICINA'
-                                })}>
-                                <Icon
-                                    name='md-calendar'
-                                    size={30}
-                                    color='#fff'
-                                />
-                                <Text style={styles.buttonText}>AGENDAMENTO</Text>
-                            </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('HomeClient')}
+                    style={{ position: 'absolute', left: 0, top: 0, padding: 15 }}>
+                    <Icon
+                        name='ios-arrow-back'
+                        size={25}
+                        color='#fff'
+                    />
+                </TouchableOpacity>
+                <View style={styles.componentsContainer}>
+                    <View style={styles.storeHoursContainer}>
+                        <View style={styles.hourContainer}>
+                            <View style={styles.openAndCloseTime}>
+                                <Text style={{ fontSize: 16, fontFamily: 'Roboto-Light', color: Colors.darkColor, letterSpacing: 3 }}>ABRE</Text>
+                                <Text style={{ fontSize: 30, fontFamily: 'Roboto-Medium', color: Colors.darkColor, letterSpacing: 2 }}>08:00</Text>
+                            </View>
+                            <Icon
+                                name='ios-time'
+                                size={30}
+                                color={Colors.colors.primaryColor}
+                            />
+                            <View style={styles.openAndCloseTime}>
+                                <Text style={{ fontSize: 16, fontFamily: 'Roboto-Light', color: Colors.darkColor, letterSpacing: 3 }}>FECHA</Text>
+                                <Text style={{ fontSize: 30, fontFamily: 'Roboto-Medium', color: Colors.darkColor, letterSpacing: 2 }}>18:00</Text>
+                            </View>
                         </View>
                     </View>
 
-                    <View style={styles.EspecialitysContainer}>
-                        <Text style={{ paddingHorizontal: 20, marginBottom: 20, fontSize: 24, }}>Essas são nossas especialidades</Text>
-                        <ScrollView style={{ backgroundColor: "#F5F5F5" }} horizontal showsHorizontalScrollIndicator={false}>
-                            <Especialitys imageUri={require('../../images/Services/Funilaria.jpg')} name='Funilaria' />
-                            <Especialitys imageUri={require('../../images/Services/Eletrica.jpg')} name='Elétrica' />
-                            <Especialitys imageUri={require('../../images/Services/Mecanica.jpg')} name='Mecânica' />
-                        </ScrollView>
-                    </View>
-
-                    <View style={{ width: width, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-                        <TouchableOpacity
-                            onPress={createOpenLink({ travelType, end })}
-                            title={name}
-                            style={styles.button}>
+                    <View style={styles.informationContainer}>
+                        <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
+                            <Icon
+                                name='md-home'
+                                size={30}
+                                color={Colors.colors.primaryColor}
+                            />
+                            <View style={{ alignItems: 'center' }}>
+                                <Text style={{ fontFamily: 'Roboto-Medium', color: Colors.darkColor, textAlign: 'center' }}>{address.endereco}</Text>
+                                <Text style={{ fontFamily: 'Roboto-Medium', color: Colors.darkColor }}>{address.bairro}</Text>
+                                <Text style={{ fontFamily: 'Roboto-Medium', color: Colors.darkColor }}>{address.cidade}</Text>
+                            </View>
+                        </View>
+                        <View style={{ width: '50%', height: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
                             <Icon
                                 name='ios-navigate'
                                 size={30}
-                                color='#fff'
+                                color={Colors.colors.primaryColor}
                             />
-                            <Text style={styles.buttonText}>IR ATÉ OFICINA</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ alignItems: 'center', marginTop: 10 }}>
-                            <TouchableOpacity
-                                style={styles.buttonAgendamento}
-                                onPress={() => this.props.navigation.navigate('Agendamento', {
-                                    name: name,
-                                    endereco: address,
-                                    id: id
-                                })}>
-                                <Text style={styles.buttonText2}>Avalie esta oficina!</Text>
-                            </TouchableOpacity>
+                            <Text style={{ fontFamily: 'Roboto-Light', color: Colors.darkColor, fontSize: 45 }}>9.3 KM</Text>
                         </View>
+                    </View>
+
+                    <TouchableOpacity style={{ width: '90%', height: '20%', backgroundColor: '#fff', marginTop: 5, alignItems: 'center', justifyContent: 'space-around', borderBottomWidth: 1, }}
+                        onPress={createOpenLink({ travelType, end })}
+                        title={name}>
+                        <Icon
+                            name="ios-navigate"
+                            size={30}
+                            color={Colors.colors.primaryColor}
+                        />
+                        <Text style={{ fontFamily: 'Roboto-Regular', letterSpacing: 2, fontSize: 20, color: Colors.darkColor }}>
+                            VER ROTA ATÉ OFICINA
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('Agendamento', {
+                            name: name,
+                            endereco: address,
+                            id: id,
+                            idProb: 0,
+                            date: '',
+                            tempoRealizacao: null,
+                            nomeServico: 'SERVIÇOS DA OFICINA'
+                        })}
+                        style={{ width: '90%', height: '32%', backgroundColor: '#fff', marginTop: 5, alignItems: 'center', justifyContent: 'center', }}>
+                        <Icon
+                            name="md-calendar"
+                            size={40}
+                            color={Colors.colors.primaryColor}
+                            style={{}}
+                        />
+                        <Text style={{ fontFamily: 'Roboto-Regular', letterSpacing: 2, fontSize: 25, color: Colors.darkColor }}>
+                            AGENDAR VISITA
+                        </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -140,73 +158,67 @@ export default class WorkShopLayout extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#0d47a1"
+        backgroundColor: Colors.colors.primaryColor,
     },
+
     headerContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: '#0d47a1'
-    },
-    bodyContainer: {
-        flex: 1,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        backgroundColor: "#F5F5F5"
-    },
-    workShopContainer: {
         width: width,
-        height: height / 4,
-    },
-
-    workShopName: {
-        marginLeft: 20,
-        marginTop: 30,
-        fontSize: 30,
-        fontFamily: 'Roboto-Medium',
-        letterSpacing: 0.15,
-        color: 'black',
-    },
-
-    workShopInformation: {
-        flexDirection: 'row',
-        marginLeft: 20,
-    },
-    information: {
-        fontSize: 16, 
-        marginLeft: 5,
-        paddingRight: 10,
-        fontFamily: 'Roboto-Regular',
-        fontSize: 14,
-        letterSpacing: 0.75
-    },
-
-    button: {
-        flexDirection: 'row',
+        height: '20%',
+        backgroundColor: Colors.colors.primaryColor,
         justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5,
-        width: width - 80,
-        backgroundColor: '#0d47a1'
+        alignItems: 'center'
     },
-    buttonText: {
+
+    headerTitle: {
         color: '#fff',
-        fontSize: 14,
-        fontFamily: 'Roboto-Medium',
-        letterSpacing: 1.25,
-        marginLeft: 10,
-        padding: 16
+        letterSpacing: 5,
+        fontSize: 30,
+        fontFamily: 'Roboto-Light',
+        textAlign: 'center'
     },
 
-    buttonText2: {
-        color: '#000',
-        fontSize: 14,
-        fontFamily: 'Roboto-Medium',
-        letterSpacing: 1.25,
-        marginLeft: 10,
-        padding: 16
+    componentsContainer: {
+        alignItems: 'center',
+        width: '100%',
+        height: '80%',
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30
     },
 
-    EspecialitysContainer: {
-        marginTop: 20
+    storeHoursContainer: {
+        borderBottomWidth: 1,
+        marginTop: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+
+    hourContainer: {
+        paddingHorizontal: 20,
+        flexDirection: 'row',
+        width: '90%',
+        height: '100%',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20
+    },
+
+    openAndCloseTime: {
+        width: 100,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    informationContainer: {
+        borderBottomWidth: 1,
+        flexDirection: 'row',
+        width: '90%',
+        height: '25%',
+        backgroundColor: '#fff',
+        marginTop: 5,
     }
 })

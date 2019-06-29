@@ -244,7 +244,6 @@ class EditProfileClient extends Component {
 
     render() {
         return (
-
             <ScrollView style={{ backgroundColor: '#fff' }}>
                 <View style={styles.inputContainer}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', height: 100, marginVertical: 20 }}>

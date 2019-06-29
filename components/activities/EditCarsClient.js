@@ -96,11 +96,11 @@ export default class EditCarsClient extends Component {
 
     postVehicle = (jwt, vehicle) => {
         axios.defaults.headers.common['x-access-token'] = jwt
-        try{
+        try {
             axios.post(`${baseURL}/api/veiculo/add`, vehicle)
                 .then(response => { this.getClient() })
-                .then( alert("Cadastro realizado com sucesso.") )
-        }catch(err){
+                .then(alert("Cadastro realizado com sucesso."))
+        } catch (err) {
             alert("Não foi possível salvar o veículo")
         }
     }
@@ -108,10 +108,10 @@ export default class EditCarsClient extends Component {
     getUserToken = async () => {
         const client = await AsyncStorage.getItem('client');
         const id = await AsyncStorage.getItem('user');
-        try{
+        try {
             axios.get(`${baseURL}/api/usuario/${id}`)
                 .then(response => this.createVehicleRequisition(client, response.data.token))
-        }catch(err){
+        } catch (err) {
             alert("Não foi possível resgatar o usuário")
         }
     }
@@ -140,23 +140,23 @@ export default class EditCarsClient extends Component {
     render() {
         return (
             <View style={styles.container}>
-                
                 {
                     //Condicionante de render dos carros do cliente
                     this.state.cars.length === 0
                         ?
-                        <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15, textAlign: 'center' }}>
+                        <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontFamily: 'Roboto-Light', marginTop: 15, letterSpacing: 2, color: '#030303' }}>
                             Você ainda não tem nenhum carro cadastrado
                             </Text>
                         :
-                        <View style={{ alignItems: 'center' }}>
-                            <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontWeight: 'bold', marginTop: 15, textAlign: 'center' }}>
-                                Aqui estão seus veículos cadastrados
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ fontSize: 25, paddingRight: 20, marginLeft: 20, fontFamily: 'Roboto-Light', marginTop: 15, letterSpacing: 2, color: '#030303' }}>
+                                Aqui estão seus veículos cadastrado
                                 </Text>
-                            <FlatList 
+                            <FlatList
                                 data={this.state.cars}
                                 keyExtractor={item => `${item.id}`}
-                                renderItem={({ item }) => <ClientCarComponent {...item} />} />
+                                renderItem={({ item }) => <ClientCarComponent {...item} />}
+                            />
                         </View>
                 }
 

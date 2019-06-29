@@ -118,8 +118,8 @@ export default class TypeProblem extends Component {
                         }}
                         style={{ padding: 15, position: 'absolute', top: 0, left: 0 }}>
                         <Icon
-                            name='md-arrow-back'
-                            size={30}
+                            name='ios-arrow-back'
+                            size={25}
                             color='#fff'
                         />
                     </TouchableOpacity>
@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: '100%',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30
     }
 
 

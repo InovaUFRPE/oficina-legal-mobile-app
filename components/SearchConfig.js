@@ -13,26 +13,26 @@ function removeAcento (text)
     return text;                 
 }
 
-export const contains = ({razaoSocial, especialidade}, query) => {
-    var formatedEspecialidade = removeAcento(especialidade)
+export const contains = ({razaoSocial, bairro, cidade}, query) => {
+    var formatedRazaoSocial = removeAcento(razaoSocial)
+    var formatedCidade = removeAcento(cidade)
+    var formatedBairro = removeAcento(bairro)
     var formatedQuery = removeAcento(query)
-    console.log(formatedQuery)
-    if (razaoSocial.includes(formatedQuery) || formatedEspecialidade.includes(formatedQuery)) {
+    if (formatedRazaoSocial.includes(formatedQuery) || formatedBairro.includes(formatedQuery) || formatedCidade.includes(formatedQuery)) {
         return true;
     }
     return false
 };
 
 
-export const getUsers = (limit = 20, query = '') => {
-    console.log('api called', query)
+export const getUsers = (limit = 20, query = '', data = null) => {
     return new Promise((resolve, reject) => {
         if (query.length === 0) {   
-            resolve(_.take(users, limit));
+            resolve(_.take(data, limit));
         } else {
             const formatedQuery = query.toLowerCase();
-            const results = _.filter(users, user => {
-                return contains(user, formatedQuery)
+            const results = _.filter(data, user => {
+            return contains(user, formatedQuery)
             })
             resolve(_.take(results, limit))
         }

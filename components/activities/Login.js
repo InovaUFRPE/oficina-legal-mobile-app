@@ -14,12 +14,11 @@ class Login extends Component {
     state = {
         name: 'Temporario',
         token: null,
-        username: '',
-        password: '',
+        username: 'Renegado13',
+        password: 'megaliga',
         errorMSG: '',
         loading: false
     };
-
 
 
 

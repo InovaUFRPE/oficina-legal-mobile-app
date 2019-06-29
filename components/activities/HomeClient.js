@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert, ActivityIndicator} from 'react-native'
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Dimensions, Image, Alert, ActivityIndicator } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler';
 import { getUsers, contains } from '../SearchConfig'
 import Modal from 'react-native-modal'
@@ -24,6 +24,7 @@ const actions = [
         position: 1
     }
 ]
+''
 export default class HomeClient extends Component {
 
     state = {
@@ -33,6 +34,7 @@ export default class HomeClient extends Component {
             latitudeDelta: 0.0143,
             longitudeDelta: 0.0134,
         },
+        distance: null,
         loading: false,
         data: [],
         error: null,
@@ -62,25 +64,10 @@ export default class HomeClient extends Component {
         AsyncStorage.setItem('client', JSON.stringify(client.data.id))
     }
 
-    getDistanceFromLatLonInKm(shopLat, shopLong) {
-        "use strict";
-        var deg2rad = function (deg) { return deg * (Math.PI / 180); },
-            R = 6371,
-            dLat = deg2rad(shopLat - this.state.region.latitude),
-            dLng = deg2rad(shopLong - this.state.region.longitude),
-            a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
-                + Math.cos(deg2rad(this.state.region.latitude))
-                * Math.cos(deg2rad(this.state.region.latitude))
-                * Math.sin(dLng / 2) * Math.sin(dLng / 2),
-            c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return ((R * c / 1000).toFixed(1));
-    }
-
-
     makeRemoteRequest = async () => {
         this.setState({ loading: true });
         console.log('Loading: ', this.state.loading)
-
+        console.log('Fez a requisiçao no banco de dados')
         await axios.get(`${baseURL}/api/oficina/findAll`)
             .then(users => {
                 this.setState({
@@ -93,6 +80,21 @@ export default class HomeClient extends Component {
                 console.log('Erro Em makeRemoteRequest ./HomeClient')
                 this.setState({ error, loading: false })
             })
+        }
+    
+
+    makeLocalRequest = () => {
+        console.log('Fez a requisiçao no Localmente')
+        getUsers(20, this.state.query, this.state.fullData.data)
+        .then(users => {
+            this.setState({
+                loading: false,
+                data: users,
+            });
+        })
+        .catch(error => {
+            this.setState({ error, loading: false })
+        })
     }
 
     getUserLocation = () => {
@@ -117,29 +119,32 @@ export default class HomeClient extends Component {
         )
     }
 
-    removeAcento = () => {
-        text = text.toLowerCase();
-        text = text.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
-        text = text.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
-        text = text.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
-        text = text.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
-        text = text.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
-        text = text.replace(new RegExp('[Ç]', 'gi'), 'c');
-        return text;
-    }
+    // getDistance(shopLat, shopLong) {
+    //     let origin = (this.state.region.latitude + ',' + this.state.region.longitude)
+    //     let destination = (shopLat + ',' + shopLong)
+    //     let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + origin + '&destinations=' + destination + '&key=AIzaSyAOeQqxsLy3yzESYglsQEjhD5iu_UtltuM';
+    //     fetch(url)
+    //         .then(res => res.json())
+    //         .then((out) => {
+    //             const distance = (out.rows[0].elements[0].distance.value/1000).toFixed(1)
+    //             return distance.GetParentId(nodeId)
+    //         })
+    //         .catch(err => { throw err });
+    // }
 
     handlerSearch = (text) => {
+        console.log('Querry: ', text)
         const formatQuery = text
-        console.log(text)
-        const data = _.filter(this.state.fullData, user => {
+        const data = _.filter(this.state.data, user => {
             return contains(user, formatQuery)
         })
-        this.setState({ query: formatQuery, data }, () => this.makeRemoteRequest())
+        this.setState({ query: formatQuery, data }, () => this.makeLocalRequest())
     }
 
     toggleModal = () => {
         this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })
     }
+
     floatingButtonPress = () => {
         if (this.state.agendamentoMarcado) {
             Alert.alert(
@@ -167,8 +172,7 @@ export default class HomeClient extends Component {
         const id = object.id
         const shopLat = object.latitude
         const shopLon = object.longitude
-        const distance = (this.getDistanceFromLatLonInKm(shopLat, shopLon))
-
+        const distance = 0.0 //this.getDistance(shopLat, shopLon)
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -177,7 +181,7 @@ export default class HomeClient extends Component {
                         shopLat: shopLat,
                         shopLon: shopLon,
                         distance: distance,
-                        address: endereco + ", " + bairro + ", " + cidade,
+                        address: {endereco, bairro ,cidade},
                         idWorkshop: id
                     },
                     )
@@ -221,6 +225,8 @@ export default class HomeClient extends Component {
     }
 
     render() {
+        console.log(this.state.fullData.data)
+        console.log(this.state.data)
         return (
 
             <View
@@ -259,7 +265,8 @@ export default class HomeClient extends Component {
                                 value={this.state.query}
                                 autoCapitalize='none'
                                 autoCorrect={false}
-                                onChangeText={this.handlerSearch} />
+                                onChangeText={this.handlerSearch} 
+                                />
                         </View>
 
 
@@ -301,19 +308,19 @@ export default class HomeClient extends Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginVertical: 10 }}>
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Mecânica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    onPress={() => { /*this.handlerSearch('Mecânica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })*/ }}>
                                     <Text style={styles.filterButtonText}>Mecânica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Elétrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    onPress={() => { /*this.handlerSearch('Elétrica'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })*/ }}>
                                     <Text style={styles.filterButtonText}>Elétrica</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
                                     style={styles.filterButton}
-                                    onPress={() => { this.handlerSearch('Funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible }) }}>
+                                    onPress={() => { /*this.handlerSearch('Funilaria'); this.setState({ isFilterModalVisible: !this.state.isFilterModalVisible })*/ }}>
                                     <Text style={styles.filterButtonText}>Funilaria</Text>
                                 </TouchableOpacity>
                             </View>
@@ -332,6 +339,7 @@ export default class HomeClient extends Component {
                         keyExtractor={item => `${item.id}`}
                         renderItem={this.RenderItem}
                         showsVerticalScrollIndicator={false}
+                        style={{paddingBottom: 10}}
                     />
                 }
 
@@ -417,7 +425,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
+        marginVertical: 5,
         height: 130,
         width: width - 30,
         borderRadius: 10,

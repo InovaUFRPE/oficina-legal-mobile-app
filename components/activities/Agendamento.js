@@ -135,7 +135,7 @@ export default class Agendamento extends Component {
         } else if (this.isAnyFieldEmpty() === 1) {
             alert('Você precisa escolher uma data para realizar o agendamento')
         } else if(this.isAnyFieldEmpty() === 2) {
-            alert('Escolha um veículo para completar o agendamento')
+            alert('Escolha um veículo para completar o agendamento, caso não tenha nenhum veículo cadastrado, cadastre no seu Perfil')
         } 
         else {
             alert('Você precisa selecionar um serviço da oficina')
@@ -239,14 +239,14 @@ export default class Agendamento extends Component {
                     style={{ position: 'absolute', left: 0, padding: 15 }}
                     onPress={() => { this.props.navigation.navigate('WorkShopLayout') }}>
                     <Icon
-                        name={'md-arrow-back'}
-                        size={30}
+                        name={'ios-arrow-back'}
+                        size={25}
                         color='#fff'
                     />
                 </TouchableOpacity>
                 <View style={styles.componentsContainer}>
                     <View style={styles.workShopNameContainer}>
-                        <Text style={{ fontFamily: 'Roboto-Light', fontSize: 15, letterSpacing: 2 }}>
+                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 15, letterSpacing: 2 }}>
                             OFICINA
                         </Text>
                         <Text style={styles.workShopNameText}>
@@ -392,8 +392,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '80%',
         backgroundColor: '#fff',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
         alignItems: 'center'
     },
 
@@ -405,7 +405,7 @@ const styles = StyleSheet.create({
 
     workShopNameText: {
         fontSize: 25,
-        fontFamily: 'Roboto-Light',
+        fontFamily: 'Roboto-Regular',
         color: 'black',
         letterSpacing: 2
     },

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import defaultStyle from './styles/Default'
 
 
 const { height, width } = Dimensions.get('window')
@@ -8,19 +9,22 @@ const { height, width } = Dimensions.get('window')
 //props: serviceName, serviceType, price, date
 
 export default props => {
-    alert(props.placa)
     return (
         <TouchableOpacity style={styles.container}>
-            <View style={{ width: width - 75, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                        name='md-car'
-                        size={30}
-                    />
-                    <Text style={styles.text}>{props.modelo}</Text>
-                </View>
-                <Text style={styles.princeText}>{(props.placa).substring(0,3).toUpperCase()+"-"+(props.placa).substring(3,6)}</Text>
-            </View>
+            <Icon
+                name='md-car'
+                size={30}
+                color={defaultStyle.primaryColor}
+
+            />
+            <Text style={styles.title}>
+                {props.modelo.toUpperCase()}
+            </Text>
+
+            <Text style={styles.subtitle}>
+                {props.placa.toUpperCase()}
+            </Text>
+
         </TouchableOpacity>
     )
 }
@@ -28,16 +32,13 @@ export default props => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
+        width: width-50,
+        height: 100,
         marginVertical: 5,
-        width: width - 40,
-        height: 70,
-        borderWidth: 0.5,
-        borderRadius: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        borderColor: '#ddd',
+        marginHorizontal: 5,
+        backgroundColor: '#fff',
         alignItems: 'center',
+        justifyContent: 'center',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -45,43 +46,22 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
-        
+
         elevation: 3,
     },
-
     informationContainer: {
-        justifyContent: 'center',
-        marginLeft: 10
-    },
-
-    text: {
-        marginLeft: 10,
-        fontSize: 25,
-        fontWeight: 'bold',
-        textAlign: 'center'
-    },
-
-    priceContainer: {
-        alignItems: 'flex-start',
-        justifyContent: 'center',
-        marginRight: 10
-    },
-
-    princeText: {
-        fontSize: 25
-    },
-
-    exclude: {
-        flex: 1,
-        backgroundColor: 'red',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 5
     },
-
-    excludeText: {
-        color: '#ffffff',
+    title: {
         fontSize: 20,
-        margin: 10
+        fontFamily: 'Roboto-Regular',
+        letterSpacing: 1.5,
+        color: defaultStyle.darkColor
+    },
+    subtitle: {
+        fontFamily: 'Roboto-Light',
+        letterSpacing: 2
     }
 })
