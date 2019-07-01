@@ -18,7 +18,7 @@ export default class HomeMechanic extends Component {
                             color="#ffffff"
                             style={styles.menuIcon}
                             onPress={() => this.props.navigation.goBack()} />
-                        <Text style={{ color: '#fff', fontSize: 30, fontFamily: defaultStyles.fontFamily, padding: 15 }}>Edição de Dados</Text>
+                        <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'Roboto-Regular', padding: 15, letterSpacing: 2 }}>Edição de Dados</Text>
                         </View>
                         <Image
                             source={require('../../images/LogoBranca.png')}

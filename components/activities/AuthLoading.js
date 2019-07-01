@@ -14,23 +14,24 @@ export default class AuthLoading extends Component {
     this._bootstrapAsync();
   }
 
-
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
-
+    console.log(userToken)
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'AppStack' : 'AuthStack');
+    this.props.navigation.navigate(userToken
+      ? 'AppStack'
+      : 'AuthStack');
   };
 
   // Render any loading content that you like here
   render() {
     return (
       <LinearGradient colors={['#2250d9', '#204ac8', '#1d43b7']}
-      style = { styles.container }>
+        style={styles.container}>
         <ActivityIndicator />
-        <StatusBar barStyle="default"/>
+        <StatusBar barStyle="default" />
       </LinearGradient>
     );
   }
@@ -38,9 +39,9 @@ export default class AuthLoading extends Component {
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      flexDirection: 'column',
-      paddingTop: 180,
+    flex: 1,
+    flexDirection: 'column',
+    paddingTop: 180,
 
   },
 })

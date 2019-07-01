@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 import { ConfirmPassword, validateCPF, validateEmail, ValidateCEP } from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ScrollView, Dimensions } from 'react-native';
 import axios from 'axios';
+import { TextInput } from 'react-native-paper'
+import defaultStyle from '../styles/Default'
+import { TextInputMask } from 'react-native-masked-text'
 import AsyncStorage from '@react-native-community/async-storage';
 import { getApiUrl } from '../../service/api'
+import Icon from 'react-native-vector-icons/Ionicons'
+
+
 
 const baseURL = getApiUrl();
 
+const { width, height } = Dimensions.get('window')
+
 export default class RegisterUser extends Component {
-    
+
     state = {
+        adress: {
+            adress: '',
+            city: '',
+            district: '',
+            state: '',
+        },
         login: '',
         name: '',
         cpf: '',
@@ -22,6 +36,7 @@ export default class RegisterUser extends Component {
         neighborhood: '',
         link: '',
         errorMSG: '',
+
     }
 
     errors = {
@@ -29,14 +44,18 @@ export default class RegisterUser extends Component {
         str2: "\nErro(s)\n"
     }
 
+
+    //http://apps.widenet.com.br/busca-cep/api/cep/06233-030.json
+
+
     saveDataStorage = (client, mechanic) => {
         try {
-            if(client){
-                AsyncStorage.setItem('user', JSON.stringify(client.idUsuario) )
+            if (client) {
+                AsyncStorage.setItem('user', JSON.stringify(client.idUsuario))
                 AsyncStorage.setItem('client', JSON.stringify(client))
-                this.props.navigation.navigate('RegisterVehicle')
+                this.props.navigation.navigate('Home')
             }
-            else{
+            else {
                 AsyncStorage.setItem('user', JSON.stringify(mechanic.idUsuario))
                 AsyncStorage.setItem('mechanic', JSON.stringify(mechanic))
                 alert("Mecânico cadastrado com sucesso")
@@ -88,9 +107,9 @@ export default class RegisterUser extends Component {
                 })
 
         } catch (err) {
-            if(client){
+            if (client) {
                 this.PostClient()
-            }else if(mechanic){
+            } else if (mechanic) {
                 this.PostMechanic()
             }
         }
@@ -99,13 +118,13 @@ export default class RegisterUser extends Component {
     getUserIdAndToken = async (client) => {
         const user = {
             email: this.state.email.trim(),
-            senha: this.state.password.trim(),   
+            senha: this.state.password.trim(),
             login: this.state.login.trim(),
         }
-        try{
+        try {
             await axios.post(`${baseURL}/api/usuario/login`, user)
                 .then(response => this.saveDataStorage(response.data.token, response.data.user.id, client))
-        }catch(err){
+        } catch (err) {
             alert("Não foi possível retornar o usuário")
         }
     }
@@ -129,6 +148,7 @@ export default class RegisterUser extends Component {
     }
 
     Verify(Mechanic, Client) {
+        this.state.cpf = this.state.cpf.replace(/[^\d]+/g,'')
         if (!this.checkBlankCamps(Mechanic, Client)) {
             Alert.alert("Erro", this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
@@ -181,9 +201,29 @@ export default class RegisterUser extends Component {
         }
         if (this.errors.str == "\nCampo(s) em branco:\n") return true
     }
+
+     getAdress(CEP) {
+        let url = 'http://apps.widenet.com.br/busca-cep/api/cep/' + CEP + '.json';
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                this.setState({
+                    street: out.address,
+                    neighborhood: out.district,
+                })
+            })
+            .catch(err => { throw err });
+    }
+    
+
+
     render() {
         const Mechanic = this.props.navigation.getParam('mechanic', false);
         const Client = this.props.navigation.getParam('client', false);
+        let cepLeght = this.state.cep.length
+        if(cepLeght === 9){
+            this.getAdress(this.state.cep)
+        }
         return (
             <View
                 colors={['#2250d9', '#204ac8', '#1d43b7']}
@@ -191,113 +231,232 @@ export default class RegisterUser extends Component {
                 {Client ?
                     <View paddingTop={20}>
                         <ScrollView showsVerticalScrollIndicator={false}>
-                            <TextInput placeholder='Login'
-                                tintColor={"black"}
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.login}
-                                returnKeyType="next"
-                                onChangeText={login => this.setState({ login })}
-                                onSubmitEditing={() => this.nameInput.focus()} />
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center', }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-person'
+                                        size={30}
+                                        color={defaultStyle.colors.primaryColor}
+                                    />
+                                </View>
+                                <TextInput placeholder='Login'
+                                    tintColor={"black"}
+                                    label='Usuario'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.login}
+                                    returnKeyType="next"
+                                    onChangeText={login => this.setState({ login })}
+                                    onSubmitEditing={() => this.nameInput.focus()} />
+                            </View>
 
-                            <TextInput placeholder='Nome'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                returnKeyType="next"
-                                ref={(input) => this.nameInput = input}
-                                value={this.state.name}
-                                onChangeText={name => this.setState({ name })}
-                                onSubmitEditing={() => this.cpfInput.focus()} />
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-person'
+                                        size={30}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput placeholder='Nome'
+                                    label='Nome'
+                                    style={[styles.input, { marginLeft: 20 }]}
+                                    returnKeyType="next"
+                                    autoCapitalize='words'
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    ref={(input) => this.nameInput = input}
+                                    value={this.state.name}
+                                    onChangeText={name => this.setState({ name })} />
+                            </View>
 
-                            <TextInput placeholder='CPF'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.cpf}
-                                maxLength={11}
-                                returnKeyType="next"
-                                keyboardType='numeric'
-                                onChangeText={cpf => this.setState({ cpf })}
-                                ref={(input) => this.cpfInput = input}
-                                maxLength={11}
-                                onSubmitEditing={() => this.emailInput.focus()} />
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-person'
+                                        size={30}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput 
+                                    placeholder='CPF'
+                                    label='CPF'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.cpf}
+                                    returnKeyType="next"
+                                    keyboardType='numeric'
+                                    onChangeText={cpf => this.setState({ cpf })}
+                                    ref={(input) => this.cpfInput = input}
+                                    render={props =>
+                                        <TextInputMask
+                                            {...props}
+                                            type={'cpf'}
+                                        />
+                                    }
+                                    onSubmitEditing={() => this.emailInput.focus()} />
+                                    
+                            </View>
 
-                            <TextInput placeholder='E-mail'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.email}
-                                returnKeyType="next"
-                                keyboardType='email-address'
-                                onChangeText={email => this.setState({ email })}
-                                onSubmitEditing={() => this.passwordInput.focus()}
-                                ref={(input) => this.emailInput = input} />
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-mail'
+                                        size={25}
+                                        color={defaultStyle.colors.primaryColor}
+                                    />
+                                </View>
+                                <TextInput placeholder='E-mail'
+                                    label='E-mail'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.email}
+                                    returnKeyType="next"
+                                    keyboardType='email-address'
+                                    onChangeText={email => this.setState({ email })}
+                                    onSubmitEditing={() => this.passwordInput.focus()}
+                                    ref={(input) => this.emailInput = input} />
+                            </View>
 
-                            <TextInput placeholder='Senha'
-                                placeholderTextColor="grey" style={styles.input}
-                                value={this.state.password}
-                                returnKeyType="next"
-                                secureTextEntry={true}
-                                onChangeText={password => this.setState({ password })}
-                                onSubmitEditing={() => this.confirmPasswordInput.focus()}
-                                ref={(input) => this.passwordInput = input} />
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-unlock'
+                                        size={30}
+                                        color={defaultStyle.colors.primaryColor}
+                                    />
+                                </View>
+                                <TextInput placeholder='Senha'
+                                    label='Senha'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.password}
+                                    returnKeyType="next"
+                                    secureTextEntry={true}
+                                    onChangeText={password => this.setState({ password })}
+                                    onSubmitEditing={() => this.confirmPasswordInput.focus()}
+                                    ref={(input) => this.passwordInput = input} />
+                            </View>
 
-                            <TextInput placeholder='Confirmar Senha'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.confirmPassword}
-                                returnKeyType="go"
-                                placeholderTextColor="grey"
-                                secureTextEntry={true}
-                                onChangeText={confirmPassword => this.setState({ confirmPassword })}
-                                onSubmitEditing={() => this.cepInput.focus()}
-                                ref={(input) => this.confirmPasswordInput = input} />
-                            <TextInput placeholder='CEP'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.cep}
-                                maxLength={8}
-                                returnKeyType="next"
-                                keyboardType='numeric'
-                                onChangeText={cep => this.setState({ cep })}
-                                ref={(input) => this.cepInput = input}
-                                onSubmitEditing={() => this.streetInput.focus()} />
-                            <TextInput placeholder='Logradouro'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.street}
-                                returnKeyType="next"
-                                ref={(input) => this.streetInput = input}
-                                onChangeText={street => this.setState({ street })}
-                                onSubmitEditing={() => this.neighborhoodInput.focus()} />
-                            <TextInput placeholder='Bairro'
-                                placeholderTextColor="grey" style={styles.input}
-                                value={this.state.neighborhood}
-                                returnKeyType="go"
-                                onChangeText={neighborhood => this.setState({ neighborhood })}
-                                ref={(input) => this.neighborhoodInput = input}
-                                onSubmitEditing={() => this.complementInput.focus()} />
-                            <TextInput placeholder='Complemento (Opcional)'
-                                placeholderTextColor="grey"
-                                style={styles.input}
-                                value={this.state.complement}
-                                returnKeyType="next"
-                                onChangeText={complement => this.setState({ complement })}
-                                ref={(input) => this.complementInput = input} />
+
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-unlock'
+                                        size={25}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput placeholder='Confirmar Senha'
+                                    label='Confirmar Senha'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.confirmPassword}
+                                    returnKeyType="go"
+                                    secureTextEntry={true}
+                                    onChangeText={confirmPassword => this.setState({ confirmPassword })}
+                                    ref={(input) => this.confirmPasswordInput = input} />
+                            </View>
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-compass'
+                                        size={25}
+                                        color={defaultStyle.colors.primaryColor}
+                                    />
+                                </View>
+                                <TextInput placeholder='CEP'
+                                    label='CEP'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.cep}
+                                    returnKeyType="next"
+                                    keyboardType='numeric'
+                                    onChangeText={cep => this.setState({ cep })}
+                                    ref={(input) => this.cepInput = input}
+                                    render={props =>
+                                        <TextInputMask
+                                            {...props}
+                                            type={'zip-code'}
+                                        />
+                                    }
+                                    onSubmitEditing={() => this.streetInput.focus()} />
+                            </View>
+
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-compass'
+                                        size={25}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput placeholder='Endereço'
+                                    label='Endereço'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.street}
+                                    returnKeyType="next"
+                                    ref={(input) => this.streetInput = input}
+                                    onChangeText={street => this.setState({ street })}
+                                    onSubmitEditing={() => this.neighborhoodInput.focus()} />
+
+                            </View>
+
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-compass'
+                                        size={25}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput placeholder='Bairro'
+                                    label='Bairro' style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.neighborhood}
+                                    returnKeyType="go"
+                                    onChangeText={neighborhood => this.setState({ neighborhood })}
+                                    ref={(input) => this.neighborhoodInput = input}
+                                    onSubmitEditing={() => this.complementInput.focus()} />
+
+                            </View>
+
+                            <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
+                                <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon
+                                        name='md-compass'
+                                        size={25}
+                                        color={'transparent'}
+                                    />
+                                </View>
+                                <TextInput placeholder='Complemento (Opcional)'
+                                    label='Complemento (Opcional)'
+                                    style={styles.input}
+                                    underlineColor={defaultStyle.colors.primaryColor}
+                                    value={this.state.complement}
+                                    returnKeyType="next"
+                                    onChangeText={complement => this.setState({ complement })}
+                                    ref={(input) => this.complementInput = input} />
+
+                            </View>
+
+
                             <TouchableOpacity onPress={() => this.Verify(false, true)}
                                 style={styles.buttonRegister}>
                                 <Text style={styles.buttonRegisterText}>Seguir</Text>
                             </TouchableOpacity>
                         </ScrollView>
-                        </View>
-                        :
-                        null
-                    }
+                    </View>
+                    :
+                    null
+                }
 
-                    {Mechanic ?
+                {Mechanic ?
                     <View paddingTop={20}>
                         <ScrollView showsVerticalScrollIndicator={false}>
                             <TextInput placeholder='Login'
                                 tintColor={"black"}
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.login}
                                 returnKeyType="next"
@@ -305,7 +464,7 @@ export default class RegisterUser extends Component {
                                 onSubmitEditing={() => this.nameInput.focus()} />
 
                             <TextInput placeholder='Nome'
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.name}
                                 returnKeyType="next"
@@ -314,7 +473,7 @@ export default class RegisterUser extends Component {
                                 onSubmitEditing={() => this.cpfInput.focus()} />
 
                             <TextInput placeholder='CPF'
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.cpf}
                                 maxLength={11}
@@ -326,7 +485,7 @@ export default class RegisterUser extends Component {
                                 onSubmitEditing={() => this.emailInput.focus()} />
 
                             <TextInput placeholder='E-mail'
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.email}
                                 returnKeyType="next"
@@ -336,7 +495,7 @@ export default class RegisterUser extends Component {
                                 ref={(input) => this.emailInput = input} />
 
                             <TextInput placeholder='Senha'
-                                placeholderTextColor="grey" style={styles.input}
+                                label='Usuario' style={styles.input}
                                 value={this.state.password}
                                 returnKeyType="next"
                                 secureTextEntry={true}
@@ -345,17 +504,18 @@ export default class RegisterUser extends Component {
                                 ref={(input) => this.passwordInput = input} />
 
                             <TextInput placeholder='Confirmar Senha'
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.confirmPassword}
                                 returnKeyType="go"
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 secureTextEntry={true}
                                 onChangeText={confirmPassword => this.setState({ confirmPassword })}
                                 onSubmitEditing={() => this.HyperlinkInput.focus()}
                                 ref={(input) => this.confirmPasswordInput = input} />
+
                             <TextInput placeholder='Link de seu curriculo'
-                                placeholderTextColor="grey"
+                                label='Usuario'
                                 style={styles.input}
                                 value={this.state.link}
                                 returnKeyType="next"
@@ -363,10 +523,10 @@ export default class RegisterUser extends Component {
                                 ref={(input) => this.HyperlinkInput = input} />
                             <TouchableOpacity onPress={() => this.Verify(true, false)}
                                 style={styles.buttonRegister}>
-                                <Text style={styles.buttonRegisterText}>Seguir</Text>
+                                <Text style={styles.buttonRegisterText}>Registrar</Text>
                             </TouchableOpacity>
-                            </ScrollView>
-                        </View>
+                        </ScrollView>
+                    </View>
                     :
                     null
                 }
@@ -391,14 +551,11 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        paddingHorizontal: 20,
-        paddingVertical: 15,
+        marginLeft: 20,
         borderRadius: 5,
-        width: 300,
+        height: 70,
+        width: '85%',
         backgroundColor: '#FFF',
-        alignSelf: 'stretch',
-        marginBottom: 15,
-        marginHorizontal: 20,
         fontSize: 16
     },
 

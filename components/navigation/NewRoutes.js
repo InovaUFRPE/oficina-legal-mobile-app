@@ -10,6 +10,7 @@ import RegisterVehicle from '../activities/RegisterVehicle'
 import ForgotPassword from '../activities/ForgotPassword'
 import RegisterMechanic from '../activities/RegisterMechanic'
 import LinkMechanicToWorkshop from '../activities/LinkMechanicToWorkshop'
+import NewRegister from '../activities/NewRegisterUser'
 
 //Auth
 import AuthLoading from '../activities/AuthLoading'
@@ -36,8 +37,8 @@ const blueHeader = {
 
 const AppStack = createStackNavigator({
     Home: { screen: Login, navigationOptions: { header: null } },
-    LoginMechanic: { screen: LoginMechanic, navigationOptions: { header: null } },
-    RegisterUser: { screen: RegisterUser, navigationOptions: { headerTintColor: '#2250d9', title: 'Registro'} },
+    LoginMechanic: { screen: LoginMechanic, navigationOptions: { header: null} },
+    RegisterUser: { screen: RegisterUser, navigationOptions:  { defaultHeader, title: 'Registro' } },
     RegisterAdress: { screen: RegisterAdress, navigationOptions: defaultHeader },
     RegisterVehicle: { screen: RegisterVehicle, navigationOptions: blueHeader },
     ForgotPassword: { screen: ForgotPassword, navigationOptions: defaultHeader },

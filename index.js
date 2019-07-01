@@ -9,7 +9,7 @@ import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import Home from './components/navigation/DrawerNavigatorClient'
 import storeConfig from './store/storeConfig'
-import Agendamentodois from './components/activities/OldAgendamento'
+import NewRegister from './components/activities/NewRegisterUser'
 
 const store = storeConfig()
 const Redux = () => (

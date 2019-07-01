@@ -14,8 +14,8 @@ class Login extends Component {
     state = {
         name: 'Temporario',
         token: null,
-        username: 'Renegado13',
-        password: 'megaliga',
+        username: '',
+        password: '',
         errorMSG: '',
         loading: false
     };
@@ -77,10 +77,13 @@ class Login extends Component {
                         this.props.navigation.navigate('DrawerNavigatorClient')
                     }
                     if (response.status == 400) {
+                        this.setState({ loading: false })
                         this.activeAlert()
                     }
                 })
         } catch (error) {
+            console.log(error)
+            this.setState({loading: !this.state.loading})
             alert("Usuário inválido")
         }
 

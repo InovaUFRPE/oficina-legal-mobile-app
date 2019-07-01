@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { ConfirmarPassword, validateCPF, validateEmail } from '../../busnisses/Validation'
-import { StyleSheet, Text, View, TextInput, Image, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
-import { connect } from 'react-redux'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { connect } from 'react-redux';
+import { TextInput } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 import { getApiUrl } from '../../service/api'
 import Icon from 'react-native-vector-icons/Ionicons'
-import defaultStyles from '../styles/Default'
+import defaultStyle from '../styles/Default'
 
 
 const baseURL = getApiUrl();
@@ -253,106 +253,108 @@ class EditProfileClient extends Component {
                         />
 
                         <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>{this.state.nome}</Text>
-                        <Icon
-                            name="md-sync"
-                            size={30}
-                            style={{ marginTop: 3, paddingBottom: 10 }}
-                            color={defaultStyles.colors.primaryColor}
-                            onPress={() => this.save()} />
+                        <TouchableOpacity
+                            onPress={() => this.save()}
+                            style={{ marginTop: 3, paddingBottom: 10 }}>
+                            <Icon
+                                name="md-sync"
+                                size={30}
+                                color={defaultStyle.colors.primaryColor}
+                            />
+                        </TouchableOpacity>
 
                     </View>
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Login</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_login'
-                            placeholderTextColor='#586069'
-                            value={this.state.login}
-                            onChangeText={login => this.setState({ login })} />
-                    </View>
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>E-mail</Text>
-                        <TextInput
-                            style={[styles.input]}
-                            placeholder='user_email'
-                            placeholderTextColor='#586069'
-                            value={this.state.email}
-                            onChangeText={email => this.setState({ email })} />
-                    </View>
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>CPF</Text>
-                        <TextInput
-                            style={[styles.input]}
-                            placeholder='user_cpf'
-                            placeholderTextColor='#586069'
-                            value={this.state.cpf}
-                            onChangeText={cpf => this.setState({ cpf })} />
-                    </View>
+                    <TextInput
+                        label='Login'
+                        style={styles.input}
+                        placeholder='Login'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.login}
+                        onChangeText={login => this.setState({ login })} />
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Senha</Text>
-                        <TextInput style={[styles.input]}
-                            secureTextEntry={true}
-                            placeholder="user_password"
-                            placeholderTextColor='#586069'
-                            value={this.state.password}
-                            onChangeText={(password) => this.setState({ password })} />
-                    </View>
+                    <TextInput
+                        label='E-mail'
+                        style={[styles.input]}
+                        placeholder='E-mail'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.email}
+                        onChangeText={email => this.setState({ email })} />
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Confirmar Senha</Text>
-                        <TextInput style={[styles.input]}
-                            secureTextEntry={true}
-                            placeholder="user_password"
-                            placeholderTextColor='#586069'
-                            value={this.state.confirmarPassword}
-                            onChangeText={(confirmarPassword) => this.setState({ confirmarPassword })} />
-                    </View>
+                    <TextInput
+                        label='CPF'
+                        style={[styles.input]}
+                        placeholder='user_cpf'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.cpf}
+                        onChangeText={cpf => this.setState({ cpf })} />
+
+
+                    <TextInput style={[styles.input]}
+                        label='Senha'
+                        secureTextEntry={true}
+                        placeholder="Coloque sua senha"
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.password}
+                        onChangeText={(password) => this.setState({ password })} />
+
+
+                    <TextInput style={[styles.input]}
+                        label='Confirmar Senha'
+                        secureTextEntry={true}
+                        placeholder="E confirme para editar os dados"
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.confirmarPassword}
+                        onChangeText={(confirmarPassword) => this.setState({ confirmarPassword })} />
+
 
                     <View style={[styles.editContainerCat, { paddingTop: 10 }]}>
                         <Text style={styles.textCategoria}>Endereço</Text>
                     </View>
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>CEP</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_cep'
-                            placeholderTextColor='#586069'
-                            value={this.state.cep}
-                            onChangeText={cep => this.setState({ cep })} />
-                    </View>
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Rua</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_street'
-                            placeholderTextColor='#586069'
-                            value={this.state.endereco}
-                            onChangeText={endereco => this.setState({ endereco })} />
-                    </View>
+                    <TextInput
+                        label='CEP'
+                        style={styles.input}
+                        placeholder='user_cep'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.cep}
+                        onChangeText={cep => this.setState({ cep })} />
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Bairro</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_neighborhood'
-                            placeholderTextColor='#586069'
-                            value={this.state.bairro}
-                            onChangeText={bairro => this.setState({ bairro })} />
-                    </View>
+                    <TextInput
+                        label='Endereço'
+                        style={styles.input}
+                        placeholder='user_street'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.endereco}
+                        onChangeText={endereco => this.setState({ endereco })} />
 
-                    <View style={styles.editContainer}>
-                        <Text style={styles.inputDescription}>Complemento</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='user_complemento'
-                            placeholderTextColor='#586069'
-                            value={this.state.complemento}
-                            onChangeText={complemento => this.setState({ complemento })} />
-                    </View>
+
+                    <TextInput
+                        label='Bairro'
+                        style={styles.input}
+                        placeholder='user_neighborhood'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.bairro}
+                        onChangeText={bairro => this.setState({ bairro })} />
+
+                    <TextInput
+                        label='Complemento'
+                        style={styles.input}
+                        placeholder='user_complemento'
+                        placeholderTextColor='#586069'
+                        underlineColor={defaultStyle.colors.primaryColor}
+                        value={this.state.complemento}
+                        onChangeText={complemento => this.setState({ complemento })} />
+
                 </View>
             </ScrollView>
 
@@ -374,7 +376,7 @@ const styles = StyleSheet.create({
 
     },
     editContainer: {
-        marginBottom: 10,
+        marginVertical: 5,
         justifyContent: 'center',
         alignItems: 'flex-start',
         width: '85%',
@@ -412,12 +414,9 @@ const styles = StyleSheet.create({
 
     input: {
         fontSize: 18,
-        width: '100%',
-        marginRight: 10,
-        height: 40,
-        borderBottomWidth: 1,
-        borderBottomColor: '#111e29',
-        borderBottomWidth: 1,
+        width: '80%',
+        marginTop: 15,
+        height: 60,
         color: '#111e29',
     },
 
