@@ -39,6 +39,7 @@ const AppStack = createStackNavigator({
     Home: { screen: Login, navigationOptions: { header: null } },
     LoginMechanic: { screen: LoginMechanic, navigationOptions: { header: null} },
     RegisterUser: { screen: RegisterUser, navigationOptions:  { defaultHeader, title: 'Registro' } },
+    NewRegister: { screen: NewRegister, navigationOptions: defaultHeader },
     RegisterAdress: { screen: RegisterAdress, navigationOptions: defaultHeader },
     RegisterVehicle: { screen: RegisterVehicle, navigationOptions: blueHeader },
     ForgotPassword: { screen: ForgotPassword, navigationOptions: defaultHeader },
