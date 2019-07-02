@@ -148,7 +148,7 @@ export default class RegisterUser extends Component {
     }
 
     Verify(Mechanic, Client) {
-        this.state.cpf = this.state.cpf.replace(/[^\d]+/g,'')
+        this.state.cpf = this.state.cpf.replace(/[^\d]+/g, '')
         if (!this.checkBlankCamps(Mechanic, Client)) {
             Alert.alert("Erro", this.errors.str)
             this.errors.str = "\nCampo(s) em branco:\n"
@@ -202,7 +202,7 @@ export default class RegisterUser extends Component {
         if (this.errors.str == "\nCampo(s) em branco:\n") return true
     }
 
-     getAdress(CEP) {
+    getAdress(CEP) {
         let url = 'http://apps.widenet.com.br/busca-cep/api/cep/' + CEP + '.json';
         fetch(url)
             .then(res => res.json())
@@ -214,14 +214,14 @@ export default class RegisterUser extends Component {
             })
             .catch(err => { throw err });
     }
-    
+
 
 
     render() {
         const Mechanic = this.props.navigation.getParam('mechanic', false);
         const Client = this.props.navigation.getParam('client', false);
         let cepLeght = this.state.cep.length
-        if(cepLeght === 9){
+        if (cepLeght === 9) {
             this.getAdress(this.state.cep)
         }
         return (
@@ -242,6 +242,7 @@ export default class RegisterUser extends Component {
                                 <TextInput placeholder='Login'
                                     tintColor={"black"}
                                     label='Usuario'
+                                    autoCapitalize='none'
                                     style={styles.input}
                                     underlineColor={defaultStyle.colors.primaryColor}
                                     value={this.state.login}
@@ -277,7 +278,7 @@ export default class RegisterUser extends Component {
                                         color={'transparent'}
                                     />
                                 </View>
-                                <TextInput 
+                                <TextInput
                                     placeholder='CPF'
                                     label='CPF'
                                     style={styles.input}
@@ -294,7 +295,7 @@ export default class RegisterUser extends Component {
                                         />
                                     }
                                     onSubmitEditing={() => this.emailInput.focus()} />
-                                    
+
                             </View>
 
                             <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
@@ -310,6 +311,7 @@ export default class RegisterUser extends Component {
                                     style={styles.input}
                                     underlineColor={defaultStyle.colors.primaryColor}
                                     value={this.state.email}
+                                    autoCapitalize='none'
                                     returnKeyType="next"
                                     keyboardType='email-address'
                                     onChangeText={email => this.setState({ email })}
@@ -356,6 +358,7 @@ export default class RegisterUser extends Component {
                                     onChangeText={confirmPassword => this.setState({ confirmPassword })}
                                     ref={(input) => this.confirmPasswordInput = input} />
                             </View>
+
                             <View style={{ marginVertical: 10, width: width - 80, height: 70, flexDirection: 'row', alignItems: 'center' }}>
                                 <View style={{ width: 30, height: 30, alignItems: 'center', justifyContent: 'center' }}>
                                     <Icon
