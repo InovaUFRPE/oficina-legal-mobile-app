@@ -61,10 +61,10 @@ class Login extends Component {
         );
     }
 
-    GetUserByLogin = async () => {
+    GetUserByLogin = async (obj) => {
         try {
             await axios.post(`${baseURL}/api/usuario/login`,
-                { login: this.state.username, email: this.state.username, senha: this.state.password })
+                obj)
                 .then(response => {
                     if (response.status == 200) {
                         this.saveDataStorage(response.data.token, response.data.user.id)
@@ -108,7 +108,22 @@ class Login extends Component {
         this.state.username = this.state.username.trim()
         this.state.password = this.state.password.trim()
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
-        this.GetUserByLogin()
+        if(this.isEmail()){
+            const req = {
+                login: false, 
+                email: this.state.username,
+                senha: this.state.password
+            }
+            this.GetUserByLogin(req)
+        }else{
+            const req = { 
+                login: this.state.username, 
+                email: false,
+                senha: this.state.password
+            }
+            this.GetUserByLogin(req)
+        }
+        
     }
 
     render() {
@@ -148,7 +163,7 @@ class Login extends Component {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.signUpLink}
-                                onPress={() => this.props.navigation.navigate('RegisterUser', {
+                                onPress={() => this.props.navigation.navigate('NewRegister', {
                                     client: true
                                 })}>
                                 <Text style={styles.signUpLinkText}>Criar conta grátis</Text>

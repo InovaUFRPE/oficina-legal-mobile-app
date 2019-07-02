@@ -129,7 +129,7 @@ export default class RegisterUser extends Component {
     PostClient = () => {
         try {
             axios.post(`${baseURL}/api/cliente/register`, this.createClientRequisition())
-                .then(client => this.saveDataStorage(client.data, false))
+                .then(client => alert(JSON.stringify(client.data)) /* this.saveDataStorage(client.data, false) */)
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }
@@ -319,7 +319,7 @@ export default class RegisterUser extends Component {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <TextInput
-                                        style={[styles.input, { width: '90%' }]}
+                                        style={[styles.input, { width: '100%' }]}
                                         label='Senha'
                                         underlineColor={defaultStyle.darkColor}
                                         selectionColor={'black'}
