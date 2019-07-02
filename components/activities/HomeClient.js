@@ -111,9 +111,9 @@ export default class HomeClient extends Component {
 
             () => { console.log('Erro') }, //Erro
             {
-                timeout: 2000,
-                enableHighAccuracy: true,
-                maximumAge: 1000,
+                timeout: 4000,
+                enableHighAccuracy: false,
+                maximumAge: 2000,
             }
         )
     }
@@ -219,8 +219,7 @@ export default class HomeClient extends Component {
     }
 
     render() {
-        console.log(this.state.fullData.data)
-        console.log(this.state.data)
+        console.log(this.state)
         return (
 
             <View
