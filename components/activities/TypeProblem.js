@@ -66,6 +66,7 @@ export default class TypeProblem extends Component {
         const formatedName = name/* .charAt(0).toUpperCase() + name.slice(1); */
         const price = object.preco
         const time = object.tempoRealizacao
+        console.log(price)
 
         return (
             <TouchableOpacity
@@ -78,7 +79,6 @@ export default class TypeProblem extends Component {
                         date: this.state.date
                     })
                 }}
-
                 style={styles.workShopComponent}>
                 <View style={{ flexDirection: 'row', marginLeft: 15, alignItems: 'center', width: '75%' }}>
                     <View style={{ backgroundColor: defaultStyle.colors.primaryColor, width: 40, height: 40, justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
@@ -101,8 +101,13 @@ export default class TypeProblem extends Component {
                         </View>
                     </View>
                 </View>
-                <View style={{ width: '20%'}}>
-                    <Text style={{ fontSize: 16, fontFamily: 'Robot-Light', letterSpacing: 1, color: 'black' }}>R$ {price}</Text>
+                <View style={{ width: '20%' }}>
+                    <Text style={{ fontSize: 16, fontFamily: 'Robot-Light', letterSpacing: 1, color: 'black' }}>
+                        {price === null
+                        ? 'Grátis'
+                        : 'R$' + price + ',00'
+                        }
+                    </Text>
                 </View>
             </TouchableOpacity>
         )

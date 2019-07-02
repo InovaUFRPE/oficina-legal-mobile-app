@@ -24,10 +24,31 @@ export default class WorkShopLayout extends Component {
         Especialitys: [],
         shopLat: '',
         shopLon: '',
+        distance: '',
+        shopLat: this.props.navigation.getParam('shopLat', 'ErroGetLat').toString(),
+        shopLon: this.props.navigation.getParam('shopLon', 'ErroGetLon').toString(),
+        userLon: this.props.navigation.getParam('userLon', 'ErroGetUserLong'),
+        userLat: this.props.navigation.getParam('userLat', 'ErroGetUserLat'),
     }
 
     componentDidMount() {
         this.getEspeciality()
+        this.getDistance()
+    }
+
+    getDistance() {
+        let origin = (this.state.userLat + ',' + this.state.userLon)
+        let destination = (this.state.shopLat + ',' + this.state.shopLon)
+        console.log(this.state)
+        let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + origin + '&destinations=' + destination + '&key=AIzaSyAOeQqxsLy3yzESYglsQEjhD5iu_UtltuM';
+        fetch(url)
+            .then(res => res.json())
+            .then((out) => {
+                this.setState({
+                    distance: (out.rows[0].elements[0].distance.value / 1000).toFixed(1)
+                })
+            })
+            .catch(err => { throw err });
     }
 
     getEspeciality = async () => {
@@ -49,8 +70,6 @@ export default class WorkShopLayout extends Component {
         const shopLon = navigation.getParam('shopLon', 'ErroGetLon').toString()
         const travelType = 'drive'
         const end = shopLat + ',' + shopLon;
-        console.log(distance)
-        console.log(this.state)
         return (
             <View style={styles.container}>
                 <View style={styles.headerContainer}>
@@ -61,7 +80,7 @@ export default class WorkShopLayout extends Component {
                     />
                     <Text style={styles.headerTitle}>
                         {name}
-                </Text>
+                    </Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('HomeClient')}
@@ -110,7 +129,7 @@ export default class WorkShopLayout extends Component {
                                 size={30}
                                 color={Colors.colors.primaryColor}
                             />
-                            <Text style={{ fontFamily: 'Roboto-Light', color: Colors.darkColor, fontSize: 45 }}>9.3 KM</Text>
+                            <Text style={{ fontFamily: 'Roboto-Light', color: Colors.darkColor, fontSize: 45 }}>{this.state.distance} KM</Text>
                         </View>
                     </View>
 

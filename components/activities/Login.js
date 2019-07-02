@@ -7,6 +7,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 import defaultStyles from '../styles/Default'
 import { getApiUrl } from '../../service/api'
+import Snackbar from 'react-native-snackbar'
 
 const baseURL = getApiUrl();
 
@@ -14,7 +15,7 @@ class Login extends Component {
     state = {
         name: 'Temporario',
         token: null,
-        username: '',
+        username: this.props.navigation.getParam('email', ''),
         password: '',
         errorMSG: '',
         loading: false
@@ -83,7 +84,7 @@ class Login extends Component {
                 })
         } catch (error) {
             console.log(error)
-            this.setState({loading: !this.state.loading})
+            this.setState({ loading: !this.state.loading })
             alert("Usuário inválido")
         }
 
@@ -108,22 +109,38 @@ class Login extends Component {
         this.state.username = this.state.username.trim()
         this.state.password = this.state.password.trim()
         if (this.blankCamps(this.state.username, this.state.password)) { alert(this.blankCamps(this.state.username, this.state.password)); return }
-        if(this.isEmail()){
+        if (this.isEmail()) {
             const req = {
-                login: false, 
+                login: false,
                 email: this.state.username,
                 senha: this.state.password
             }
             this.GetUserByLogin(req)
-        }else{
-            const req = { 
-                login: this.state.username, 
+        } else {
+            const req = {
+                login: this.state.username,
                 email: false,
                 senha: this.state.password
             }
             this.GetUserByLogin(req)
         }
-        
+
+    }
+
+    componentDidMount() {
+        this.getParams()
+    }
+
+    getParams = () => {
+        const { navigation } = this.props;
+        let register = this.props.navigation.getParam('register', '0');
+        if (register === '1') {
+            Snackbar.show({
+                title: 'Cadastro Realizado Com Sucesso',
+                duration: Snackbar.LENGTH_LONG
+            })
+            register = 0
+        }
     }
 
     render() {
@@ -142,7 +159,7 @@ class Login extends Component {
                             <ActivityIndicator size="large" color={defaultStyles.colors.primaryColor} />
                         </View>
                         :
-                        <View style={{width: '100%'}}>
+                        <View style={{ width: '100%' }}>
                             <TextInput style={styles.input}
                                 placeholder="Digite seu email ou login."
                                 keyboardType='email-address'

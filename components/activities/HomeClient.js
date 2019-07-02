@@ -66,7 +66,6 @@ export default class HomeClient extends Component {
 
     makeRemoteRequest = async () => {
         this.setState({ loading: true });
-        console.log('Loading: ', this.state.loading)
         console.log('Fez a requisiçao no banco de dados')
         await axios.get(`${baseURL}/api/oficina/findAll`)
             .then(users => {
@@ -80,21 +79,21 @@ export default class HomeClient extends Component {
                 console.log('Erro Em makeRemoteRequest ./HomeClient')
                 this.setState({ error, loading: false })
             })
-        }
-    
+    }
+
 
     makeLocalRequest = () => {
         console.log('Fez a requisiçao no Localmente')
         getUsers(20, this.state.query, this.state.fullData.data)
-        .then(users => {
-            this.setState({
-                loading: false,
-                data: users,
-            });
-        })
-        .catch(error => {
-            this.setState({ error, loading: false })
-        })
+            .then(users => {
+                this.setState({
+                    loading: false,
+                    data: users,
+                });
+            })
+            .catch(error => {
+                this.setState({ error, loading: false })
+            })
     }
 
     getUserLocation = () => {
@@ -162,6 +161,7 @@ export default class HomeClient extends Component {
             });
         }
     }
+
     RenderItem = (obj) => {
         const object = obj.item
         const name = object.razaoSocial
@@ -172,7 +172,8 @@ export default class HomeClient extends Component {
         const id = object.id
         const shopLat = object.latitude
         const shopLon = object.longitude
-        const distance = 0.0 //this.getDistance(shopLat, shopLon)
+        const userLat = this.state.region.latitude
+        const userLon = this.state.region.longitude
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -180,9 +181,10 @@ export default class HomeClient extends Component {
                         name: formatedName,
                         shopLat: shopLat,
                         shopLon: shopLon,
-                        distance: distance,
-                        address: {endereco, bairro ,cidade},
-                        idWorkshop: id
+                        userLat: userLat,
+                        userLon: userLon,
+                        address: { endereco, bairro, cidade },
+                        idWorkshop: id,
                     },
                     )
                 }}
@@ -209,14 +211,6 @@ export default class HomeClient extends Component {
                         />
                         <Text style={{ marginHorizontal: 5, fontFamily: 'Roboto-Light', letterSpacing: 1, color: 'black' }}>
                             1.513
-                        </Text>
-                        <Icon
-                            name='ios-navigate'
-                            size={15}
-                            color={defaultStyles.colors.primaryColor}
-                        />
-                        <Text style={{ marginHorizontal: 5, fontFamily: 'Roboto-Light', letterSpacing: 1, color: 'black' }}>
-                            {distance} KM
                         </Text>
                     </View>
                 </View>
@@ -265,8 +259,8 @@ export default class HomeClient extends Component {
                                 value={this.state.query}
                                 autoCapitalize='none'
                                 autoCorrect={false}
-                                onChangeText={this.handlerSearch} 
-                                />
+                                onChangeText={this.handlerSearch}
+                            />
                         </View>
 
 
@@ -339,7 +333,7 @@ export default class HomeClient extends Component {
                         keyExtractor={item => `${item.id}`}
                         renderItem={this.RenderItem}
                         showsVerticalScrollIndicator={false}
-                        style={{paddingBottom: 10}}
+                        style={{ paddingBottom: 10 }}
                     />
                 }
 

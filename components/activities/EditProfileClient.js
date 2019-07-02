@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { getApiUrl } from '../../service/api'
 import Icon from 'react-native-vector-icons/Ionicons'
 import defaultStyle from '../styles/Default'
-
+import { TextInputMask } from 'react-native-masked-text'
 
 const baseURL = getApiUrl();
 
@@ -98,8 +98,7 @@ class EditProfileClient extends Component {
     }
 
     populateBlankCamps = () => {
-        this.state.usuario.login = this.state.login,
-            this.state.usuario.email = this.state.email
+        this.state.usuario.email = this.state.email
         const cpf = this.state.cliente.cpf
         const cep = this.state.cliente.cep
         this.setState(
@@ -109,7 +108,7 @@ class EditProfileClient extends Component {
                 cpf: cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11),
                 endereco: this.state.cliente.endereco,
                 bairro: this.state.cliente.bairro,
-                cep: cep.substring(0, 5) + "-" + cep.substring(5, 8),
+                cep: this.state.cliente.cep,
                 complemento: this.state.cliente.complemento,
                 cliente: {}
             })
@@ -293,7 +292,8 @@ class EditProfileClient extends Component {
                         onChangeText={cpf => this.setState({ cpf })} />
 
 
-                    <TextInput style={[styles.input]}
+                    <TextInput
+                        style={[styles.input]}
                         label='Senha'
                         secureTextEntry={true}
                         placeholder="Coloque sua senha"
@@ -325,7 +325,14 @@ class EditProfileClient extends Component {
                         placeholderTextColor='#586069'
                         underlineColor={defaultStyle.colors.primaryColor}
                         value={this.state.cep}
-                        onChangeText={cep => this.setState({ cep })} />
+                        onChangeText={cep => this.setState({ cep })}
+                        render={props =>
+                            <TextInputMask
+                                {...props}
+                                type={'zip-code'}
+                            />
+                        }
+                    />
 
                     <TextInput
                         label='Endereço'
@@ -408,8 +415,9 @@ const styles = StyleSheet.create({
     textCategoria: {
         fontSize: 28,
         color: '#2250d9',
-        fontWeight: 'bold',
-        alignContent: 'center'
+        fontFamily: 'Roboto-Regular',
+        alignContent: 'center',
+        letterSpacing: 2, marginTop: 20
     },
 
     input: {
@@ -418,6 +426,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
         height: 60,
         color: '#111e29',
+        backgroundColor: 'transparent'
     },
 
     ButtonEdit: {

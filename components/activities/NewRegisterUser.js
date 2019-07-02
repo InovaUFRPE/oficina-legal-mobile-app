@@ -8,11 +8,13 @@ import { TextInput } from 'react-native-paper'
 import defaultStyle from '../styles/Default'
 import { TextInputMask } from 'react-native-masked-text'
 import Icon from 'react-native-vector-icons/Ionicons'
+import { FloatingAction } from "react-native-floating-action"
 
 const baseURL = getApiUrl();
 
 const { width, height } = Dimensions.get('window')
 
+console.disableYellowBox = true;
 export default class RegisterUser extends Component {
 
     state = {
@@ -129,7 +131,10 @@ export default class RegisterUser extends Component {
     PostClient = () => {
         try {
             axios.post(`${baseURL}/api/cliente/register`, this.createClientRequisition())
-                .then(client => alert(JSON.stringify(client.data)) /* this.saveDataStorage(client.data, false) */)
+                .then(client => (JSON.stringify(client.data))
+                .then(this.props.navigation.navigate('Home', {email: this.state.email}))
+    
+                /* this.saveDataStorage(client.data, false) */)
         } catch (err) {
             alert("Não foi possível salvar o usuário")
         }
@@ -235,10 +240,10 @@ export default class RegisterUser extends Component {
             return true
         } else {
             this.state.name = this.state.name.trim(),
-            this.state.email = this.state.email.trim(),
-            this.state.password = this.state.password.trim(),
-            
-            console.log(this.state)
+                this.state.email = this.state.email.trim(),
+                this.state.password = this.state.password.trim(),
+
+                console.log(this.state)
             return false
         }
     }
@@ -267,6 +272,7 @@ export default class RegisterUser extends Component {
         if (this.errors.str == "\nCampo(s) em branco:\n") return true
     }
 
+
     render() {
         const Mechanic = this.props.navigation.getParam('mechanic', false);
         const Client = this.props.navigation.getParam('client', false);
@@ -291,11 +297,12 @@ export default class RegisterUser extends Component {
                             <Text style={styles.headerTitle}>Oficina Legal</Text>
                         </View>
                         {Client
-                            ? <View style={{ marginTop: 20, width: width - 80, }}>
+                            ? <View style={{ marginTop: 20, width: width - 60 }}>
                                 <TextInput
                                     autoCapitalize='words'
                                     style={styles.input}
                                     label='Nome'
+                                    textContentType='name'
                                     underlineColor={defaultStyle.darkColor}
                                     selectionColor={'black'}
                                     mode='outlined'
@@ -311,6 +318,8 @@ export default class RegisterUser extends Component {
                                     underlineColor={defaultStyle.darkColor}
                                     selectionColor={'black'}
                                     mode='outlined'
+                                    autoCapitalize='none'
+                                    textContentType='emailAddress'
                                     placeholder={this.errorField.errorEmailMessage}
                                     error={this.errorField.email}
                                     value={this.state.email}
@@ -319,7 +328,7 @@ export default class RegisterUser extends Component {
 
                                 <View style={{ flexDirection: 'row' }}>
                                     <TextInput
-                                        style={[styles.input, { width: '100%' }]}
+                                        style={[styles.input, { width: '85%' }]}
                                         label='Senha'
                                         underlineColor={defaultStyle.darkColor}
                                         selectionColor={'black'}
